@@ -9,7 +9,7 @@ import com.google.android.gms.cast.framework.media.RemoteMediaClient;
 import com.google.android.gms.common.images.WebImage;
 import com.iseasoft.iSeaMusic.models.Song;
 import com.iseasoft.iSeaMusic.utils.Constants;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -19,7 +19,7 @@ public class iSeaMusicCastHelper {
 
     public static void startCasting(CastSession castSession, Song song) {
 
-        String ipAddress = iSeaUtils.getIPAddress(true);
+        String ipAddress = Utils.getIPAddress(true);
         URL baseUrl;
         try {
             baseUrl = new URL("http", ipAddress, Constants.CAST_SERVER_PORT, "" );

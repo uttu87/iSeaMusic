@@ -23,7 +23,7 @@ import android.provider.MediaStore;
 import android.provider.MediaStore.Audio.PlaylistsColumns;
 
 import com.iseasoft.iSeaMusic.models.Playlist;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +49,7 @@ public class PlaylistLoader {
 
                 final String name = mCursor.getString(1);
 
-                final int songCount = iSeaUtils.getSongCountForPlaylist(context, id);
+                final int songCount = Utils.getSongCountForPlaylist(context, id);
 
                 final Playlist playlist = new Playlist(id, name, songCount);
 
@@ -67,18 +67,18 @@ public class PlaylistLoader {
         final Resources resources = context.getResources();
 
         /* Last added list */
-        final Playlist lastAdded = new Playlist(iSeaUtils.PlaylistType.LastAdded.mId,
-                resources.getString(iSeaUtils.PlaylistType.LastAdded.mTitleId), -1);
+        final Playlist lastAdded = new Playlist(Utils.PlaylistType.LastAdded.mId,
+                resources.getString(Utils.PlaylistType.LastAdded.mTitleId), -1);
         mPlaylistList.add(lastAdded);
 
         /* Recently Played */
-        final Playlist recentlyPlayed = new Playlist(iSeaUtils.PlaylistType.RecentlyPlayed.mId,
-                resources.getString(iSeaUtils.PlaylistType.RecentlyPlayed.mTitleId), -1);
+        final Playlist recentlyPlayed = new Playlist(Utils.PlaylistType.RecentlyPlayed.mId,
+                resources.getString(Utils.PlaylistType.RecentlyPlayed.mTitleId), -1);
         mPlaylistList.add(recentlyPlayed);
 
         /* Top Tracks */
-        final Playlist topTracks = new Playlist(iSeaUtils.PlaylistType.TopTracks.mId,
-                resources.getString(iSeaUtils.PlaylistType.TopTracks.mTitleId), -1);
+        final Playlist topTracks = new Playlist(Utils.PlaylistType.TopTracks.mId,
+                resources.getString(Utils.PlaylistType.TopTracks.mTitleId), -1);
         mPlaylistList.add(topTracks);
     }
 

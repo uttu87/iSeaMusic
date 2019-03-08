@@ -11,7 +11,7 @@ import com.iseasoft.iSeaMusic.activities.BaseActivity;
 import com.iseasoft.iSeaMusic.cast.iSeaMusicCastHelper;
 import com.iseasoft.iSeaMusic.models.Song;
 import com.iseasoft.iSeaMusic.utils.NavigationUtils;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 
 import java.util.List;
 
@@ -50,7 +50,7 @@ public class BaseSongAdapter<V extends RecyclerView.ViewHolder> extends Recycler
     }
 
     public void playAll(final Activity context, final long[] list, int position,
-                        final long sourceId, final iSeaUtils.IdType sourceType,
+                        final long sourceId, final Utils.IdType sourceType,
                         final boolean forceShuffle, final Song currentSong, boolean navigateNowPlaying) {
 
         if (context instanceof BaseActivity) {
@@ -59,10 +59,10 @@ public class BaseSongAdapter<V extends RecyclerView.ViewHolder> extends Recycler
                 navigateNowPlaying = false;
                 iSeaMusicCastHelper.startCasting(castSession, currentSong);
             } else {
-                MusicPlayer.playAll(context, list, position, -1, iSeaUtils.IdType.NA, false);
+                MusicPlayer.playAll(context, list, position, -1, Utils.IdType.NA, false);
             }
         } else {
-            MusicPlayer.playAll(context, list, position, -1, iSeaUtils.IdType.NA, false);
+            MusicPlayer.playAll(context, list, position, -1, Utils.IdType.NA, false);
         }
 
         if (navigateNowPlaying) {

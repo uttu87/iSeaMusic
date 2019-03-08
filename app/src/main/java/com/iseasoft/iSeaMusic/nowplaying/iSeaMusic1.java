@@ -22,7 +22,7 @@ import android.view.ViewGroup;
 
 import com.iseasoft.iSeaMusic.MusicPlayer;
 import com.iseasoft.iSeaMusic.MusicService;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 import com.iseasoft.iSeaMusic.R;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
@@ -48,7 +48,7 @@ public class iSeaMusic1 extends BaseNowplayingFragment {
                     .setIcon(MaterialDrawableBuilder.IconValue.SHUFFLE)
                     .setSizeDp(30);
 
-            builder.setColor(iSeaUtils.getBlackWhiteColor(accentColor));
+            builder.setColor(Utils.getBlackWhiteColor(accentColor));
 
             shuffle.setImageDrawable(builder.build());
             shuffle.setOnClickListener(new View.OnClickListener() {

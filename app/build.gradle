@@ -23,6 +23,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             manifestPlaceholders = [ appNameSuffix:""]
 
+            resValue "string", "fabric_api_key", "12345"
+            resValue "string", "play_billing_license_key", "12345"
+            resValue "string", "cast_app_id", "12345"
+
         }
         debug {
             ext.enableCrashlytics = false
@@ -83,6 +87,14 @@ dependencies {
     }
     implementation 'com.anjlab.android.iab.v3:library:1.0.+'
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
+
+    implementation 'com.dropbox.core:dropbox-core-sdk:3.0.5'
+    implementation 'com.google.android.gms:play-services-auth:16.0.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    implementation group: 'com.google.apis', name: 'google-api-services-drive', version: 'v2-rev348-1.18.0-rc'
+    implementation group: 'com.google.api-client', name: 'google-api-client', version: '1.19.0'
+    implementation group: 'com.google.api-client', name: 'google-api-client-android', version: '1.19.0'
+    implementation 'com.google.http-client:google-http-client-gson:1.19.0'
 
 
 }

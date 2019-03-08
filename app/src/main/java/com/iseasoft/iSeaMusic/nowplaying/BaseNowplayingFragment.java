@@ -50,7 +50,7 @@ import com.iseasoft.iSeaMusic.utils.Helpers;
 import com.iseasoft.iSeaMusic.utils.NavigationUtils;
 import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
 import com.iseasoft.iSeaMusic.utils.SlideTrackSwitcher;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.activities.BaseActivity;
 import com.iseasoft.iSeaMusic.adapters.BaseQueueAdapter;
@@ -108,7 +108,7 @@ public class BaseNowplayingFragment extends Fragment implements MusicStateListen
             if (mProgress != null) {
                 mProgress.setProgress((int) position);
                 if (elapsedtime != null && getActivity() != null)
-                    elapsedtime.setText(iSeaUtils.makeShortTimeString(getActivity(), position / 1000));
+                    elapsedtime.setText(Utils.makeShortTimeString(getActivity(), position / 1000));
             }
             overflowcounter--;
             int delay = 250; //not sure why this delay was so high before
@@ -128,7 +128,7 @@ public class BaseNowplayingFragment extends Fragment implements MusicStateListen
             if (mCircularProgress != null) {
                 mCircularProgress.setProgress((int) position);
                 if (elapsedtime != null && getActivity() != null)
-                    elapsedtime.setText(iSeaUtils.makeShortTimeString(getActivity(), position / 1000));
+                    elapsedtime.setText(Utils.makeShortTimeString(getActivity(), position / 1000));
 
             }
             overflowcounter--;
@@ -147,7 +147,7 @@ public class BaseNowplayingFragment extends Fragment implements MusicStateListen
         @Override
         public void run() {
             if (getActivity() != null) {
-                String time = iSeaUtils.makeShortTimeString(getActivity(), MusicPlayer.position() / 1000);
+                String time = Utils.makeShortTimeString(getActivity(), MusicPlayer.position() / 1000);
                 if (time.length() < 5) {
                     timelyView11.setVisibility(View.GONE);
                     timelyView12.setVisibility(View.GONE);
@@ -323,7 +323,7 @@ public class BaseNowplayingFragment extends Fragment implements MusicStateListen
         }
 
         if (playPauseFloating != null) {
-            playPauseDrawable.setColorFilter(iSeaUtils.getBlackWhiteColor(accentColor), PorterDuff.Mode.MULTIPLY);
+            playPauseDrawable.setColorFilter(Utils.getBlackWhiteColor(accentColor), PorterDuff.Mode.MULTIPLY);
             playPauseFloating.setImageDrawable(playPauseDrawable);
             if (MusicPlayer.isPlaying())
                 playPauseDrawable.transformToPause(false);
@@ -337,7 +337,7 @@ public class BaseNowplayingFragment extends Fragment implements MusicStateListen
         }
 
         if (timelyView11 != null) {
-            String time = iSeaUtils.makeShortTimeString(getActivity(), MusicPlayer.position() / 1000);
+            String time = Utils.makeShortTimeString(getActivity(), MusicPlayer.position() / 1000);
             if (time.length() < 5) {
                 timelyView11.setVisibility(View.GONE);
                 timelyView12.setVisibility(View.GONE);
@@ -527,7 +527,7 @@ public class BaseNowplayingFragment extends Fragment implements MusicStateListen
         //do not reload image if it was a play/pause change
         if (!duetoplaypause) {
             if (albumart != null) {
-                ImageLoader.getInstance().displayImage(iSeaUtils.getAlbumArtUri(MusicPlayer.getCurrentAlbumId()).toString(), albumart,
+                ImageLoader.getInstance().displayImage(Utils.getAlbumArtUri(MusicPlayer.getCurrentAlbumId()).toString(), albumart,
                         new DisplayImageOptions.Builder().cacheInMemory(true)
                                 .showImageOnFail(R.drawable.ic_empty_music2)
                                 .build(), new SimpleImageLoadingListener() {
@@ -580,7 +580,7 @@ public class BaseNowplayingFragment extends Fragment implements MusicStateListen
             updatePlayPauseFloatingButton();
 
         if (songduration != null && getActivity() != null)
-            songduration.setText(iSeaUtils.makeShortTimeString(getActivity(), MusicPlayer.duration() / 1000));
+            songduration.setText(Utils.makeShortTimeString(getActivity(), MusicPlayer.duration() / 1000));
 
         if (mProgress != null) {
             mProgress.setMax((int) MusicPlayer.duration());

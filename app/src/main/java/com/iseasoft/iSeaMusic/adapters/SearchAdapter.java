@@ -35,7 +35,7 @@ import com.iseasoft.iSeaMusic.models.Album;
 import com.iseasoft.iSeaMusic.models.Artist;
 import com.iseasoft.iSeaMusic.models.Song;
 import com.iseasoft.iSeaMusic.utils.NavigationUtils;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.dialogs.AddPlaylistDialog;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -88,7 +88,7 @@ public class SearchAdapter extends BaseSongAdapter<SearchAdapter.ItemHolder> {
                 Song song = (Song) searchResults.get(i);
                 itemHolder.title.setText(song.title);
                 itemHolder.songartist.setText(song.albumName);
-                ImageLoader.getInstance().displayImage(iSeaUtils.getAlbumArtUri(song.albumId).toString(), itemHolder.albumArt,
+                ImageLoader.getInstance().displayImage(Utils.getAlbumArtUri(song.albumId).toString(), itemHolder.albumArt,
                         new DisplayImageOptions.Builder().cacheInMemory(true)
                                 .cacheOnDisk(true)
                                 .showImageOnFail(R.drawable.ic_empty_music2)
@@ -101,7 +101,7 @@ public class SearchAdapter extends BaseSongAdapter<SearchAdapter.ItemHolder> {
                 Album album = (Album) searchResults.get(i);
                 itemHolder.albumtitle.setText(album.title);
                 itemHolder.albumartist.setText(album.artistName);
-                ImageLoader.getInstance().displayImage(iSeaUtils.getAlbumArtUri(album.id).toString(), itemHolder.albumArt,
+                ImageLoader.getInstance().displayImage(Utils.getAlbumArtUri(album.id).toString(), itemHolder.albumArt,
                         new DisplayImageOptions.Builder().cacheInMemory(true)
                                 .cacheOnDisk(true)
                                 .showImageOnFail(R.drawable.ic_empty_music2)
@@ -112,9 +112,9 @@ public class SearchAdapter extends BaseSongAdapter<SearchAdapter.ItemHolder> {
             case 2:
                 Artist artist = (Artist) searchResults.get(i);
                 itemHolder.artisttitle.setText(artist.name);
-                String albumNmber = iSeaUtils.makeLabel(mContext, R.plurals.Nalbums, artist.albumCount);
-                String songCount = iSeaUtils.makeLabel(mContext, R.plurals.Nsongs, artist.songCount);
-                itemHolder.albumsongcount.setText(iSeaUtils.makeCombinedString(mContext, albumNmber, songCount));
+                String albumNmber = Utils.makeLabel(mContext, R.plurals.Nalbums, artist.albumCount);
+                String songCount = Utils.makeLabel(mContext, R.plurals.Nsongs, artist.songCount);
+                itemHolder.albumsongcount.setText(Utils.makeCombinedString(mContext, albumNmber, songCount));
                 LastFmClient.getInstance(mContext).getArtistInfo(new ArtistQuery(artist.name), new ArtistInfoListener() {
                     @Override
                     public void artistInfoSucess(LastfmArtist artist) {
@@ -166,10 +166,10 @@ public class SearchAdapter extends BaseSongAdapter<SearchAdapter.ItemHolder> {
                         song[0] = ((Song) searchResults.get(position)).id;
                         switch (item.getItemId()) {
                             case R.id.popup_song_play:
-                                MusicPlayer.playAll(mContext, song, 0, -1, iSeaUtils.IdType.NA, false);
+                                MusicPlayer.playAll(mContext, song, 0, -1, Utils.IdType.NA, false);
                                 break;
                             case R.id.popup_song_play_next:
-                                MusicPlayer.playNext(mContext, song, -1, iSeaUtils.IdType.NA);
+                                MusicPlayer.playNext(mContext, song, -1, Utils.IdType.NA);
                                 break;
                             case R.id.popup_song_goto_album:
                                 NavigationUtils.navigateToAlbum(mContext, ((Song) searchResults.get(position)).albumId, null);
@@ -178,7 +178,7 @@ public class SearchAdapter extends BaseSongAdapter<SearchAdapter.ItemHolder> {
                                 NavigationUtils.navigateToArtist(mContext, ((Song) searchResults.get(position)).artistId, null);
                                 break;
                             case R.id.popup_song_addto_queue:
-                                MusicPlayer.addToQueue(mContext, song, -1, iSeaUtils.IdType.NA);
+                                MusicPlayer.addToQueue(mContext, song, -1, Utils.IdType.NA);
                                 break;
                             case R.id.popup_song_addto_playlist:
                                 AddPlaylistDialog.newInstance(((Song) searchResults.get(position))).show(((AppCompatActivity) mContext).getSupportFragmentManager(), "ADD_PLAYLIST");
@@ -246,7 +246,7 @@ public class SearchAdapter extends BaseSongAdapter<SearchAdapter.ItemHolder> {
                         public void run() {
                             long[] ret = new long[1];
                             ret[0] = ((Song) searchResults.get(getAdapterPosition())).id;
-                            playAll(mContext, ret, 0, -1, iSeaUtils.IdType.NA,
+                            playAll(mContext, ret, 0, -1, Utils.IdType.NA,
                                     false, (Song) searchResults.get(getAdapterPosition()), false);
                         }
                     }, 100);

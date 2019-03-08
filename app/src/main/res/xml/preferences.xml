@@ -88,6 +88,8 @@
 
     </com.iseasoft.iSeaMusic.widgets.ThemedPreferenceCategory>
 
+    <!--
+
     <com.iseasoft.iSeaMusic.widgets.ThemedPreferenceCategory android:title="LastFM">
 
         <Preference
@@ -143,6 +145,7 @@
             android:title="Restore purchases" />
 
     </com.iseasoft.iSeaMusic.widgets.ThemedPreferenceCategory>
+    -->
 
 
 </PreferenceScreen>

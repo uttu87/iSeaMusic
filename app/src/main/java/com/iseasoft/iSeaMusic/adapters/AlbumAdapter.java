@@ -30,7 +30,7 @@ import com.iseasoft.iSeaMusic.models.Album;
 import com.iseasoft.iSeaMusic.utils.Helpers;
 import com.iseasoft.iSeaMusic.utils.NavigationUtils;
 import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 import com.iseasoft.iSeaMusic.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -73,7 +73,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ItemHolder> 
         itemHolder.title.setText(localItem.title);
         itemHolder.artist.setText(localItem.artistName);
 
-        ImageLoader.getInstance().displayImage(iSeaUtils.getAlbumArtUri(localItem.id).toString(), itemHolder.albumArt,
+        ImageLoader.getInstance().displayImage(Utils.getAlbumArtUri(localItem.id).toString(), itemHolder.albumArt,
                 new DisplayImageOptions.Builder().cacheInMemory(true)
                         .showImageOnLoading(R.drawable.ic_empty_music2)
                         .resetViewBeforeLoading(true)
@@ -89,7 +89,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ItemHolder> 
                                     if (swatch != null) {
                                         int color = swatch.getRgb();
                                         itemHolder.footer.setBackgroundColor(color);
-                                        int textColor = iSeaUtils.getBlackWhiteColor(swatch.getTitleTextColor());
+                                        int textColor = Utils.getBlackWhiteColor(swatch.getTitleTextColor());
                                         itemHolder.title.setTextColor(textColor);
                                         itemHolder.artist.setTextColor(textColor);
                                     } else {
@@ -97,7 +97,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ItemHolder> 
                                         if (mutedSwatch != null) {
                                             int color = mutedSwatch.getRgb();
                                             itemHolder.footer.setBackgroundColor(color);
-                                            int textColor = iSeaUtils.getBlackWhiteColor(mutedSwatch.getTitleTextColor());
+                                            int textColor = Utils.getBlackWhiteColor(mutedSwatch.getTitleTextColor());
                                             itemHolder.title.setTextColor(textColor);
                                             itemHolder.artist.setTextColor(textColor);
                                         }
@@ -123,7 +123,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ItemHolder> 
                     }
                 });
 
-        if (iSeaUtils.isLollipop())
+        if (Utils.isLollipop())
             itemHolder.albumArt.setTransitionName("transition_album_art" + i);
 
     }

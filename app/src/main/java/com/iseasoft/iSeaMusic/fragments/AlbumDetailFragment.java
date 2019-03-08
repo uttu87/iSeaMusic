@@ -56,7 +56,7 @@ import com.iseasoft.iSeaMusic.utils.ImageUtils;
 import com.iseasoft.iSeaMusic.utils.NavigationUtils;
 import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
 import com.iseasoft.iSeaMusic.utils.SortOrder;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.adapters.AlbumSongsAdapter;
 import com.iseasoft.iSeaMusic.dialogs.AddPlaylistDialog;
@@ -154,7 +154,7 @@ public class AlbumDetailFragment extends Fragment {
                     @Override
                     public void run() {
                         AlbumSongsAdapter adapter = (AlbumSongsAdapter) recyclerView.getAdapter();
-                        MusicPlayer.playAll(getActivity(), adapter.getSongIds(), 0, albumID, iSeaUtils.IdType.Album, true);
+                        MusicPlayer.playAll(getActivity(), adapter.getSongIds(), 0, albumID, Utils.IdType.Album, true);
                         NavigationUtils.navigateToNowplaying(getActivity(), false);
                     }
                 }, 150);
@@ -184,7 +184,7 @@ public class AlbumDetailFragment extends Fragment {
                         loadFailed = true;
                         MaterialDrawableBuilder builder = MaterialDrawableBuilder.with(context)
                                 .setIcon(MaterialDrawableBuilder.IconValue.SHUFFLE)
-                                .setColor(iSeaUtils.getBlackWhiteColor(Config.accentColor(context, Helpers.getATEKey(context))));
+                                .setColor(Utils.getBlackWhiteColor(Config.accentColor(context, Helpers.getATEKey(context))));
                         ATEUtils.setFabBackgroundTint(fab, Config.accentColor(context, Helpers.getATEKey(context)));
                         fab.setImageDrawable(builder.build());
                     }
@@ -216,13 +216,13 @@ public class AlbumDetailFragment extends Fragment {
                                                                                           .setIcon(MaterialDrawableBuilder.IconValue.SHUFFLE)
                                                                                           .setSizeDp(30);
                                                                                   if (primaryColor != -1) {
-                                                                                      builder.setColor(iSeaUtils.getBlackWhiteColor(primaryColor));
+                                                                                      builder.setColor(Utils.getBlackWhiteColor(primaryColor));
                                                                                       ATEUtils.setFabBackgroundTint(fab, primaryColor);
                                                                                       fab.setImageDrawable(builder.build());
                                                                                   } else {
                                                                                       if (context != null) {
                                                                                           ATEUtils.setFabBackgroundTint(fab, Config.accentColor(context, Helpers.getATEKey(context)));
-                                                                                          builder.setColor(iSeaUtils.getBlackWhiteColor(Config.accentColor(context, Helpers.getATEKey(context))));
+                                                                                          builder.setColor(Utils.getBlackWhiteColor(Config.accentColor(context, Helpers.getATEKey(context))));
                                                                                           fab.setImageDrawable(builder.build());
                                                                                       }
                                                                                   }
@@ -251,7 +251,7 @@ public class AlbumDetailFragment extends Fragment {
 
     private void setAlbumDetails() {
 
-        String songCount = iSeaUtils.makeLabel(getActivity(), R.plurals.Nsongs, album.songCount);
+        String songCount = Utils.makeLabel(getActivity(), R.plurals.Nsongs, album.songCount);
 
         String year = (album.year != 0) ? (" - " + String.valueOf(album.year)) : "";
 
@@ -313,7 +313,7 @@ public class AlbumDetailFragment extends Fragment {
                 NavigationUtils.goToArtist(getContext(), album.artistId);
                 break;
             case R.id.popup_song_addto_queue:
-                MusicPlayer.addToQueue(context, mAdapter.getSongIds(), -1, iSeaUtils.IdType.NA);
+                MusicPlayer.addToQueue(context, mAdapter.getSongIds(), -1, Utils.IdType.NA);
                 break;
             case R.id.popup_song_addto_playlist:
                 AddPlaylistDialog.newInstance(mAdapter.getSongIds()).show(mContext.getSupportFragmentManager(), "ADD_PLAYLIST");

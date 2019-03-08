@@ -48,7 +48,7 @@ import com.iseasoft.iSeaMusic.dataloaders.SongLoader;
 import com.iseasoft.iSeaMusic.dataloaders.TopTracksLoader;
 import com.iseasoft.iSeaMusic.models.Song;
 import com.iseasoft.iSeaMusic.utils.Constants;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.adapters.SongsListAdapter;
 import com.iseasoft.iSeaMusic.listeners.SimplelTransitionListener;
@@ -130,7 +130,7 @@ public class PlaylistDetailActivity extends BaseActivity implements ATEActivityT
         setAlbumart();
 
         animate = getIntent().getBooleanExtra(Constants.ACTIVITY_TRANSITION, false);
-        if (animate && iSeaUtils.isLollipop()) {
+        if (animate && Utils.isLollipop()) {
             getWindow().getEnterTransition().addListener(new EnterTransitionListener());
         } else {
             setUpSongs();
@@ -141,7 +141,7 @@ public class PlaylistDetailActivity extends BaseActivity implements ATEActivityT
     private void setAlbumart() {
         playlistname.setText(getIntent().getExtras().getString(Constants.PLAYLIST_NAME));
         foreground.setBackgroundColor(getIntent().getExtras().getInt(Constants.PLAYLIST_FOREGROUND_COLOR));
-        loadBitmap(iSeaUtils.getAlbumArtUri(getIntent().getExtras().getLong(Constants.ALBUM_ID)).toString());
+        loadBitmap(Utils.getAlbumArtUri(getIntent().getExtras().getLong(Constants.ALBUM_ID)).toString());
     }
 
     private void setUpSongs() {
@@ -184,7 +184,7 @@ public class PlaylistDetailActivity extends BaseActivity implements ATEActivityT
 
     private void setRecyclerViewAapter() {
         recyclerView.setAdapter(mAdapter);
-        if (animate && iSeaUtils.isLollipop()) {
+        if (animate && Utils.isLollipop()) {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
@@ -364,13 +364,13 @@ public class PlaylistDetailActivity extends BaseActivity implements ATEActivityT
     private void clearAutoPlaylists() {
         switch (action) {
             case Constants.NAVIGATE_PLAYLIST_LASTADDED:
-                iSeaUtils.clearLastAdded(this);
+                Utils.clearLastAdded(this);
                 break;
             case Constants.NAVIGATE_PLAYLIST_RECENT:
-                iSeaUtils.clearRecent(this);
+                Utils.clearRecent(this);
                 break;
             case Constants.NAVIGATE_PLAYLIST_TOPTRACKS:
-                iSeaUtils.clearTopTracks(this);
+                Utils.clearTopTracks(this);
                 break;
         }
         Intent returnIntent = new Intent();

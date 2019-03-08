@@ -74,8 +74,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
         xposed = findPreference(XPOSED);
 
-        lastFMlogin = findPreference(LASTFM_LOGIN);
-        updateLastFM();
+        //lastFMlogin = findPreference(LASTFM_LOGIN);
+        //updateLastFM();
 //        themePreference = (ListPreference) findPreference(KEY_THEME);
         startPagePreference = (ListPreference) findPreference(KEY_START_PAGE);
 
@@ -130,8 +130,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         restoreIntent.putExtra("title", "Restoring purchases..");
         restoreIntent.setAction("restore");
 
-        findPreference("support_development").setIntent(new Intent(getActivity(), DonateActivity.class));
-        findPreference("restore_purchases").setIntent(restoreIntent);
+        //findPreference("support_development").setIntent(new Intent(getActivity(), DonateActivity.class));
+        //findPreference("restore_purchases").setIntent(restoreIntent);
 
         lockscreen.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -143,6 +143,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             }
         });
 
+        /*
         xposed.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -172,6 +173,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                 return true;
             }
         });
+        */
 
     }
 

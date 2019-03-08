@@ -68,7 +68,7 @@ public class ImageUtils {
     private static void loadAlbumArtFromDiskWithLastfmFallback(final long albumId, ImageView view,
                                                                final ImageLoadingListener listener) {
         ImageLoader.getInstance()
-                .displayImage(iSeaUtils.getAlbumArtUri(albumId).toString(),
+                .displayImage(Utils.getAlbumArtUri(albumId).toString(),
                               view,
                               diskDisplayImageOptions,
                               new SimpleImageLoadingListener() {

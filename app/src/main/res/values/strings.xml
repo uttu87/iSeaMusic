@@ -167,4 +167,34 @@
     <string name="now_playing_no_track_selected">\"No current track selected.</string>
     <string name="lyrics_loading">Loading...</string>
 
+    <string name="select_song">Please select song.</string>
+    <string name="cloud_not_find_any_song">There is no song in cloud storage.</string>
+    <string name="select_songs">Please select music.</string>
+    <string name="confirm_cancel_uploading">Do you want to cancel uploading this item?</string>
+    <string name="confirm_cancel_uploading_all_items">Do you want to cancel song upload?</string>
+    <string name="upload_dropbox_menu_title">Back up music library here</string>
+    <string name="uploaded_media_dropbox">The media is uploaded</string>
+    <string name="cloud_network_error">Playback error occurred, please check the status of network communication.</string>
+    <string name="cloud_confirm_go_to_upload_screen">Would you like to back up the song data in the terminal here?</string>
+    <string name="cloud_confirm_download_files">Would you like to download music from this folder?</string>
+    <string name="cloud_confirm_cancel_all_coninue_upload">Continue uploading</string>
+    <string name="cloud_confirm_cancel_all_cancel">Cancel</string>
+    <string name="cloud_data_is_empty">The purchased music is not on the terminal.</string>
+    <string name="cloud_communicate_error_title">Communication error</string>
+    <string name="cloud_communicate_error_content">Please check the communication environment.</string>
+    <string name="cloud_playback_error_title">Playback error</string>
+    <string name="cloud_playback_error_content">The file is damaged or it can not be played because it is not supported.</string>
+    <string name="confirm_uploading_all_items">Would you like to upload music?</string>
+    <string name="cloud_confirm_upload_all_yes">Yes</string>
+    <string name="cloud_confirm_upload_all_cancel">Cancel</string>
+    <string name="empty_folder">Music file is not in this folder</string>
+    <string name="resume">Resume</string>
+    <string name="retry">Retry</string>
+    <string name="pause_upload">Pause</string>
+    <string name="clould_dropbox_upload_title">Song</string>
+    <string name="clould_introduction_text">When connecting to the cloud service, you can play music data existing on the cloud as it is. Also, you can restore saved song data to your terminal at any time.</string>
+    <string name="popup_download_music">Download songs</string>
+    <string name="cloud_download_error">Download failed. Please check the network status and try again.</string>
+
+
 </resources>

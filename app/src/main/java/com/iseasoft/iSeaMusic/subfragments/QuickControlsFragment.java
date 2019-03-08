@@ -38,7 +38,7 @@ import com.iseasoft.iSeaMusic.utils.ImageUtils;
 import com.iseasoft.iSeaMusic.utils.NavigationUtils;
 import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
 import com.iseasoft.iSeaMusic.utils.SlideTrackSwitcher;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.activities.BaseActivity;
 import com.iseasoft.iSeaMusic.listeners.MusicStateListener;
@@ -237,7 +237,7 @@ public class QuickControlsFragment extends Fragment implements MusicStateListene
         mTitleExpanded.setText(MusicPlayer.getTrackName());
         mArtistExpanded.setText(MusicPlayer.getArtistName());
         if (!duetoplaypause) {
-            ImageLoader.getInstance().displayImage(iSeaUtils.getAlbumArtUri(MusicPlayer.getCurrentAlbumId()).toString(), mAlbumArt,
+            ImageLoader.getInstance().displayImage(Utils.getAlbumArtUri(MusicPlayer.getCurrentAlbumId()).toString(), mAlbumArt,
                     new DisplayImageOptions.Builder().cacheInMemory(true)
                             .showImageOnFail(R.drawable.ic_empty_music2)
                             .resetViewBeforeLoading(true)

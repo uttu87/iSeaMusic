@@ -21,7 +21,7 @@ import com.iseasoft.iSeaMusic.dataloaders.FolderLoader;
 import com.iseasoft.iSeaMusic.dataloaders.SongLoader;
 import com.iseasoft.iSeaMusic.models.Song;
 import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.widgets.BubbleTextGetter;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -83,7 +83,7 @@ public class FolderAdapter extends BaseSongAdapter<FolderAdapter.ItemHolder> imp
         if (localItem.isDirectory()) {
             itemHolder.albumArt.setImageDrawable("..".equals(localItem.getName()) ? mIcons[1] : mIcons[0]);
         } else {
-            ImageLoader.getInstance().displayImage(iSeaUtils.getAlbumArtUri(song.albumId).toString(),
+            ImageLoader.getInstance().displayImage(Utils.getAlbumArtUri(song.albumId).toString(),
                     itemHolder.albumArt,
                     new DisplayImageOptions.Builder().
                             cacheInMemory(true).showImageOnFail(mIcons[2])
@@ -244,7 +244,7 @@ public class FolderAdapter extends BaseSongAdapter<FolderAdapter.ItemHolder> imp
                                 j++;
                             }
                         }
-                        playAll(mContext, ret, current, -1, iSeaUtils.IdType.NA,
+                        playAll(mContext, ret, current, -1, Utils.IdType.NA,
                                 false, mSongs.get(getAdapterPosition()), false);
                     }
                 }, 100);

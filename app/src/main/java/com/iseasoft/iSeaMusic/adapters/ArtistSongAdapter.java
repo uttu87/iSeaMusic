@@ -32,7 +32,7 @@ import com.iseasoft.iSeaMusic.MusicPlayer;
 import com.iseasoft.iSeaMusic.dataloaders.ArtistAlbumLoader;
 import com.iseasoft.iSeaMusic.models.Song;
 import com.iseasoft.iSeaMusic.utils.NavigationUtils;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.dialogs.AddPlaylistDialog;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -79,7 +79,7 @@ public class ArtistSongAdapter extends BaseSongAdapter<ArtistSongAdapter.ItemHol
             itemHolder.title.setText(localItem.title);
             itemHolder.album.setText(localItem.albumName);
 
-            ImageLoader.getInstance().displayImage(iSeaUtils.getAlbumArtUri(localItem.albumId).toString(),
+            ImageLoader.getInstance().displayImage(Utils.getAlbumArtUri(localItem.albumId).toString(),
                     itemHolder.albumArt, new DisplayImageOptions.Builder()
                             .cacheInMemory(true).showImageOnLoading(R.drawable.ic_empty_music2).resetViewBeforeLoading(true).build());
             setOnPopupMenuListener(itemHolder, i - 1);
@@ -112,12 +112,12 @@ public class ArtistSongAdapter extends BaseSongAdapter<ArtistSongAdapter.ItemHol
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.popup_song_play:
-                                MusicPlayer.playAll(mContext, songIDs, position + 1, -1, iSeaUtils.IdType.NA, false);
+                                MusicPlayer.playAll(mContext, songIDs, position + 1, -1, Utils.IdType.NA, false);
                                 break;
                             case R.id.popup_song_play_next:
                                 long[] ids = new long[1];
                                 ids[0] = arraylist.get(position + 1).id;
-                                MusicPlayer.playNext(mContext, ids, -1, iSeaUtils.IdType.NA);
+                                MusicPlayer.playNext(mContext, ids, -1, Utils.IdType.NA);
                                 break;
                             case R.id.popup_song_goto_album:
                                 NavigationUtils.goToAlbum(mContext, arraylist.get(position + 1).albumId);
@@ -128,17 +128,17 @@ public class ArtistSongAdapter extends BaseSongAdapter<ArtistSongAdapter.ItemHol
                             case R.id.popup_song_addto_queue:
                                 long[] id = new long[1];
                                 id[0] = arraylist.get(position + 1).id;
-                                MusicPlayer.addToQueue(mContext, id, -1, iSeaUtils.IdType.NA);
+                                MusicPlayer.addToQueue(mContext, id, -1, Utils.IdType.NA);
                                 break;
                             case R.id.popup_song_addto_playlist:
                                 AddPlaylistDialog.newInstance(arraylist.get(position + 1)).show(((AppCompatActivity) mContext).getSupportFragmentManager(), "ADD_PLAYLIST");
                                 break;
                             case R.id.popup_song_share:
-                                iSeaUtils.shareTrack(mContext, arraylist.get(position + 1).id);
+                                Utils.shareTrack(mContext, arraylist.get(position + 1).id);
                                 break;
                             case R.id.popup_song_delete:
                                 long[] deleteIds = {arraylist.get(position + 1).id};
-                                iSeaUtils.showDeleteDialog(mContext,arraylist.get(position + 1).title, deleteIds, ArtistSongAdapter.this, position + 1);
+                                Utils.showDeleteDialog(mContext,arraylist.get(position + 1).title, deleteIds, ArtistSongAdapter.this, position + 1);
                                 break;
                         }
                         return false;
@@ -229,7 +229,7 @@ public class ArtistSongAdapter extends BaseSongAdapter<ArtistSongAdapter.ItemHol
                 @Override
                 public void run() {
                     playAll(mContext, songIDs, getAdapterPosition(), artistID,
-                            iSeaUtils.IdType.Artist, false,
+                            Utils.IdType.Artist, false,
                             arraylist.get(getAdapterPosition()), true);
                 }
             }, 100);

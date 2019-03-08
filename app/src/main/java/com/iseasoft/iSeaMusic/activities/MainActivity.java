@@ -47,7 +47,7 @@ import com.iseasoft.iSeaMusic.subfragments.LyricsFragment;
 import com.iseasoft.iSeaMusic.utils.Constants;
 import com.iseasoft.iSeaMusic.utils.Helpers;
 import com.iseasoft.iSeaMusic.utils.NavigationUtils;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.fragments.AlbumDetailFragment;
 import com.iseasoft.iSeaMusic.fragments.ArtistDetailFragment;
@@ -57,6 +57,7 @@ import com.iseasoft.iSeaMusic.fragments.PlaylistFragment;
 import com.iseasoft.iSeaMusic.fragments.QueueFragment;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -205,7 +206,7 @@ public class MainActivity extends BaseActivity implements ATEActivityThemeCustom
         }, 700);
 
 
-        if (iSeaUtils.isMarshmallow()) {
+        if (Utils.isMarshmallow()) {
             checkPermissionAndThenLoad();
             //checkWritePermissions();
         } else {
@@ -430,9 +431,10 @@ public class MainActivity extends BaseActivity implements ATEActivityThemeCustom
             songtitle.setText(name);
             songartist.setText(artist);
         }
-        ImageLoader.getInstance().displayImage(iSeaUtils.getAlbumArtUri(MusicPlayer.getCurrentAlbumId()).toString(), albumart,
+        ImageLoader.getInstance().displayImage(Utils.getAlbumArtUri(MusicPlayer.getCurrentAlbumId()).toString(), albumart,
                 new DisplayImageOptions.Builder().cacheInMemory(true)
                         .showImageOnFail(R.drawable.ic_empty_music2)
+                        .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                         .resetViewBeforeLoading(true)
                         .build());
     }

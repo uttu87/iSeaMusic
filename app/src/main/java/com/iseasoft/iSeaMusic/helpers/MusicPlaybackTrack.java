@@ -19,7 +19,7 @@ package com.iseasoft.iSeaMusic.helpers;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 
 /**
  * This is used by the music playback service to track the music tracks it is playing
@@ -41,10 +41,10 @@ public class MusicPlaybackTrack implements Parcelable {
     };
     public long mId;
     public long mSourceId;
-    public iSeaUtils.IdType mSourceType;
+    public Utils.IdType mSourceType;
     public int mSourcePosition;
 
-    public MusicPlaybackTrack(long id, long sourceId, iSeaUtils.IdType type, int sourcePosition) {
+    public MusicPlaybackTrack(long id, long sourceId, Utils.IdType type, int sourcePosition) {
         mId = id;
         mSourceId = sourceId;
         mSourceType = type;
@@ -54,7 +54,7 @@ public class MusicPlaybackTrack implements Parcelable {
     public MusicPlaybackTrack(Parcel in) {
         mId = in.readLong();
         mSourceId = in.readLong();
-        mSourceType = iSeaUtils.IdType.getTypeById(in.readInt());
+        mSourceType = Utils.IdType.getTypeById(in.readInt());
         mSourcePosition = in.readInt();
     }
 

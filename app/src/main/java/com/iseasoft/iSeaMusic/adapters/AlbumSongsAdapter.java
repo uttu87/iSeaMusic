@@ -29,7 +29,7 @@ import android.widget.TextView;
 import com.iseasoft.iSeaMusic.MusicPlayer;
 import com.iseasoft.iSeaMusic.models.Song;
 import com.iseasoft.iSeaMusic.utils.NavigationUtils;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.dialogs.AddPlaylistDialog;
 
@@ -65,7 +65,7 @@ public class AlbumSongsAdapter extends BaseSongAdapter<AlbumSongsAdapter.ItemHol
         Song localItem = arraylist.get(i);
 
         itemHolder.title.setText(localItem.title);
-        itemHolder.duration.setText(iSeaUtils.makeShortTimeString(mContext, (localItem.duration) / 1000));
+        itemHolder.duration.setText(Utils.makeShortTimeString(mContext, (localItem.duration) / 1000));
         int tracknumber = localItem.trackNumber;
         if (tracknumber == 0) {
             itemHolder.trackNumber.setText("-");
@@ -88,12 +88,12 @@ public class AlbumSongsAdapter extends BaseSongAdapter<AlbumSongsAdapter.ItemHol
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.popup_song_play:
-                                MusicPlayer.playAll(mContext, songIDs, position, -1, iSeaUtils.IdType.NA, false);
+                                MusicPlayer.playAll(mContext, songIDs, position, -1, Utils.IdType.NA, false);
                                 break;
                             case R.id.popup_song_play_next:
                                 long[] ids = new long[1];
                                 ids[0] = arraylist.get(position).id;
-                                MusicPlayer.playNext(mContext, ids, -1, iSeaUtils.IdType.NA);
+                                MusicPlayer.playNext(mContext, ids, -1, Utils.IdType.NA);
                                 break;
                             case R.id.popup_song_goto_album:
                                 NavigationUtils.goToAlbum(mContext, arraylist.get(position).albumId);
@@ -104,17 +104,17 @@ public class AlbumSongsAdapter extends BaseSongAdapter<AlbumSongsAdapter.ItemHol
                             case R.id.popup_song_addto_queue:
                                 long[] id = new long[1];
                                 id[0] = arraylist.get(position).id;
-                                MusicPlayer.addToQueue(mContext, id, -1, iSeaUtils.IdType.NA);
+                                MusicPlayer.addToQueue(mContext, id, -1, Utils.IdType.NA);
                                 break;
                             case R.id.popup_song_addto_playlist:
                                 AddPlaylistDialog.newInstance(arraylist.get(position)).show(((AppCompatActivity) mContext).getSupportFragmentManager(), "ADD_PLAYLIST");
                                 break;
                             case R.id.popup_song_share:
-                                iSeaUtils.shareTrack(mContext, arraylist.get(position).id);
+                                Utils.shareTrack(mContext, arraylist.get(position).id);
                                 break;
                             case R.id.popup_song_delete:
                                 long[] deleteIds = {arraylist.get(position).id};
-                                iSeaUtils.showDeleteDialog(mContext,arraylist.get(position).title, deleteIds, AlbumSongsAdapter.this, position);
+                                Utils.showDeleteDialog(mContext,arraylist.get(position).title, deleteIds, AlbumSongsAdapter.this, position);
                                 break;
                         }
                         return false;
@@ -171,7 +171,7 @@ public class AlbumSongsAdapter extends BaseSongAdapter<AlbumSongsAdapter.ItemHol
                 @Override
                 public void run() {
                     playAll(mContext, songIDs, getAdapterPosition(), albumID,
-                            iSeaUtils.IdType.Album, false,
+                            Utils.IdType.Album, false,
                             arraylist.get(getAdapterPosition()), true);
                 }
             }, 100);

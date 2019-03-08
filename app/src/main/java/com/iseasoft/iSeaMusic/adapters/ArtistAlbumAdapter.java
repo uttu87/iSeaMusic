@@ -27,7 +27,7 @@ import android.widget.TextView;
 import com.iseasoft.iSeaMusic.models.Album;
 import com.iseasoft.iSeaMusic.utils.ImageUtils;
 import com.iseasoft.iSeaMusic.utils.NavigationUtils;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 import com.iseasoft.iSeaMusic.R;
 
 import java.util.List;
@@ -56,12 +56,12 @@ public class ArtistAlbumAdapter extends RecyclerView.Adapter<ArtistAlbumAdapter.
         Album localItem = arraylist.get(i);
 
         itemHolder.title.setText(localItem.title);
-        String songCount = iSeaUtils.makeLabel(mContext, R.plurals.Nsongs, localItem.songCount);
+        String songCount = Utils.makeLabel(mContext, R.plurals.Nsongs, localItem.songCount);
         itemHolder.details.setText(songCount);
 
         ImageUtils.loadAlbumArtIntoView(localItem.id, itemHolder.albumArt);
 
-        if (iSeaUtils.isLollipop())
+        if (Utils.isLollipop())
             itemHolder.albumArt.setTransitionName("transition_album_art" + i);
 
     }

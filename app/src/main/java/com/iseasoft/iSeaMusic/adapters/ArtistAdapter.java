@@ -36,7 +36,7 @@ import com.iseasoft.iSeaMusic.models.Artist;
 import com.iseasoft.iSeaMusic.utils.Helpers;
 import com.iseasoft.iSeaMusic.utils.NavigationUtils;
 import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.widgets.BubbleTextGetter;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -81,9 +81,9 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ItemHolder
         final Artist localItem = arraylist.get(i);
 
         itemHolder.name.setText(localItem.name);
-        String albumNmber = iSeaUtils.makeLabel(mContext, R.plurals.Nalbums, localItem.albumCount);
-        String songCount = iSeaUtils.makeLabel(mContext, R.plurals.Nsongs, localItem.songCount);
-        itemHolder.albums.setText(iSeaUtils.makeCombinedString(mContext, albumNmber, songCount));
+        String albumNmber = Utils.makeLabel(mContext, R.plurals.Nalbums, localItem.albumCount);
+        String songCount = Utils.makeLabel(mContext, R.plurals.Nsongs, localItem.songCount);
+        itemHolder.albums.setText(Utils.makeCombinedString(mContext, albumNmber, songCount));
 
 
         LastFmClient.getInstance(mContext).getArtistInfo(new ArtistQuery(localItem.name), new ArtistInfoListener() {
@@ -150,7 +150,7 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ItemHolder
             }
         });
 
-        if (iSeaUtils.isLollipop())
+        if (Utils.isLollipop())
             itemHolder.artistImage.setTransitionName("transition_artist_art" + i);
 
     }

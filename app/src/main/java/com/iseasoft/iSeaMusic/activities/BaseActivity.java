@@ -52,7 +52,7 @@ import com.iseasoft.iSeaMusic.slidinguppanel.SlidingUpPanelLayout;
 import com.iseasoft.iSeaMusic.subfragments.QuickControlsFragment;
 import com.iseasoft.iSeaMusic.utils.Helpers;
 import com.iseasoft.iSeaMusic.utils.NavigationUtils;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 import com.iseasoft.iSeaMusic.iSeaMusicService;
 import com.iseasoft.iSeaMusic.R;
 
@@ -61,6 +61,9 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 public class BaseActivity extends ATEActivity implements ServiceConnection, MusicStateListener {
+
+    public static final String APP_GO_TO_FOREGROUND = "com.iseasoft.iSeaMusic.APP_GOES_TO_FOREGROUND";
+    public static final String APP_GO_TO_BACKGROUND = "com.iseasoft.iSeaMusic.APP_GOES_TO_BACKGROUND";
 
     private final ArrayList<MusicStateListener> mMusicStateListener = new ArrayList<>();
     private MusicPlayer.ServiceToken mToken;
@@ -272,7 +275,7 @@ public class BaseActivity extends ATEActivity implements ServiceConnection, Musi
                     R.id.media_route_menu_item);
         }
 
-        if (!iSeaUtils.hasEffectsPanel(BaseActivity.this)) {
+        if (!Utils.hasEffectsPanel(BaseActivity.this)) {
             menu.removeItem(R.id.action_equalizer);
         }
         ATE.applyMenu(this, getATEKey(), menu);

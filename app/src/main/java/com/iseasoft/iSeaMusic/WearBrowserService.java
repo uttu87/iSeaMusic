@@ -30,7 +30,7 @@ import com.iseasoft.iSeaMusic.models.Album;
 import com.iseasoft.iSeaMusic.models.Artist;
 import com.iseasoft.iSeaMusic.models.Playlist;
 import com.iseasoft.iSeaMusic.models.Song;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 import com.iseasoft.iSeaMusic.dataloaders.AlbumLoader;
 import com.iseasoft.iSeaMusic.dataloaders.AlbumSongLoader;
 import com.iseasoft.iSeaMusic.dataloaders.ArtistAlbumLoader;
@@ -119,7 +119,7 @@ public class WearBrowserService extends MediaBrowserService {
         public void onPlayFromMediaId(final String mediaId, Bundle extras) {
             long songId = Long.parseLong(mediaId);
             setSessionActive();
-            MusicPlayer.playAll(mContext, new long[]{songId}, 0, -1, iSeaUtils.IdType.NA, false);
+            MusicPlayer.playAll(mContext, new long[]{songId}, 0, -1, Utils.IdType.NA, false);
         }
 
         @Override
@@ -240,28 +240,28 @@ public class WearBrowserService extends MediaBrowserService {
                         case TYPE_ARTIST:
                             List<Artist> artistList = ArtistLoader.getAllArtists(mContext);
                             for (Artist artist : artistList) {
-                                String albumNmber = iSeaUtils.makeLabel(mContext, R.plurals.Nalbums, artist.albumCount);
-                                String songCount = iSeaUtils.makeLabel(mContext, R.plurals.Nsongs, artist.songCount);
+                                String albumNmber = Utils.makeLabel(mContext, R.plurals.Nalbums, artist.albumCount);
+                                String songCount = Utils.makeLabel(mContext, R.plurals.Nsongs, artist.songCount);
                                 fillMediaItems(mediaItems, Integer.toString(TYPE_ARTIST_SONG_ALBUMS) + Long.toString(artist.id), artist.name, Uri.parse("android.resource://" +
-                                        "iseasoft.iSeaMusic/drawable/ic_empty_music2"), iSeaUtils.makeCombinedString(mContext, albumNmber, songCount), MediaBrowser.MediaItem.FLAG_BROWSABLE);
+                                        "iseasoft.iSeaMusic/drawable/ic_empty_music2"), Utils.makeCombinedString(mContext, albumNmber, songCount), MediaBrowser.MediaItem.FLAG_BROWSABLE);
                             }
                             break;
                         case TYPE_ALBUM:
                             List<Album> albumList = AlbumLoader.getAllAlbums(mContext);
                             for (Album album : albumList) {
-                                fillMediaItems(mediaItems, Integer.toString(TYPE_ALBUM_SONGS) + Long.toString(album.id), album.title, iSeaUtils.getAlbumArtUri(album.id), album.artistName, MediaBrowser.MediaItem.FLAG_BROWSABLE);
+                                fillMediaItems(mediaItems, Integer.toString(TYPE_ALBUM_SONGS) + Long.toString(album.id), album.title, Utils.getAlbumArtUri(album.id), album.artistName, MediaBrowser.MediaItem.FLAG_BROWSABLE);
                             }
                             break;
                         case TYPE_SONG:
                             List<Song> songList = SongLoader.getAllSongs(mContext);
                             for (Song song : songList) {
-                                fillMediaItems(mediaItems, String.valueOf(song.id), song.title, iSeaUtils.getAlbumArtUri(song.albumId), song.artistName, MediaBrowser.MediaItem.FLAG_PLAYABLE);
+                                fillMediaItems(mediaItems, String.valueOf(song.id), song.title, Utils.getAlbumArtUri(song.albumId), song.artistName, MediaBrowser.MediaItem.FLAG_PLAYABLE);
                             }
                             break;
                         case TYPE_ALBUM_SONGS:
                             List<Song> albumSongList = AlbumSongLoader.getSongsForAlbum(mContext, Long.parseLong(parentId.substring(1)));
                             for (Song song : albumSongList) {
-                                fillMediaItems(mediaItems, String.valueOf(song.id), song.title, iSeaUtils.getAlbumArtUri(song.albumId), song.artistName, MediaBrowser.MediaItem.FLAG_PLAYABLE);
+                                fillMediaItems(mediaItems, String.valueOf(song.id), song.title, Utils.getAlbumArtUri(song.albumId), song.artistName, MediaBrowser.MediaItem.FLAG_PLAYABLE);
                             }
                             break;
                         case TYPE_ARTIST_SONG_ALBUMS:
@@ -269,21 +269,21 @@ public class WearBrowserService extends MediaBrowserService {
                                     "iseasoft.iSeaMusic/drawable/ic_empty_music2"), "All songs by artist", MediaBrowser.MediaItem.FLAG_BROWSABLE);
                             List<Album> artistAlbums = ArtistAlbumLoader.getAlbumsForArtist(mContext, Long.parseLong(parentId.substring(1)));
                             for (Album album : artistAlbums) {
-                                String songCount = iSeaUtils.makeLabel(mContext, R.plurals.Nsongs, album.songCount);
-                                fillMediaItems(mediaItems, Integer.toString(TYPE_ALBUM_SONGS) + Long.toString(album.id), album.title, iSeaUtils.getAlbumArtUri(album.id), songCount, MediaBrowser.MediaItem.FLAG_BROWSABLE);
+                                String songCount = Utils.makeLabel(mContext, R.plurals.Nsongs, album.songCount);
+                                fillMediaItems(mediaItems, Integer.toString(TYPE_ALBUM_SONGS) + Long.toString(album.id), album.title, Utils.getAlbumArtUri(album.id), songCount, MediaBrowser.MediaItem.FLAG_BROWSABLE);
 
                             }
                             break;
                         case TYPE_ARTIST_ALL_SONGS:
                             List<Song> artistSongs = ArtistSongLoader.getSongsForArtist(mContext, Long.parseLong(parentId.substring(1)));
                             for (Song song : artistSongs) {
-                                fillMediaItems(mediaItems, String.valueOf(song.id), song.title, iSeaUtils.getAlbumArtUri(song.albumId), song.albumName, MediaBrowser.MediaItem.FLAG_PLAYABLE);
+                                fillMediaItems(mediaItems, String.valueOf(song.id), song.title, Utils.getAlbumArtUri(song.albumId), song.albumName, MediaBrowser.MediaItem.FLAG_PLAYABLE);
                             }
                             break;
                         case TYPE_PLAYLIST:
                             List<Playlist> playlistList = PlaylistLoader.getPlaylists(mContext, false);
                             for (Playlist playlist : playlistList) {
-                                String songCount = iSeaUtils.makeLabel(mContext, R.plurals.Nsongs, playlist.songCount);
+                                String songCount = Utils.makeLabel(mContext, R.plurals.Nsongs, playlist.songCount);
                                 fillMediaItems(mediaItems, Integer.toString(TYPE_PLAYLIST_ALL_SONGS) + Long.toString(playlist.id), playlist.name,
                                         Uri.parse("android.resource://" +
                                                 "iseasoft.iSeaMusic/drawable/ic_empty_music2"), songCount, MediaBrowser.MediaItem.FLAG_BROWSABLE);
@@ -292,7 +292,7 @@ public class WearBrowserService extends MediaBrowserService {
                         case TYPE_PLAYLIST_ALL_SONGS:
                             List<Song> playlistSongs = PlaylistSongLoader.getSongsInPlaylist(mContext, Long.parseLong(parentId.substring(1)));
                             for (Song song : playlistSongs) {
-                                fillMediaItems(mediaItems, String.valueOf(song.id), song.title, iSeaUtils.getAlbumArtUri(song.albumId), song.albumName, MediaBrowser.MediaItem.FLAG_PLAYABLE);
+                                fillMediaItems(mediaItems, String.valueOf(song.id), song.title, Utils.getAlbumArtUri(song.albumId), song.albumName, MediaBrowser.MediaItem.FLAG_PLAYABLE);
                             }
                             break;
 

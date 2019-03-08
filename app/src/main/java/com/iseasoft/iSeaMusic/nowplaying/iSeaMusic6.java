@@ -14,7 +14,7 @@ import com.iseasoft.iSeaMusic.MusicPlayer;
 import com.iseasoft.iSeaMusic.MusicService;
 import com.iseasoft.iSeaMusic.dataloaders.SongLoader;
 import com.iseasoft.iSeaMusic.models.Song;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.widgets.CircleImageView;
 
@@ -118,7 +118,7 @@ public class iSeaMusic6 extends BaseNowplayingFragment {
             long nextId = MusicPlayer.getNextAudioId();
             Song next = SongLoader.getSongForID(getActivity(), nextId);
             nextSong.setText(next.title);
-            nextArt.setImageURI(iSeaUtils.getAlbumArtUri(next.albumId));
+            nextArt.setImageURI(Utils.getAlbumArtUri(next.albumId));
         }
     }
 }

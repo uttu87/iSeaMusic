@@ -21,7 +21,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 import com.iseasoft.iSeaMusic.helpers.MusicPlaybackTrack;
 
 import java.util.ArrayList;
@@ -161,7 +161,7 @@ public class MusicPlaybackState {
 
                 do {
                     results.add(new MusicPlaybackTrack(cursor.getLong(0), cursor.getLong(1),
-                            iSeaUtils.IdType.getTypeById(cursor.getInt(2)), cursor.getInt(3)));
+                            Utils.IdType.getTypeById(cursor.getInt(2)), cursor.getInt(3)));
                 } while (cursor.moveToNext());
             }
 

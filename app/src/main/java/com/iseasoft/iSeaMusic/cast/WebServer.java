@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 
 import com.iseasoft.iSeaMusic.utils.Constants;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,7 +33,7 @@ public class WebServer extends NanoHTTPD {
             //serve the picture
 
             String albumId = parameters.get("id");
-            this.albumArtUri = iSeaUtils.getAlbumArtUri(Long.parseLong(albumId));
+            this.albumArtUri = Utils.getAlbumArtUri(Long.parseLong(albumId));
 
             if (albumArtUri != null) {
                 String mediasend = "image/jpg";
@@ -52,7 +52,7 @@ public class WebServer extends NanoHTTPD {
         } else if (uri.contains("song")) {
 
             String songId = parameters.get("id");
-            this.songUri = iSeaUtils.getSongUri(context, Long.parseLong(songId));
+            this.songUri = Utils.getSongUri(context, Long.parseLong(songId));
 
             if (songUri != null) {
                 String mediasend = "audio/mp3";

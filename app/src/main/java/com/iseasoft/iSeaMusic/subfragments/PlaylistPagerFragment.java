@@ -32,7 +32,7 @@ import com.iseasoft.iSeaMusic.models.Song;
 import com.iseasoft.iSeaMusic.utils.Constants;
 import com.iseasoft.iSeaMusic.utils.NavigationUtils;
 import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.dataloaders.LastAddedLoader;
 import com.iseasoft.iSeaMusic.dataloaders.PlaylistLoader;
@@ -167,7 +167,7 @@ public class PlaylistPagerFragment extends Fragment {
                             }
                             if (songCountInt != 0) {
                                 firstAlbumID = lastAddedSongs.get(0).albumId;
-                                return iSeaUtils.getAlbumArtUri(firstAlbumID).toString();
+                                return Utils.getAlbumArtUri(firstAlbumID).toString();
                             } else return "nosongs";
                         case 1:
                             TopTracksLoader recentloader = new TopTracksLoader(getActivity(), TopTracksLoader.QueryType.RecentSongs);
@@ -179,7 +179,7 @@ public class PlaylistPagerFragment extends Fragment {
 
                             if (songCountInt != 0) {
                                 firstAlbumID = recentsongs.get(0).albumId;
-                                return iSeaUtils.getAlbumArtUri(firstAlbumID).toString();
+                                return Utils.getAlbumArtUri(firstAlbumID).toString();
                             } else return "nosongs";
                         case 2:
                             TopTracksLoader topTracksLoader = new TopTracksLoader(getActivity(), TopTracksLoader.QueryType.TopTracks);
@@ -190,7 +190,7 @@ public class PlaylistPagerFragment extends Fragment {
                             }
                             if (songCountInt != 0) {
                                 firstAlbumID = topsongs.get(0).albumId;
-                                return iSeaUtils.getAlbumArtUri(firstAlbumID).toString();
+                                return Utils.getAlbumArtUri(firstAlbumID).toString();
                             } else return "nosongs";
                         default:
                             List<Song> playlistsongs = PlaylistSongLoader.getSongsInPlaylist(getActivity(), playlist.id);
@@ -200,7 +200,7 @@ public class PlaylistPagerFragment extends Fragment {
                             }
                             if (songCountInt != 0) {
                                 firstAlbumID = playlistsongs.get(0).albumId;
-                                return iSeaUtils.getAlbumArtUri(firstAlbumID).toString();
+                                return Utils.getAlbumArtUri(firstAlbumID).toString();
                             } else return "nosongs";
 
                     }
@@ -212,7 +212,7 @@ public class PlaylistPagerFragment extends Fragment {
                     }
                     if (songCountInt != 0) {
                         firstAlbumID = playlistsongs.get(0).albumId;
-                        return iSeaUtils.getAlbumArtUri(firstAlbumID).toString();
+                        return Utils.getAlbumArtUri(firstAlbumID).toString();
                     } else return "nosongs";
                 }
             } else return "context is null";
@@ -231,7 +231,7 @@ public class PlaylistPagerFragment extends Fragment {
                         }
                     });
             songcount.setText(" " + String.valueOf(songCountInt) + " " + mContext.getString(R.string.songs));
-            runtime.setText(" " + iSeaUtils.makeShortTimeString(mContext, totalRuntime));
+            runtime.setText(" " + Utils.makeShortTimeString(mContext, totalRuntime));
         }
 
         @Override

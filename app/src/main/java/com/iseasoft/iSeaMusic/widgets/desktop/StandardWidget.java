@@ -11,7 +11,7 @@ import android.widget.RemoteViews;
 
 import com.iseasoft.iSeaMusic.MusicService;
 import com.iseasoft.iSeaMusic.utils.NavigationUtils;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 import com.iseasoft.iSeaMusic.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -72,7 +72,7 @@ public class StandardWidget extends BaseWidget {
                     extras.getBoolean("playing") ? R.drawable.ic_pause_white_36dp : R.drawable.ic_play_white_36dp);
             long albumId = extras.getLong("albumid");
             if (albumId != -1) {
-                Bitmap artwork = ImageLoader.getInstance().loadImageSync(iSeaUtils.getAlbumArtUri(albumId).toString());
+                Bitmap artwork = ImageLoader.getInstance().loadImageSync(Utils.getAlbumArtUri(albumId).toString());
                 if (artwork != null) {
                     remoteViews.setImageViewBitmap(R.id.imageView_cover, artwork);
                 } else {

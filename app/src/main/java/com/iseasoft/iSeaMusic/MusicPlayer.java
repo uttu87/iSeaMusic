@@ -32,7 +32,7 @@ import android.provider.BaseColumns;
 import android.provider.MediaStore;
 import android.widget.Toast;
 
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 import com.iseasoft.iSeaMusic.dataloaders.SongLoader;
 import com.iseasoft.iSeaMusic.helpers.MusicPlaybackTrack;
 
@@ -451,19 +451,19 @@ public class MusicPlayer {
     public static void playArtist(final Context context, final long artistId, int position, boolean shuffle) {
         final long[] artistList = getSongListForArtist(context, artistId);
         if (artistList != null) {
-            playAll(context, artistList, position, artistId, iSeaUtils.IdType.Artist, shuffle);
+            playAll(context, artistList, position, artistId, Utils.IdType.Artist, shuffle);
         }
     }
 
     public static void playAlbum(final Context context, final long albumId, int position, boolean shuffle) {
         final long[] albumList = getSongListForAlbum(context, albumId);
         if (albumList != null) {
-            playAll(context, albumList, position, albumId, iSeaUtils.IdType.Album, shuffle);
+            playAll(context, albumList, position, albumId, Utils.IdType.Album, shuffle);
         }
     }
 
     public static void playAll(final Context context, final long[] list, int position,
-                               final long sourceId, final iSeaUtils.IdType sourceType,
+                               final long sourceId, final Utils.IdType sourceType,
                                final boolean forceShuffle) {
         if (list == null || list.length == 0 || mService == null) {
             return;
@@ -492,7 +492,7 @@ public class MusicPlayer {
         }
     }
 
-    public static void playNext(Context context, final long[] list, final long sourceId, final iSeaUtils.IdType sourceType) {
+    public static void playNext(Context context, final long[] list, final long sourceId, final Utils.IdType sourceType) {
         if (mService == null) {
             return;
         }
@@ -516,7 +516,7 @@ public class MusicPlayer {
                     mService.play();
                     return;
             }
-            mService.open(trackList, -1, -1, iSeaUtils.IdType.NA.mId);
+            mService.open(trackList, -1, -1, Utils.IdType.NA.mId);
             mService.play();
             cursor.close();
         } catch (final RemoteException ignored) {
@@ -658,7 +658,7 @@ public class MusicPlayer {
     }
 
     public static void addToQueue(final Context context, final long[] list, long sourceId,
-                                  iSeaUtils.IdType sourceType) {
+                                  Utils.IdType sourceType) {
         if (mService == null) {
             return;
         }

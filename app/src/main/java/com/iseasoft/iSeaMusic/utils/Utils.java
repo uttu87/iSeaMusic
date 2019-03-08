@@ -48,10 +48,16 @@ import java.net.NetworkInterface;
 import java.util.Collections;
 import java.util.List;
 
-public class iSeaUtils {
+public class Utils {
 
     public static final String MUSIC_ONLY_SELECTION = MediaStore.Audio.AudioColumns.IS_MUSIC + "=1"
             + " AND " + MediaStore.Audio.AudioColumns.TITLE + " != ''";
+
+    public static final int API_9_GB = 9;
+    public static final int API_10_GM_MR1 = 10;
+    public static final int API_11_HC = 11;
+    public static final int API_16_JB = 16;
+    public static final int API_17_JB = 17;
 
     public static boolean isOreo() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
@@ -239,7 +245,7 @@ public class iSeaUtils {
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        iSeaUtils.deleteTracks(context, list);
+                        Utils.deleteTracks(context, list);
                         adapter.removeSongAt(pos);
                         adapter.notifyItemRemoved(pos);
                         adapter.notifyItemRangeChanged(pos, adapter.getItemCount());
@@ -264,7 +270,7 @@ public class iSeaUtils {
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        iSeaUtils.deleteTracks(context, list);
+                        Utils.deleteTracks(context, list);
                         qAdapter.removeSongAt(pos);
                         qAdapter.notifyItemRemoved(pos);
                         qAdapter.notifyItemRangeChanged(pos, qAdapter.getItemCount());
@@ -408,6 +414,17 @@ public class iSeaUtils {
             }
         } catch (Exception ex) { }
         return "";
+    }
+
+    /**
+     * Api level greather or equal specified level
+     *
+     * @return
+     */
+    public static boolean isApiLevelAtLeast(int apiLevel)
+    {
+        int sdkVersion = Build.VERSION.SDK_INT;
+        return sdkVersion >= apiLevel;
     }
 
 }

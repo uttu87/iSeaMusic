@@ -49,7 +49,7 @@ import com.iseasoft.iSeaMusic.utils.ATEUtils;
 import com.iseasoft.iSeaMusic.utils.Constants;
 import com.iseasoft.iSeaMusic.utils.Helpers;
 import com.iseasoft.iSeaMusic.utils.ImageUtils;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.iseasoft.iSeaMusic.utils.Utils;
 import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.adapters.ArtistSongAdapter;
 import com.iseasoft.iSeaMusic.dialogs.AddPlaylistDialog;
@@ -218,7 +218,7 @@ public class ArtistDetailFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.popup_song_addto_queue:
-                MusicPlayer.addToQueue(getContext(), mAdapter.getSongIds(), -1, iSeaUtils.IdType.NA);
+                MusicPlayer.addToQueue(getContext(), mAdapter.getSongIds(), -1, Utils.IdType.NA);
                 break;
             case R.id.popup_song_addto_playlist:
                 AddPlaylistDialog.newInstance(mAdapter.getSongIds()).show(getActivity().getSupportFragmentManager(), "ADD_PLAYLIST");

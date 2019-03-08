@@ -31,6 +31,7 @@ import com.iseasoft.iSeaMusic.widgets.MultiViewPager;
 
 public class StyleSelectorFragment extends Fragment {
 
+    public static final int SELECTOR_COUNT = 6;
     public String ACTION = "action";
     private FragmentStatePagerAdapter adapter;
     private MultiViewPager pager;
@@ -69,7 +70,7 @@ public class StyleSelectorFragment extends Fragment {
 
             @Override
             public int getCount() {
-                return 6;
+                return SELECTOR_COUNT;
             }
 
             @Override
