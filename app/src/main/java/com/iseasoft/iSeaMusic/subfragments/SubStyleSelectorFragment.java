@@ -30,11 +30,11 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.iseasoft.iSeaMusic.R;
+import com.iseasoft.iSeaMusic.activities.DonateActivity;
 import com.iseasoft.iSeaMusic.utils.Constants;
 import com.iseasoft.iSeaMusic.utils.NavigationUtils;
 import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
-import com.iseasoft.iSeaMusic.R;
-import com.iseasoft.iSeaMusic.activities.DonateActivity;
 
 public class SubStyleSelectorFragment extends Fragment {
 
@@ -121,7 +121,7 @@ public class SubStyleSelectorFragment extends Fragment {
     }
 
     private void updateLockedStatus() {
-        if (getArguments().getInt(ARG_PAGE_NUMBER) >= 4 && !isUnlocked()) {
+        if (getArguments().getInt(ARG_PAGE_NUMBER) >= 6 && !isUnlocked()) {
             imgLock.setVisibility(View.VISIBLE);
             foreground.setVisibility(View.VISIBLE);
         }

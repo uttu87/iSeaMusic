@@ -14,7 +14,6 @@
 
 package com.iseasoft.iSeaMusic.fragments;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -29,14 +28,12 @@ import com.afollestad.appthemeengine.Config;
 import com.afollestad.appthemeengine.prefs.ATECheckBoxPreference;
 import com.afollestad.appthemeengine.prefs.ATEColorPreference;
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
-import com.iseasoft.iSeaMusic.activities.DonateActivity;
+import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.activities.SettingsActivity;
 import com.iseasoft.iSeaMusic.lastfmapi.LastFmClient;
 import com.iseasoft.iSeaMusic.utils.Constants;
 import com.iseasoft.iSeaMusic.utils.NavigationUtils;
 import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
-import com.iseasoft.iSeaMusic.R;
-import com.iseasoft.iSeaMusic.dialogs.LastFmLoginDialog;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -74,8 +71,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
         xposed = findPreference(XPOSED);
 
-        lastFMlogin = findPreference(LASTFM_LOGIN);
-        updateLastFM();
+        //lastFMlogin = findPreference(LASTFM_LOGIN);
+        //updateLastFM();
 //        themePreference = (ListPreference) findPreference(KEY_THEME);
         startPagePreference = (ListPreference) findPreference(KEY_START_PAGE);
 
@@ -126,12 +123,11 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             }
         });
 
-        Intent restoreIntent = new Intent(getActivity(), DonateActivity.class);
-        restoreIntent.putExtra("title", "Restoring purchases..");
-        restoreIntent.setAction("restore");
-
-        findPreference("support_development").setIntent(new Intent(getActivity(), DonateActivity.class));
-        findPreference("restore_purchases").setIntent(restoreIntent);
+//        Intent restoreIntent = new Intent(getActivity(), DonateActivity.class);
+//        restoreIntent.putExtra("title", "Restoring purchases..");
+//        restoreIntent.setAction("restore");
+        //findPreference("support_development").setIntent(new Intent(getActivity(), DonateActivity.class));
+        //findPreference("restore_purchases").setIntent(restoreIntent);
 
         lockscreen.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -153,25 +149,25 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             }
         });
 
-        lastFMlogin.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                if (lastFMlogedin) {
-                    LastFmClient.getInstance(getActivity()).logout();
-                    Bundle extras = new Bundle();
-                    extras.putString("lf_token","logout");
-                    extras.putString("lf_user",null);
-                    mPreferences.updateService(extras);
-                    updateLastFM();
-                } else {
-                    LastFmLoginDialog lastFmLoginDialog = new LastFmLoginDialog();
-                    lastFmLoginDialog.setTargetFragment(SettingsFragment.this, 0);
-                    lastFmLoginDialog.show(getFragmentManager(), LastFmLoginDialog.FRAGMENT_NAME);
-
-                }
-                return true;
-            }
-        });
+//        lastFMlogin.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+//            @Override
+//            public boolean onPreferenceClick(Preference preference) {
+//                if (lastFMlogedin) {
+//                    LastFmClient.getInstance(getActivity()).logout();
+//                    Bundle extras = new Bundle();
+//                    extras.putString("lf_token","logout");
+//                    extras.putString("lf_user",null);
+//                    mPreferences.updateService(extras);
+//                    updateLastFM();
+//                } else {
+//                    LastFmLoginDialog lastFmLoginDialog = new LastFmLoginDialog();
+//                    lastFmLoginDialog.setTargetFragment(SettingsFragment.this, 0);
+//                    lastFmLoginDialog.show(getFragmentManager(), LastFmLoginDialog.FRAGMENT_NAME);
+//
+//                }
+//                return true;
+//            }
+//        });
 
     }
 

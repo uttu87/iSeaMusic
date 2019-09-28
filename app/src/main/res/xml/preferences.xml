@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:key="settings_key">
 
     <com.iseasoft.iSeaMusic.widgets.ThemedPreferenceCategory android:title="@string/now_playing">
 
@@ -88,7 +89,9 @@
 
     </com.iseasoft.iSeaMusic.widgets.ThemedPreferenceCategory>
 
-    <com.iseasoft.iSeaMusic.widgets.ThemedPreferenceCategory android:title="LastFM">
+    <!--
+    <com.iseasoft.iSeaMusic.widgets.ThemedPreferenceCategory android:title="LastFM"
+        android:key="last_fm_key">
 
         <Preference
             android:key="lastfm_login"
@@ -118,6 +121,7 @@
             android:title="@string/always_load_album_images_lastfm"
             app:ateKey_pref_checkBox="?ate_key" />
     </com.iseasoft.iSeaMusic.widgets.ThemedPreferenceCategory>
+    -->
 
     <com.iseasoft.iSeaMusic.widgets.ThemedPreferenceCategory android:title="@string/advanced">
 
@@ -130,7 +134,9 @@
 
     </com.iseasoft.iSeaMusic.widgets.ThemedPreferenceCategory>
 
-    <com.iseasoft.iSeaMusic.widgets.ThemedPreferenceCategory android:title="Support">
+    <!--
+    <com.iseasoft.iSeaMusic.widgets.ThemedPreferenceCategory android:title="Support"
+        android:key="support_key">
 
         <Preference
             android:key="support_development"
@@ -143,6 +149,6 @@
             android:title="Restore purchases" />
 
     </com.iseasoft.iSeaMusic.widgets.ThemedPreferenceCategory>
-
+    -->
 
 </PreferenceScreen>

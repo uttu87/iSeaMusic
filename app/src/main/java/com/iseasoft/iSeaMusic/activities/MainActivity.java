@@ -36,10 +36,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.appthemeengine.customizers.ATEActivityThemeCustomizer;
-import com.anjlab.android.iab.v3.BillingProcessor;
 import com.google.android.gms.cast.framework.media.widget.ExpandedControllerActivity;
 import com.iseasoft.iSeaMusic.MusicPlayer;
+import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.cast.ExpandedControlsActivity;
+import com.iseasoft.iSeaMusic.fragments.AlbumDetailFragment;
+import com.iseasoft.iSeaMusic.fragments.ArtistDetailFragment;
+import com.iseasoft.iSeaMusic.fragments.FoldersFragment;
+import com.iseasoft.iSeaMusic.fragments.MainFragment;
+import com.iseasoft.iSeaMusic.fragments.PlaylistFragment;
+import com.iseasoft.iSeaMusic.fragments.QueueFragment;
 import com.iseasoft.iSeaMusic.permissions.Nammu;
 import com.iseasoft.iSeaMusic.permissions.PermissionCallback;
 import com.iseasoft.iSeaMusic.slidinguppanel.SlidingUpPanelLayout;
@@ -48,13 +54,6 @@ import com.iseasoft.iSeaMusic.utils.Constants;
 import com.iseasoft.iSeaMusic.utils.Helpers;
 import com.iseasoft.iSeaMusic.utils.NavigationUtils;
 import com.iseasoft.iSeaMusic.utils.iSeaUtils;
-import com.iseasoft.iSeaMusic.R;
-import com.iseasoft.iSeaMusic.fragments.AlbumDetailFragment;
-import com.iseasoft.iSeaMusic.fragments.ArtistDetailFragment;
-import com.iseasoft.iSeaMusic.fragments.FoldersFragment;
-import com.iseasoft.iSeaMusic.fragments.MainFragment;
-import com.iseasoft.iSeaMusic.fragments.PlaylistFragment;
-import com.iseasoft.iSeaMusic.fragments.QueueFragment;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -341,7 +340,7 @@ public class MainActivity extends BaseActivity implements ATEActivityThemeCustom
             navigationView.getMenu().findItem(R.id.nav_nowplaying).setIcon(R.drawable.bookmark_music);
             navigationView.getMenu().findItem(R.id.nav_settings).setIcon(R.drawable.settings);
             navigationView.getMenu().findItem(R.id.nav_about).setIcon(R.drawable.information);
-            navigationView.getMenu().findItem(R.id.nav_donate).setIcon(R.drawable.payment_black);
+            //navigationView.getMenu().findItem(R.id.nav_donate).setIcon(R.drawable.payment_black);
         } else {
             navigationView.getMenu().findItem(R.id.nav_library).setIcon(R.drawable.library_music_white);
             navigationView.getMenu().findItem(R.id.nav_playlists).setIcon(R.drawable.playlist_play_white);
@@ -350,13 +349,13 @@ public class MainActivity extends BaseActivity implements ATEActivityThemeCustom
             navigationView.getMenu().findItem(R.id.nav_nowplaying).setIcon(R.drawable.bookmark_music_white);
             navigationView.getMenu().findItem(R.id.nav_settings).setIcon(R.drawable.settings_white);
             navigationView.getMenu().findItem(R.id.nav_about).setIcon(R.drawable.information_white);
-            navigationView.getMenu().findItem(R.id.nav_donate).setIcon(R.drawable.payment_white);
+            //navigationView.getMenu().findItem(R.id.nav_donate).setIcon(R.drawable.payment_white);
         }
 
         try {
-            if (!BillingProcessor.isIabServiceAvailable(this)) {
+            //if (!BillingProcessor.isIabServiceAvailable(this)) {
                 navigationView.getMenu().removeItem(R.id.nav_donate);
-            }
+            //}
         } catch (Exception e) {
             e.printStackTrace();
         }
