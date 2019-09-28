@@ -6,7 +6,7 @@ android {
     buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
-        applicationId "iseasoft.iSeaMusic"
+        applicationId "com.isea14.iMuzik"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode 20
