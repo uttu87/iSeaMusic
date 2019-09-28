@@ -18,7 +18,7 @@
         android:name=".iSeaMusicApp"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
-        android:label="iSeaMusic${appNameSuffix}"
+        android:label="@string/app_name"
         android:theme="@style/AppTheme.FullScreen.Light"
         tools:replace="android:allowBackup, android:label">
 
