@@ -66,9 +66,13 @@ import android.support.v7.graphics.Palette;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.iseasoft.iSeaMusic.utils.NavigationUtils;
-import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
+import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.Player;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.iseasoft.iSeaMusic.helpers.MediaButtonIntentReceiver;
 import com.iseasoft.iSeaMusic.helpers.MusicPlaybackTrack;
 import com.iseasoft.iSeaMusic.lastfmapi.LastFmClient;
@@ -78,9 +82,11 @@ import com.iseasoft.iSeaMusic.permissions.Nammu;
 import com.iseasoft.iSeaMusic.provider.MusicPlaybackState;
 import com.iseasoft.iSeaMusic.provider.RecentStore;
 import com.iseasoft.iSeaMusic.provider.SongPlayCount;
+import com.iseasoft.iSeaMusic.utils.NavigationUtils;
+import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
+import com.iseasoft.iSeaMusic.utils.iSeaUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -428,7 +434,7 @@ public class MusicService extends Service {
             }
         });
         mSession.setFlags(MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS
-                          | MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS);
+                | MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS);
     }
 
     @Override
@@ -568,8 +574,7 @@ public class MusicService extends Service {
             cycleShuffle();
         } else if (UPDATE_PREFERENCES.equals(action)) {
             onPreferencesUpdate(intent.getExtras());
-        }
-        else if (AudioManager.ACTION_AUDIO_BECOMING_NOISY.equals(action)) {
+        } else if (AudioManager.ACTION_AUDIO_BECOMING_NOISY.equals(action)) {
             if (PreferencesUtility.getInstance(getApplicationContext()).pauseEnabledOnDetach()) {
                 pause();
             }
@@ -578,7 +583,7 @@ public class MusicService extends Service {
 
     private void onPreferencesUpdate(Bundle extras) {
         mShowAlbumArtOnLockscreen = extras.getBoolean("lockscreen", mShowAlbumArtOnLockscreen);
-        mActivateXTrackSelector = extras.getBoolean("xtrack",mActivateXTrackSelector);
+        mActivateXTrackSelector = extras.getBoolean("xtrack", mActivateXTrackSelector);
         LastfmUserSession session = LastfmUserSession.getSession(this);
         session.mToken = extras.getString("lf_token", session.mToken);
         session.mUsername = extras.getString("lf_user", session.mUsername);
@@ -1964,7 +1969,7 @@ public class MusicService extends Service {
     }
 
     public void play() {
-        play(true);
+        play(false);
     }
 
     public void play(boolean createNewNextTrack) {
@@ -1987,11 +1992,11 @@ public class MusicService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             mSession.setActive(true);
 
-        if (createNewNextTrack) {
-            setNextTrack();
-        } else {
-            setNextTrack(mNextPlayPos);
-        }
+//        if (createNewNextTrack) {
+//            setNextTrack();
+//        } else {
+//            setNextTrack(mNextPlayPos);
+//        }
 
         if (mPlayer.isInitialized()) {
             final long duration = mPlayer.duration();
@@ -2396,13 +2401,13 @@ public class MusicService extends Service {
     }
 
     private static final class MultiPlayer implements MediaPlayer.OnErrorListener,
-            MediaPlayer.OnCompletionListener {
+            MediaPlayer.OnCompletionListener, Player.EventListener {
 
         private final WeakReference<MusicService> mService;
 
-        private MediaPlayer mCurrentMediaPlayer = new MediaPlayer();
+        private SimpleExoPlayer mCurrentMediaPlayer;
 
-        private MediaPlayer mNextMediaPlayer;
+        private SimpleExoPlayer mNextMediaPlayer;
 
         private Handler mHandler;
 
@@ -2413,7 +2418,8 @@ public class MusicService extends Service {
 
         public MultiPlayer(final MusicService service) {
             mService = new WeakReference<MusicService>(service);
-            mCurrentMediaPlayer.setWakeMode(mService.get(), PowerManager.PARTIAL_WAKE_LOCK);
+            //mCurrentMediaPlayer.setWakeMode(mService.get(), PowerManager.PARTIAL_WAKE_LOCK);
+            mCurrentMediaPlayer = ExoPlayerFactory.newSimpleInstance(mService.get());
 
         }
 
@@ -2430,35 +2436,34 @@ public class MusicService extends Service {
         }
 
 
-        private boolean setDataSourceImpl(final MediaPlayer player, final String path) {
+        private boolean setDataSourceImpl(final SimpleExoPlayer player, final String path) {
             try {
-                player.reset();
-                player.setOnPreparedListener(null);
-                if (path.startsWith("content://")) {
-                    player.setDataSource(mService.get(), Uri.parse(path));
-                } else {
-                    player.setDataSource(path);
-                }
-                player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
-                player.prepare();
-            } catch (final IOException todo) {
-
-                return false;
+                // Produces DataSource instances through which media data is loaded.
+                Context context = mService.get();
+                // This is the MediaSource representing the media to be played.
+                MediaSource videoSource = buildMediaSource(Uri.parse(path));
+                // Prepare the player with the source.
+                player.prepare(videoSource);
+                player.addListener(this);
             } catch (final IllegalArgumentException todo) {
 
                 return false;
             }
-            player.setOnCompletionListener(this);
-            player.setOnErrorListener(this);
+            player.setPlayWhenReady(false);
             return true;
+        }
+
+        private MediaSource buildMediaSource(Uri uri) {
+            return new ExtractorMediaSource.Factory(
+                    new DefaultDataSourceFactory(mService.get(), "au")).createMediaSource(uri);
+
         }
 
 
         public void setNextDataSource(final String path) {
             mNextMediaPath = null;
             try {
-                mCurrentMediaPlayer.setNextMediaPlayer(null);
+
             } catch (IllegalArgumentException e) {
                 Log.i(TAG, "Next media player is current one, continuing");
             } catch (IllegalStateException e) {
@@ -2472,22 +2477,18 @@ public class MusicService extends Service {
             if (path == null) {
                 return;
             }
-            mNextMediaPlayer = new MediaPlayer();
-            mNextMediaPlayer.setWakeMode(mService.get(), PowerManager.PARTIAL_WAKE_LOCK);
-            mNextMediaPlayer.setAudioSessionId(getAudioSessionId());
-            try {
-                if (setDataSourceImpl(mNextMediaPlayer, path)) {
-                    mNextMediaPath = path;
-                    mCurrentMediaPlayer.setNextMediaPlayer(mNextMediaPlayer);
-                } else {
-                    if (mNextMediaPlayer != null) {
-                        mNextMediaPlayer.release();
-                        mNextMediaPlayer = null;
-                    }
-                }
-            } catch (IllegalStateException e) {
-                e.printStackTrace();
-            }
+//            mNextMediaPlayer = ExoPlayerFactory.newSimpleInstance(mService.get());;
+//            try {
+//                if (setDataSourceImpl(mCurrentMediaPlayer, path)) {
+//
+//                } else {
+//                    if (mCurrentMediaPlayer != null) {
+//                        mCurrentMediaPlayer.release();
+//                    }
+//                }
+//            } catch (IllegalStateException e) {
+//                e.printStackTrace();
+//            }
         }
 
 
@@ -2502,12 +2503,12 @@ public class MusicService extends Service {
 
 
         public void start() {
-            mCurrentMediaPlayer.start();
+            mCurrentMediaPlayer.setPlayWhenReady(true);
         }
 
 
         public void stop() {
-            mCurrentMediaPlayer.reset();
+            mCurrentMediaPlayer.stop(true);
             mIsInitialized = false;
         }
 
@@ -2518,7 +2519,7 @@ public class MusicService extends Service {
 
 
         public void pause() {
-            mCurrentMediaPlayer.pause();
+            mCurrentMediaPlayer.setPlayWhenReady(false);
         }
 
 
@@ -2540,7 +2541,7 @@ public class MusicService extends Service {
 
         public void setVolume(final float vol) {
             try {
-                mCurrentMediaPlayer.setVolume(vol, vol);
+                mCurrentMediaPlayer.setVolume(vol);
             } catch (IllegalStateException e) {
                 e.printStackTrace();
             }
@@ -2551,7 +2552,7 @@ public class MusicService extends Service {
         }
 
         public void setAudioSessionId(final int sessionId) {
-            mCurrentMediaPlayer.setAudioSessionId(sessionId);
+            //mCurrentMediaPlayer.setAudioSessionId(sessionId);
         }
 
         @Override
@@ -2565,8 +2566,8 @@ public class MusicService extends Service {
 
                     mIsInitialized = false;
                     mCurrentMediaPlayer.release();
-                    mCurrentMediaPlayer = new MediaPlayer();
-                    mCurrentMediaPlayer.setWakeMode(service, PowerManager.PARTIAL_WAKE_LOCK);
+                    //mCurrentMediaPlayer = new MediaPlayer();
+                    //mCurrentMediaPlayer.setWakeMode(service, PowerManager.PARTIAL_WAKE_LOCK);
                     Message msg = mHandler.obtainMessage(SERVER_DIED, errorInfo);
                     mHandler.sendMessageDelayed(msg, 2000);
                     return true;
@@ -2579,7 +2580,7 @@ public class MusicService extends Service {
 
         @Override
         public void onCompletion(final MediaPlayer mp) {
-            if (mp == mCurrentMediaPlayer && mNextMediaPlayer != null) {
+            if (mCurrentMediaPlayer != null && mNextMediaPlayer != null) {
                 mCurrentMediaPlayer.release();
                 mCurrentMediaPlayer = mNextMediaPlayer;
                 mNextMediaPath = null;
@@ -2590,6 +2591,27 @@ public class MusicService extends Service {
                 mHandler.sendEmptyMessage(TRACK_ENDED);
                 mHandler.sendEmptyMessage(RELEASE_WAKELOCK);
             }
+        }
+
+        @Override
+        public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+            if (playbackState == Player.STATE_ENDED) {
+                mService.get().gotoNext(false);
+            }
+        }
+
+        @Override
+        public void onPlayerError(ExoPlaybackException error) {
+            final MusicService service = mService.get();
+            final TrackErrorInfo errorInfo = new TrackErrorInfo(service.getAudioId(),
+                    service.getTrackName());
+
+            mIsInitialized = false;
+            mCurrentMediaPlayer.release();
+            //mCurrentMediaPlayer = new MediaPlayer();
+            //mCurrentMediaPlayer.setWakeMode(service, PowerManager.PARTIAL_WAKE_LOCK);
+            Message msg = mHandler.obtainMessage(SERVER_DIED, errorInfo);
+            mHandler.sendMessageDelayed(msg, 2000);
         }
     }
 

@@ -21,7 +21,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            manifestPlaceholders = [ appNameSuffix:""]
+            manifestPlaceholders = [appNameSuffix: ""]
 
         }
         debug {
@@ -29,7 +29,7 @@ android {
             versionNameSuffix "-debug"
             minifyEnabled false
             applicationIdSuffix '.dev'
-            manifestPlaceholders = [ appNameSuffix:" Dev"]
+            manifestPlaceholders = [appNameSuffix: " Dev"]
 
             resValue "string", "fabric_api_key", "12345"
             resValue "string", "play_billing_license_key", "12345"
@@ -42,6 +42,11 @@ android {
     lintOptions {
         disable 'MissingTranslation'
         disable 'ExtraTranslation'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
 }
@@ -83,6 +88,8 @@ dependencies {
     }
     implementation 'com.anjlab.android.iab.v3:library:1.0.+'
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
+
+    implementation 'com.google.android.exoplayer:exoplayer:2.9.6'
 
 
 }
