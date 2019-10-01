@@ -51,17 +51,62 @@
                 android:textColor="#ffffff"
                 android:textSize="14sp" />
 
-            <SeekBar
-                android:id="@+id/song_progress"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
-                android:maxHeight="2dp"
-                android:paddingTop="18dp"
-                android:progress="30"
-                android:tag="tint_accent_color" />
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:orientation="horizontal"
+                android:paddingTop="20dp">
+
+                <FrameLayout
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_weight="1">
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/playpausewrapper"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:clickable="true"
+                        android:padding="4dp"
+                        android:scaleType="fitCenter"
+                        android:tag="bg_tint_accent_color" />
+
+                    <com.iseasoft.iSeaMusic.widgets.PlayPauseButton
+                        android:id="@+id/playpause"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center" />
+
+                </FrameLayout>
+
+                <net.steamcrafted.materialiconlib.MaterialIconView
+                    android:id="@+id/previous"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_weight="0.7"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:paddingLeft="50dp"
+                    android:scaleType="center"
+                    app:materialIcon="skip_previous"
+                    app:materialIconColor="@color/colorAccent"
+                    app:materialIconSize="64dp" />
+
+                <net.steamcrafted.materialiconlib.MaterialIconView
+                    android:id="@+id/next"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_weight="0.7"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:paddingRight="50dp"
+                    android:scaleType="center"
+                    app:materialIcon="skip_next"
+                    app:materialIconColor="@color/colorAccent"
+                    app:materialIconSize="64dp" />
+            </LinearLayout>
 
 
             <TextView
@@ -89,56 +134,68 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|center_vertical"
-                android:orientation="horizontal"
-                android:paddingTop="20dp">
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <net.steamcrafted.materialiconlib.MaterialIconView
-                    android:id="@+id/previous"
+                    android:id="@+id/repeat"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_weight="0.7"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:paddingLeft="50dp"
-                    android:scaleType="center"
-                    app:materialIcon="skip_previous"
+                    android:layout_weight="1"
+                    app:materialIcon="repeat"
                     app:materialIconColor="#fff"
                     app:materialIconSize="35dp" />
 
-                <FrameLayout
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1">
-
-                    <com.iseasoft.iSeaMusic.widgets.PlayPauseButton
-                        android:id="@+id/playpause"
-                        android:layout_width="23dp"
-                        android:layout_height="23dp"
-                        android:layout_gravity="center" />
-
-                    <View
-                        android:id="@+id/playpausewrapper"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="?attr/selectableItemBackgroundBorderless" />
-
-                </FrameLayout>
-
                 <net.steamcrafted.materialiconlib.MaterialIconView
-                    android:id="@+id/next"
+                    android:id="@+id/timer"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_weight="0.7"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:paddingRight="50dp"
-                    android:scaleType="center"
-                    app:materialIcon="skip_next"
+                    android:layout_weight="1"
+                    app:materialIcon="av_timer"
+                    app:materialIconColor="#fff"
+                    app:materialIconSize="35dp" />
+
+                <net.steamcrafted.materialiconlib.MaterialIconView
+                    android:id="@+id/shuffle"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    app:materialIcon="shuffle"
+                    app:materialIconColor="#fff"
+                    app:materialIconSize="35dp" />
+
+                <net.steamcrafted.materialiconlib.MaterialIconView
+                    android:id="@+id/menu"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    app:materialIcon="dots_horizontal"
+                    app:materialIconColor="#fff"
+                    app:materialIconSize="35dp" />
+
+                <net.steamcrafted.materialiconlib.MaterialIconView
+                    android:id="@+id/playlist_play"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    app:materialIcon="playlist_play"
                     app:materialIconColor="#fff"
                     app:materialIconSize="35dp" />
             </LinearLayout>
+
+            <SeekBar
+                android:maxHeight="4dp"
+                android:id="@+id/song_progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:progressDrawable="@drawable/progressbar_thumb"
+                android:paddingTop="18dp"
+                android:progress="30"
+                android:tag="tint_accent_color" />
 
         </LinearLayout>
     </FrameLayout>
