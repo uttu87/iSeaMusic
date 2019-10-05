@@ -403,9 +403,9 @@ public class MainActivity extends BaseActivity implements ATEActivityThemeCustom
                 }, 350);
 
                 break;
-            case R.id.nav_donate:
-                startActivity(new Intent(MainActivity.this, DonateActivity.class));
-                break;
+//            case R.id.nav_donate:
+//                startActivity(new Intent(MainActivity.this, DonateActivity.class));
+//                break;
         }
 
         if (runnable != null) {
