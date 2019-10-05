@@ -17,7 +17,6 @@ package com.iseasoft.iSeaMusic.fragments;
 import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,9 +26,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.ads.AdLoader;
-import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
-import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.adapters.AlbumAdapter;
 import com.iseasoft.iSeaMusic.dataloaders.AlbumLoader;
@@ -43,9 +39,8 @@ import com.iseasoft.iSeaMusic.widgets.FastScroller;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlbumFragment extends Fragment {
+public class AlbumFragment extends AdsFragment {
 
-    public int spaceBetweenAds = 4;
     private AlbumAdapter mAdapter;
     private BaseRecyclerView recyclerView;
     private FastScroller fastScroller;
@@ -53,7 +48,6 @@ public class AlbumFragment extends Fragment {
     private RecyclerView.ItemDecoration itemDecoration;
     private PreferencesUtility mPreferences;
     private boolean isGrid;
-    private List<Object> mDataSet;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -106,17 +100,11 @@ public class AlbumFragment extends Fragment {
     private void updateLayoutManager(int column) {
         recyclerView.removeItemDecoration(itemDecoration);
         spaceBetweenAds = isGrid ? 5 : 10;
-        genarateDataSet(AlbumLoader.getAllAlbums(getActivity()));
+        generateDataSet(AlbumLoader.getAllAlbums(getActivity()), mAdapter);
         recyclerView.setAdapter(new AlbumAdapter(getActivity(), mDataSet));
         layoutManager.setSpanCount(column);
         layoutManager.requestLayout();
         setItemDecoration();
-    }
-
-    private void genarateDataSet(List<Album> allAlbums) {
-        mDataSet.clear();
-        mDataSet.addAll(allAlbums);
-        addNativeExpressAds();
     }
 
     private void reloadAdapter() {
@@ -124,7 +112,7 @@ public class AlbumFragment extends Fragment {
             @Override
             protected Void doInBackground(final Void... unused) {
                 List<Album> albumList = AlbumLoader.getAllAlbums(getActivity());
-                genarateDataSet(albumList);
+                generateDataSet(albumList, mAdapter);
                 mAdapter.updateDataSet(mDataSet);
                 return null;
             }
@@ -187,24 +175,6 @@ public class AlbumFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void addNativeExpressAds() {
-        for (int i = 2; i <= mDataSet.size(); i += (spaceBetweenAds + 1)) {
-            final int position = i;
-            AdLoader adLoader = new AdLoader.Builder(getActivity(), "/21617015150/407539/21858867742")
-                    .forUnifiedNativeAd(new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
-                        @Override
-                        public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
-                            mDataSet.add(position, unifiedNativeAd);
-                            mAdapter.notifyItemChanged(position);
-                        }
-                    })
-                    .build();
-
-            adLoader.loadAd(new PublisherAdRequest.Builder()
-                    .addTestDevice("FB536EF8C6F97686372A2C5A5AA24BC5").build());
-        }
-    }
-
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
         private int space;
 
@@ -230,8 +200,8 @@ public class AlbumFragment extends Fragment {
         @Override
         protected String doInBackground(String... params) {
             if (getActivity() != null) {
-                genarateDataSet(AlbumLoader.getAllAlbums(getActivity()));
                 mAdapter = new AlbumAdapter(getActivity(), mDataSet);
+                generateDataSet(AlbumLoader.getAllAlbums(getActivity()), mAdapter);
             }
             return "Executed";
         }
