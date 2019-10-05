@@ -264,7 +264,8 @@ public final class PreferencesUtility {
         final Intent intent = new Intent(context, MusicService.class);
         intent.setAction(MusicService.UPDATE_PREFERENCES);
         intent.putExtras(extras);
-        context.startService(intent);
+        //context.startService(intent);
+        MusicService.enqueueWork(context, intent);
     }
 
     public boolean loadArtistAndAlbumImages() {

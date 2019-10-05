@@ -23,7 +23,6 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.ContentResolver;
@@ -58,6 +57,8 @@ import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Audio.AlbumColumns;
 import android.provider.MediaStore.Audio.AudioColumns;
+import android.support.annotation.NonNull;
+import android.support.v4.app.JobIntentService;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
@@ -66,9 +67,6 @@ import android.support.v7.graphics.Palette;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.iseasoft.iSeaMusic.utils.NavigationUtils;
-import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
 import com.iseasoft.iSeaMusic.helpers.MediaButtonIntentReceiver;
 import com.iseasoft.iSeaMusic.helpers.MusicPlaybackTrack;
 import com.iseasoft.iSeaMusic.lastfmapi.LastFmClient;
@@ -78,6 +76,9 @@ import com.iseasoft.iSeaMusic.permissions.Nammu;
 import com.iseasoft.iSeaMusic.provider.MusicPlaybackState;
 import com.iseasoft.iSeaMusic.provider.RecentStore;
 import com.iseasoft.iSeaMusic.provider.SongPlayCount;
+import com.iseasoft.iSeaMusic.utils.NavigationUtils;
+import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
+import com.iseasoft.iSeaMusic.utils.iSeaUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.IOException;
@@ -87,13 +88,14 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Random;
 import java.util.TreeSet;
+import java.util.concurrent.TimeUnit;
 
 import de.Maxr1998.trackselectorlib.ModNotInstalledException;
 import de.Maxr1998.trackselectorlib.NotificationHelper;
 import de.Maxr1998.trackselectorlib.TrackItem;
 
 @SuppressLint("NewApi")
-public class MusicService extends Service {
+public class MusicService extends JobIntentService {
     public static final String PLAYSTATE_CHANGED = "com.iseasoft.iSeaMusic.playstatechanged";
     public static final String POSITION_CHANGED = "com.iseasoft.iSeaMusic.positionchanged";
     public static final String META_CHANGED = "com.iseasoft.iSeaMusic.metachanged";
@@ -172,6 +174,10 @@ public class MusicService extends Service {
             MediaStore.Audio.Media.MIME_TYPE, MediaStore.Audio.Media.ALBUM_ID,
             MediaStore.Audio.Media.ARTIST_ID
     };
+    public static final int JOB_ID = 213;
+    private static final long HEARTBEAT_TIMER = TimeUnit.SECONDS.toMillis(30);
+    public static boolean jobStarted = false;
+
     private static LinkedList<Integer> mHistory = new LinkedList<>();
     private final IBinder mBinder = new ServiceStub(this);
     private MultiPlayer mPlayer;
@@ -246,6 +252,10 @@ public class MusicService extends Service {
         }
     };
     private ContentObserver mMediaStoreObserver;
+
+    public static void enqueueWork(Context context, Intent work) {
+        enqueueWork(context, MusicService.class, JOB_ID, work);
+    }
 
     @Override
     public IBinder onBind(final Intent intent) {
@@ -473,6 +483,30 @@ public class MusicService extends Service {
         }
 
         mWakeLock.release();
+    }
+
+    @Override
+    protected void onHandleWork(@NonNull Intent intent) {
+        if (D) Log.d(TAG, "onHandleWork Got new intent " + intent);
+        mServiceStartId = JOB_ID;
+
+        if (intent != null) {
+            final String action = intent.getAction();
+
+            if (SHUTDOWN.equals(action)) {
+                mShutdownScheduled = false;
+                releaseServiceUiAndStop();
+                return;
+            }
+
+            handleCommandIntent(intent);
+        }
+
+        scheduleDelayedShutdown();
+
+        if (intent != null && intent.getBooleanExtra(FROM_MEDIA_BUTTON, false)) {
+            MediaButtonIntentReceiver.completeWakefulIntent(intent);
+        }
     }
 
     @Override

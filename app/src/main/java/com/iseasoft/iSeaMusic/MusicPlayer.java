@@ -32,9 +32,9 @@ import android.provider.BaseColumns;
 import android.provider.MediaStore;
 import android.widget.Toast;
 
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
 import com.iseasoft.iSeaMusic.dataloaders.SongLoader;
 import com.iseasoft.iSeaMusic.helpers.MusicPlaybackTrack;
+import com.iseasoft.iSeaMusic.utils.iSeaUtils;
 
 import java.util.Arrays;
 import java.util.WeakHashMap;
@@ -59,7 +59,11 @@ public class MusicPlayer {
             realActivity = (Activity) context;
         }
         final ContextWrapper contextWrapper = new ContextWrapper(realActivity);
-        contextWrapper.startService(new Intent(contextWrapper, MusicService.class));
+
+        MusicService.enqueueWork(contextWrapper, new Intent(contextWrapper, MusicService.class));
+
+        //contextWrapper.startService(new Intent(contextWrapper, MusicService.class));
+
         final ServiceBinder binder = new ServiceBinder(callback,
                 contextWrapper.getApplicationContext());
         if (contextWrapper.bindService(
@@ -105,7 +109,8 @@ public class MusicPlayer {
     public static void asyncNext(final Context context) {
         final Intent previous = new Intent(context, MusicService.class);
         previous.setAction(MusicService.NEXT_ACTION);
-        context.startService(previous);
+        //context.startService(previous);
+        MusicService.enqueueWork(context, previous);
     }
 
     public static void previous(final Context context, final boolean force) {
@@ -115,7 +120,8 @@ public class MusicPlayer {
         } else {
             previous.setAction(MusicService.PREVIOUS_ACTION);
         }
-        context.startService(previous);
+        //context.startService(previous);
+        MusicService.enqueueWork(context, previous);
     }
 
     public static void playOrPause() {
@@ -513,8 +519,8 @@ public class MusicPlayer {
         try {
             mService.setShuffleMode(MusicService.SHUFFLE_NORMAL);
             if (getQueuePosition() == 0 && mService.getAudioId() == trackList[0] && Arrays.equals(trackList, getQueue())) {
-                    mService.play();
-                    return;
+                mService.play();
+                return;
             }
             mService.open(trackList, -1, -1, iSeaUtils.IdType.NA.mId);
             mService.play();
@@ -649,7 +655,7 @@ public class MusicPlayer {
     }
 
     public static void clearQueue() {
-        if (mService!=null) {
+        if (mService != null) {
             try {
                 mService.removeTracks(0, Integer.MAX_VALUE);
             } catch (final RemoteException ignored) {
