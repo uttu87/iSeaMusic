@@ -15,10 +15,8 @@
 package com.iseasoft.iSeaMusic.subfragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -28,13 +26,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.iseasoft.iSeaMusic.R;
-import com.iseasoft.iSeaMusic.activities.DonateActivity;
 import com.iseasoft.iSeaMusic.utils.Constants;
 import com.iseasoft.iSeaMusic.utils.NavigationUtils;
 import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
+
+//import com.iseasoft.iSeaMusic.activities.DonateActivity;
 
 public class SubStyleSelectorFragment extends Fragment {
 
@@ -131,28 +128,28 @@ public class SubStyleSelectorFragment extends Fragment {
         }
     }
     private void showPurchaseDialog() {
-        MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
-                .title("Purchase")
-                .content("This now playing style is available after a one time purchase of any amount. Support development and unlock this style?")
-                .positiveText("Support development")
-                .neutralText("Restore purchases")
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        startActivity(new Intent(getActivity(), DonateActivity.class));
-                        dialog.dismiss();
-                    }
-                }).onNeutral(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent(getActivity(), DonateActivity.class);
-                        intent.putExtra("title", "Restoring purchases..");
-                        intent.setAction("restore");
-                        startActivity(intent);
-                        dialog.dismiss();
-                    }
-                })
-                .show();
+//        MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+//                .title("Purchase")
+//                .content("This now playing style is available after a one time purchase of any amount. Support development and unlock this style?")
+//                .positiveText("Support development")
+//                .neutralText("Restore purchases")
+//                .onPositive(new MaterialDialog.SingleButtonCallback() {
+//                    @Override
+//                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                        startActivity(new Intent(getActivity(), DonateActivity.class));
+//                        dialog.dismiss();
+//                    }
+//                }).onNeutral(new MaterialDialog.SingleButtonCallback() {
+//                    @Override
+//                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                        Intent intent = new Intent(getActivity(), DonateActivity.class);
+//                        intent.putExtra("title", "Restoring purchases..");
+//                        intent.setAction("restore");
+//                        startActivity(intent);
+//                        dialog.dismiss();
+//                    }
+//                })
+//                .show();
     }
 
     public void setCurrentStyle() {
