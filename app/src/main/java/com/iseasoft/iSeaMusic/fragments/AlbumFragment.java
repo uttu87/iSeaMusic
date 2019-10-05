@@ -27,6 +27,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.ads.AdLoader;
+import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
+import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.adapters.AlbumAdapter;
 import com.iseasoft.iSeaMusic.dataloaders.AlbumLoader;
@@ -186,7 +189,19 @@ public class AlbumFragment extends Fragment {
 
     private void addNativeExpressAds() {
         for (int i = 2; i <= mDataSet.size(); i += (spaceBetweenAds + 1)) {
-            mDataSet.add(i, i);
+            final int position = i;
+            AdLoader adLoader = new AdLoader.Builder(getActivity(), "/21617015150/407539/21858867742")
+                    .forUnifiedNativeAd(new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
+                        @Override
+                        public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
+                            mDataSet.add(position, unifiedNativeAd);
+                            mAdapter.notifyItemChanged(position);
+                        }
+                    })
+                    .build();
+
+            adLoader.loadAd(new PublisherAdRequest.Builder()
+                    .addTestDevice("FB536EF8C6F97686372A2C5A5AA24BC5").build());
         }
     }
 

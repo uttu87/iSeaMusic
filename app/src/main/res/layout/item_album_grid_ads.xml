@@ -18,6 +18,13 @@
             android:gravity="center"
             android:orientation="vertical">
 
+            <com.iseasoft.iSeaMusic.widgets.SquareImageView
+                android:id="@+id/album_art"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:scaleType="centerCrop"
+                android:transitionName="transition_album_art" />
+
             <LinearLayout
                 android:id="@+id/footer"
                 android:layout_width="fill_parent"
@@ -29,19 +36,19 @@
 
                 <RatingBar
                     android:id="@+id/rating_bar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    style="?android:attr/ratingBarStyleIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/gnt_no_margin"
                     android:layout_marginTop="@dimen/gnt_no_margin"
                     android:layout_marginEnd="@dimen/gnt_no_margin"
                     android:layout_marginBottom="@dimen/gnt_no_margin"
-                    android:background="@color/gnt_white"
+                    android:layout_gravity="center"
                     android:lines="1"
                     android:numStars="0"
                     android:textColor="@color/gnt_gray"
                     android:textSize="@dimen/gnt_text_size_small"
-                    android:visibility="gone" />
-
+                    android:visibility="gone"/>
                 <TextView
                     android:id="@+id/album_title"
                     android:layout_width="wrap_content"
@@ -60,12 +67,6 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
             </LinearLayout>
 
-            <com.iseasoft.iSeaMusic.widgets.SquareImageView
-                android:id="@+id/album_art"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:scaleType="centerCrop"
-                android:transitionName="transition_album_art" />
         </LinearLayout>
     </FrameLayout>
 

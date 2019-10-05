@@ -28,8 +28,6 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.afollestad.appthemeengine.Config;
-import com.google.android.gms.ads.AdLoader;
-import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.google.android.gms.ads.formats.UnifiedNativeAdView;
 import com.iseasoft.iSeaMusic.R;
@@ -154,18 +152,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             case NATIVE_EXPRESS_AD_VIEW_TYPE:
             default:
                 final NativeExpressAdViewHolder nativeExpressHolder = (NativeExpressAdViewHolder) viewHolder;
-                AdLoader adLoader = new AdLoader.Builder(mContext, "/21617015150/407539/21858867742")
-                        .forUnifiedNativeAd(new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
-                            @Override
-                            public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
-                                nativeExpressHolder.setContent(unifiedNativeAd);
-                            }
-                        })
-                        .build();
-
-                adLoader.loadAd(new PublisherAdRequest.Builder()
-                        .addTestDevice("FB536EF8C6F97686372A2C5A5AA24BC5").build());
-
+                UnifiedNativeAd unifiedNativeAd = (UnifiedNativeAd) arraylist.get(i);
+                nativeExpressHolder.setContent(unifiedNativeAd);
                 break;
         }
 
@@ -245,8 +233,10 @@ public class AlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             Double starRating = unifiedNativeAd.getStarRating();
             if (starRating != null && starRating > 0) {
                 ratingBar.setVisibility(VISIBLE);
+                ratingBar.setRating(starRating.floatValue());
                 ratingBar.setMax(5);
                 templateView.setStarRatingView(ratingBar);
+                artist.setVisibility(GONE);
             } else {
                 ratingBar.setVisibility(GONE);
             }
