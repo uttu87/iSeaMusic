@@ -27,20 +27,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.iseasoft.iSeaMusic.R;
+import com.iseasoft.iSeaMusic.adapters.AlbumAdapter;
 import com.iseasoft.iSeaMusic.dataloaders.AlbumLoader;
 import com.iseasoft.iSeaMusic.models.Album;
 import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
 import com.iseasoft.iSeaMusic.utils.SortOrder;
-import com.iseasoft.iSeaMusic.R;
-import com.iseasoft.iSeaMusic.adapters.AlbumAdapter;
 import com.iseasoft.iSeaMusic.widgets.BaseRecyclerView;
 import com.iseasoft.iSeaMusic.widgets.DividerItemDecoration;
 import com.iseasoft.iSeaMusic.widgets.FastScroller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AlbumFragment extends Fragment {
 
+    public int spaceBetweenAds = 4;
     private AlbumAdapter mAdapter;
     private BaseRecyclerView recyclerView;
     private FastScroller fastScroller;
@@ -48,12 +50,15 @@ public class AlbumFragment extends Fragment {
     private RecyclerView.ItemDecoration itemDecoration;
     private PreferencesUtility mPreferences;
     private boolean isGrid;
+    private List<Object> mDataSet;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPreferences = PreferencesUtility.getInstance(getActivity());
         isGrid = mPreferences.isAlbumsInGrid();
+        spaceBetweenAds = isGrid ? 5 : 10;
+        mDataSet = new ArrayList<>();
     }
 
     @Override
@@ -97,10 +102,18 @@ public class AlbumFragment extends Fragment {
 
     private void updateLayoutManager(int column) {
         recyclerView.removeItemDecoration(itemDecoration);
-        recyclerView.setAdapter(new AlbumAdapter(getActivity(), AlbumLoader.getAllAlbums(getActivity())));
+        spaceBetweenAds = isGrid ? 5 : 10;
+        genarateDataSet(AlbumLoader.getAllAlbums(getActivity()));
+        recyclerView.setAdapter(new AlbumAdapter(getActivity(), mDataSet));
         layoutManager.setSpanCount(column);
         layoutManager.requestLayout();
         setItemDecoration();
+    }
+
+    private void genarateDataSet(List<Album> allAlbums) {
+        mDataSet.clear();
+        mDataSet.addAll(allAlbums);
+        addNativeExpressAds();
     }
 
     private void reloadAdapter() {
@@ -108,7 +121,8 @@ public class AlbumFragment extends Fragment {
             @Override
             protected Void doInBackground(final Void... unused) {
                 List<Album> albumList = AlbumLoader.getAllAlbums(getActivity());
-                mAdapter.updateDataSet(albumList);
+                genarateDataSet(albumList);
+                mAdapter.updateDataSet(mDataSet);
                 return null;
             }
 
@@ -170,6 +184,12 @@ public class AlbumFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    private void addNativeExpressAds() {
+        for (int i = 2; i <= mDataSet.size(); i += (spaceBetweenAds + 1)) {
+            mDataSet.add(i, i);
+        }
+    }
+
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
         private int space;
 
@@ -194,8 +214,10 @@ public class AlbumFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... params) {
-            if (getActivity() != null)
-                mAdapter = new AlbumAdapter(getActivity(), AlbumLoader.getAllAlbums(getActivity()));
+            if (getActivity() != null) {
+                genarateDataSet(AlbumLoader.getAllAlbums(getActivity()));
+                mAdapter = new AlbumAdapter(getActivity(), mDataSet);
+            }
             return "Executed";
         }
 
