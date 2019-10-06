@@ -16,7 +16,8 @@ public class AdsFragment extends Fragment {
     protected int spaceBetweenAds;
 
     protected void generateDataSet(final AdsAdapter adapter) {
-        if (adapter.getDataSet().size() < ADS_ITEM_START_INDEX) {
+        if (getActivity() == null || adapter == null
+                || adapter.getDataSet().size() < ADS_ITEM_START_INDEX) {
             return;
         }
         AdLoader adLoader = new AdLoader.Builder(getActivity(), "/21617015150/407539/21858867742")
