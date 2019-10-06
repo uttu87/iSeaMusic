@@ -53,7 +53,7 @@ public class AlbumFragment extends AdsFragment {
         super.onCreate(savedInstanceState);
         mPreferences = PreferencesUtility.getInstance(getActivity());
         isGrid = mPreferences.isAlbumsInGrid();
-        spaceBetweenAds = isGrid ? 5 : 10;
+        spaceBetweenAds = isGrid ? GRID_VIEW_ADS_COUNT : LIST_VIEW_ADS_COUNT;
     }
 
     @Override

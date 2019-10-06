@@ -29,27 +29,27 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.iseasoft.iSeaMusic.MusicPlayer;
+import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.dataloaders.ArtistAlbumLoader;
+import com.iseasoft.iSeaMusic.dialogs.AddPlaylistDialog;
 import com.iseasoft.iSeaMusic.models.Song;
 import com.iseasoft.iSeaMusic.utils.NavigationUtils;
 import com.iseasoft.iSeaMusic.utils.iSeaUtils;
-import com.iseasoft.iSeaMusic.R;
-import com.iseasoft.iSeaMusic.dialogs.AddPlaylistDialog;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArtistSongAdapter extends BaseSongAdapter<ArtistSongAdapter.ItemHolder> {
+public class ArtistSongAdapter extends BaseSongAdapter {
 
-    private List<Song> arraylist;
     private Activity mContext;
     private long artistID;
     private long[] songIDs;
 
     public ArtistSongAdapter(Activity context, List<Song> arraylist, long artistID) {
-        this.arraylist = arraylist;
+        this.arraylist = new ArrayList<>();
+        this.arraylist.addAll(arraylist);
         this.mContext = context;
         this.artistID = artistID;
         this.songIDs = getSongIds();
@@ -69,13 +69,14 @@ public class ArtistSongAdapter extends BaseSongAdapter<ArtistSongAdapter.ItemHol
     }
 
     @Override
-    public void onBindViewHolder(ItemHolder itemHolder, int i) {
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
+        final ItemHolder itemHolder = (ItemHolder) viewHolder;
 
         if (getItemViewType(i) == 0) {
             //nothing
             setUpAlbums(itemHolder.albumsRecyclerView);
         } else {
-            Song localItem = arraylist.get(i);
+            Song localItem = (Song)arraylist.get(i);
             itemHolder.title.setText(localItem.title);
             itemHolder.album.setText(localItem.albumName);
 
@@ -88,8 +89,8 @@ public class ArtistSongAdapter extends BaseSongAdapter<ArtistSongAdapter.ItemHol
     }
 
     @Override
-    public void onViewRecycled(ItemHolder itemHolder) {
-
+    public void onViewRecycled(RecyclerView.ViewHolder viewHolder) {
+        final ItemHolder itemHolder = (ItemHolder) viewHolder;
         if (itemHolder.getItemViewType() == 0)
             clearExtraSpacingBetweenCards(itemHolder.albumsRecyclerView);
 
@@ -100,7 +101,7 @@ public class ArtistSongAdapter extends BaseSongAdapter<ArtistSongAdapter.ItemHol
         return (null != arraylist ? arraylist.size() : 0);
     }
 
-    private void setOnPopupMenuListener(ItemHolder itemHolder, final int position) {
+    private void setOnPopupMenuListener(final ItemHolder itemHolder, final int position) {
 
         itemHolder.menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,35 +111,36 @@ public class ArtistSongAdapter extends BaseSongAdapter<ArtistSongAdapter.ItemHol
                 menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
+                        Song songNext = (Song) arraylist.get(position + 1);
                         switch (item.getItemId()) {
                             case R.id.popup_song_play:
-                                MusicPlayer.playAll(mContext, songIDs, position + 1, -1, iSeaUtils.IdType.NA, false);
+                                MusicPlayer.playAll(mContext, getSongIds(), position + 1, -1, iSeaUtils.IdType.NA, false);
                                 break;
                             case R.id.popup_song_play_next:
                                 long[] ids = new long[1];
-                                ids[0] = arraylist.get(position + 1).id;
+                                ids[0] = songNext.id;
                                 MusicPlayer.playNext(mContext, ids, -1, iSeaUtils.IdType.NA);
                                 break;
                             case R.id.popup_song_goto_album:
-                                NavigationUtils.goToAlbum(mContext, arraylist.get(position + 1).albumId);
+                                NavigationUtils.goToAlbum(mContext, songNext.albumId);
                                 break;
                             case R.id.popup_song_goto_artist:
-                                NavigationUtils.goToArtist(mContext, arraylist.get(position + 1).artistId);
+                                NavigationUtils.goToArtist(mContext, songNext.artistId);
                                 break;
                             case R.id.popup_song_addto_queue:
                                 long[] id = new long[1];
-                                id[0] = arraylist.get(position + 1).id;
+                                id[0] = songNext.id;
                                 MusicPlayer.addToQueue(mContext, id, -1, iSeaUtils.IdType.NA);
                                 break;
                             case R.id.popup_song_addto_playlist:
-                                AddPlaylistDialog.newInstance(arraylist.get(position + 1)).show(((AppCompatActivity) mContext).getSupportFragmentManager(), "ADD_PLAYLIST");
+                                AddPlaylistDialog.newInstance(songNext).show(((AppCompatActivity) mContext).getSupportFragmentManager(), "ADD_PLAYLIST");
                                 break;
                             case R.id.popup_song_share:
-                                iSeaUtils.shareTrack(mContext, arraylist.get(position + 1).id);
+                                iSeaUtils.shareTrack(mContext, songNext.id);
                                 break;
                             case R.id.popup_song_delete:
-                                long[] deleteIds = {arraylist.get(position + 1).id};
-                                iSeaUtils.showDeleteDialog(mContext,arraylist.get(position + 1).title, deleteIds, ArtistSongAdapter.this, position + 1);
+                                long[] deleteIds = {songNext.id};
+                                iSeaUtils.showDeleteDialog(mContext,songNext.title, deleteIds, ArtistSongAdapter.this, position + 1);
                                 break;
                         }
                         return false;
@@ -173,11 +175,15 @@ public class ArtistSongAdapter extends BaseSongAdapter<ArtistSongAdapter.ItemHol
     }
 
     public long[] getSongIds() {
-        List<Song> actualArraylist = new ArrayList<Song>(arraylist);
+        List<Object> actualArraylist = new ArrayList<Object>(arraylist);
         //actualArraylist.remove(0);
         long[] ret = new long[actualArraylist.size()];
         for (int i = 0; i < actualArraylist.size(); i++) {
-            ret[i] = actualArraylist.get(i).id;
+            if(getItemViewType(i) == NATIVE_EXPRESS_AD_VIEW_TYPE) {
+                ret[i] = 0;
+            } else {
+                ret[i] = ((Song)actualArraylist.get(i)).id;
+            }
         }
         return ret;
     }
@@ -185,12 +191,13 @@ public class ArtistSongAdapter extends BaseSongAdapter<ArtistSongAdapter.ItemHol
     @Override
     public void removeSongAt(int i){
         arraylist.remove(i);
-        updateDataSet(arraylist);
+        //updateDataSet(arraylist);
     }
 
     @Override
     public void updateDataSet(List<Song> arraylist) {
-        this.arraylist = arraylist;
+        this.arraylist.clear();
+        this.arraylist.addAll(arraylist);
         this.songIDs = getSongIds();
     }
 
@@ -228,9 +235,9 @@ public class ArtistSongAdapter extends BaseSongAdapter<ArtistSongAdapter.ItemHol
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    playAll(mContext, songIDs, getAdapterPosition(), artistID,
+                    playAll(mContext, getSongIds(), getAdapterPosition(), artistID,
                             iSeaUtils.IdType.Artist, false,
-                            arraylist.get(getAdapterPosition()), true);
+                            (Song)arraylist.get(getAdapterPosition()), true);
                 }
             }, 100);
 

@@ -24,8 +24,8 @@ import static android.view.View.VISIBLE;
 
 public class AdsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     // Defining variables for view types
-    protected static final int DATA_VIEW_TYPE = 0;
-    protected static final int NATIVE_EXPRESS_AD_VIEW_TYPE = 1;
+    protected static final int DATA_VIEW_TYPE = 100;
+    protected static final int NATIVE_EXPRESS_AD_VIEW_TYPE = 101;
 
     protected List<Object> arraylist;
     protected boolean isGrid;
