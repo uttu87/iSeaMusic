@@ -100,8 +100,10 @@ public class AlbumFragment extends AdsFragment {
     private void updateLayoutManager(int column) {
         recyclerView.removeItemDecoration(itemDecoration);
         spaceBetweenAds = isGrid ? 5 : 10;
-        generateDataSet(AlbumLoader.getAllAlbums(getActivity()), mAdapter);
+        mDataSet.clear();
+        mDataSet.addAll(AlbumLoader.getAllAlbums(getActivity()));
         recyclerView.setAdapter(new AlbumAdapter(getActivity(), mDataSet));
+        generateDataSet(mAdapter);
         layoutManager.setSpanCount(column);
         layoutManager.requestLayout();
         setItemDecoration();
@@ -112,8 +114,10 @@ public class AlbumFragment extends AdsFragment {
             @Override
             protected Void doInBackground(final Void... unused) {
                 List<Album> albumList = AlbumLoader.getAllAlbums(getActivity());
-                generateDataSet(albumList, mAdapter);
+                mDataSet.clear();
+                mDataSet.addAll(albumList);
                 mAdapter.updateDataSet(mDataSet);
+                generateDataSet(mAdapter);
                 return null;
             }
 
@@ -200,8 +204,10 @@ public class AlbumFragment extends AdsFragment {
         @Override
         protected String doInBackground(String... params) {
             if (getActivity() != null) {
+                mDataSet.clear();
+                mDataSet.addAll(AlbumLoader.getAllAlbums(getActivity()));
                 mAdapter = new AlbumAdapter(getActivity(), mDataSet);
-                generateDataSet(AlbumLoader.getAllAlbums(getActivity()), mAdapter);
+                generateDataSet(mAdapter);
             }
             return "Executed";
         }

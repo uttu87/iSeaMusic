@@ -6,20 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
-import com.iseasoft.iSeaMusic.models.Album;
 
 import java.util.List;
 
 public class AdsFragment extends Fragment {
     protected List<Object> mDataSet;
     protected int spaceBetweenAds;
-    protected void generateDataSet(List<Album> allAlbums, RecyclerView.Adapter adapter) {
-        mDataSet.clear();
-        mDataSet.addAll(allAlbums);
-        addNativeExpressAds(adapter);
-    }
-
-    private void addNativeExpressAds(final RecyclerView.Adapter adapter) {
+    protected void generateDataSet(final RecyclerView.Adapter adapter) {
         for (int i = 2; i <= mDataSet.size(); i += (spaceBetweenAds + 1)) {
             final int position = i;
             AdLoader adLoader = new AdLoader.Builder(getActivity(), "/21617015150/407539/21858867742")
@@ -27,7 +20,7 @@ public class AdsFragment extends Fragment {
                         @Override
                         public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
                             mDataSet.add(position, unifiedNativeAd);
-                            adapter.notifyItemChanged(position);
+                            adapter.notifyItemRangeChanged(position, spaceBetweenAds);
                         }
                     })
                     .build();
