@@ -53,14 +53,17 @@ public class ArtistSongAdapter extends BaseSongAdapter {
         this.mContext = context;
         this.artistID = artistID;
         this.songIDs = getSongIds();
+        this.isGrid = false;
     }
 
     @Override
-    public ItemHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         if (viewType == 0) {
             View v0 = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.artist_detail_albums_header, null);
             ItemHolder ml = new ItemHolder(v0);
             return ml;
+        } else if (viewType == NATIVE_EXPRESS_AD_VIEW_TYPE) {
+            return super.onCreateViewHolder(viewGroup, viewType);
         } else {
             View v2 = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_artist_song, null);
             ItemHolder ml = new ItemHolder(v2);
@@ -68,15 +71,21 @@ public class ArtistSongAdapter extends BaseSongAdapter {
         }
     }
 
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
+        if (getItemViewType(i) == NATIVE_EXPRESS_AD_VIEW_TYPE) {
+            super.onBindViewHolder(viewHolder, i);
+            return;
+        }
+
         final ItemHolder itemHolder = (ItemHolder) viewHolder;
 
         if (getItemViewType(i) == 0) {
             //nothing
             setUpAlbums(itemHolder.albumsRecyclerView);
         } else {
-            Song localItem = (Song)arraylist.get(i);
+            Song localItem = (Song) arraylist.get(i);
             itemHolder.title.setText(localItem.title);
             itemHolder.album.setText(localItem.albumName);
 
@@ -90,9 +99,13 @@ public class ArtistSongAdapter extends BaseSongAdapter {
 
     @Override
     public void onViewRecycled(RecyclerView.ViewHolder viewHolder) {
+        if (viewHolder.getItemViewType() == NATIVE_EXPRESS_AD_VIEW_TYPE) {
+            return;
+        }
         final ItemHolder itemHolder = (ItemHolder) viewHolder;
-        if (itemHolder.getItemViewType() == 0)
+        if (itemHolder.getItemViewType() == 0) {
             clearExtraSpacingBetweenCards(itemHolder.albumsRecyclerView);
+        }
 
     }
 
@@ -140,7 +153,7 @@ public class ArtistSongAdapter extends BaseSongAdapter {
                                 break;
                             case R.id.popup_song_delete:
                                 long[] deleteIds = {songNext.id};
-                                iSeaUtils.showDeleteDialog(mContext,songNext.title, deleteIds, ArtistSongAdapter.this, position + 1);
+                                iSeaUtils.showDeleteDialog(mContext, songNext.title, deleteIds, ArtistSongAdapter.this, position + 1);
                                 break;
                         }
                         return false;
@@ -179,17 +192,17 @@ public class ArtistSongAdapter extends BaseSongAdapter {
         //actualArraylist.remove(0);
         long[] ret = new long[actualArraylist.size()];
         for (int i = 0; i < actualArraylist.size(); i++) {
-            if(getItemViewType(i) == NATIVE_EXPRESS_AD_VIEW_TYPE) {
+            if (getItemViewType(i) == NATIVE_EXPRESS_AD_VIEW_TYPE) {
                 ret[i] = 0;
             } else {
-                ret[i] = ((Song)actualArraylist.get(i)).id;
+                ret[i] = ((Song) actualArraylist.get(i)).id;
             }
         }
         return ret;
     }
 
     @Override
-    public void removeSongAt(int i){
+    public void removeSongAt(int i) {
         arraylist.remove(i);
         //updateDataSet(arraylist);
     }
@@ -203,11 +216,11 @@ public class ArtistSongAdapter extends BaseSongAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        int viewType;
         if (position == 0) {
-            viewType = 0;
-        } else viewType = 1;
-        return viewType;
+            return 0;
+        } else {
+            return super.getItemViewType(position);
+        }
     }
 
     public class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -237,7 +250,7 @@ public class ArtistSongAdapter extends BaseSongAdapter {
                 public void run() {
                     playAll(mContext, getSongIds(), getAdapterPosition(), artistID,
                             iSeaUtils.IdType.Artist, false,
-                            (Song)arraylist.get(getAdapterPosition()), true);
+                            (Song) arraylist.get(getAdapterPosition()), true);
                 }
             }, 100);
 

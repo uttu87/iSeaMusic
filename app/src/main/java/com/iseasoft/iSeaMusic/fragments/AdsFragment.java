@@ -12,15 +12,19 @@ import java.util.List;
 public class AdsFragment extends Fragment {
     protected final static int LIST_VIEW_ADS_COUNT = 10;
     protected final static int GRID_VIEW_ADS_COUNT = 5;
+    private final static int ADS_ITEM_START_INDEX = 2;
     protected int spaceBetweenAds;
 
     protected void generateDataSet(final AdsAdapter adapter) {
+        if (adapter.getDataSet().size() < ADS_ITEM_START_INDEX) {
+            return;
+        }
         AdLoader adLoader = new AdLoader.Builder(getActivity(), "/21617015150/407539/21858867742")
                 .forUnifiedNativeAd(new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
                     @Override
                     public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
                         final List<Object> mDataSet = adapter.getDataSet();
-                        for (int i = 2; i <= mDataSet.size(); i += (spaceBetweenAds + 1)) {
+                        for (int i = ADS_ITEM_START_INDEX; i <= mDataSet.size(); i += (spaceBetweenAds + 1)) {
                             adapter.getDataSet().add(i, unifiedNativeAd);
                             adapter.notifyItemRangeChanged(i, spaceBetweenAds);
                         }

@@ -29,43 +29,54 @@ import android.widget.TextView;
 
 import com.afollestad.appthemeengine.Config;
 import com.iseasoft.iSeaMusic.MusicPlayer;
+import com.iseasoft.iSeaMusic.R;
+import com.iseasoft.iSeaMusic.dialogs.AddPlaylistDialog;
 import com.iseasoft.iSeaMusic.models.Song;
 import com.iseasoft.iSeaMusic.utils.Helpers;
 import com.iseasoft.iSeaMusic.utils.NavigationUtils;
 import com.iseasoft.iSeaMusic.utils.iSeaUtils;
-import com.iseasoft.iSeaMusic.R;
-import com.iseasoft.iSeaMusic.dialogs.AddPlaylistDialog;
 import com.iseasoft.iSeaMusic.widgets.MusicVisualizer;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class PlayingQueueAdapter extends RecyclerView.Adapter<PlayingQueueAdapter.ItemHolder> {
+public class PlayingQueueAdapter extends AdsAdapter {
     private static final String TAG = "PlayingQueueAdapter";
 
     public int currentlyPlayingPosition;
-    private List<Song> arraylist;
     private Activity mContext;
     private String ateKey;
 
     public PlayingQueueAdapter(Activity context, List<Song> arraylist) {
-        this.arraylist = arraylist;
+        this.arraylist = new ArrayList<>();
+        this.arraylist.addAll(arraylist);
         this.mContext = context;
         this.currentlyPlayingPosition = MusicPlayer.getQueuePosition();
         this.ateKey = Helpers.getATEKey(context);
+        isGrid = false;
     }
 
     @Override
-    public ItemHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        if (viewType == NATIVE_EXPRESS_AD_VIEW_TYPE) {
+            return super.onCreateViewHolder(viewGroup, viewType);
+        }
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_playing_queue, null);
         ItemHolder ml = new ItemHolder(v);
         return ml;
     }
 
     @Override
-    public void onBindViewHolder(ItemHolder itemHolder, int i) {
-        Song localItem = arraylist.get(i);
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
+        if (getItemViewType(i) == NATIVE_EXPRESS_AD_VIEW_TYPE) {
+            super.onBindViewHolder(viewHolder, i);
+            return;
+        }
+
+        Song localItem = (Song) arraylist.get(i);
+        final ItemHolder itemHolder = (ItemHolder) viewHolder;
 
         itemHolder.title.setText(localItem.title);
         itemHolder.artist.setText(localItem.artistName);
@@ -98,9 +109,10 @@ public class PlayingQueueAdapter extends RecyclerView.Adapter<PlayingQueueAdapte
                 menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
+                        final Song song = (Song) arraylist.get(position);
                         switch (item.getItemId()) {
                             case R.id.popup_song_remove_queue:
-                                Log.v(TAG,"Removing " + position);
+                                Log.v(TAG, "Removing " + position);
                                 MusicPlayer.removeTrackAtPosition(getSongAt(position).id, position);
                                 removeSongAt(position);
                                 notifyItemRemoved(position);
@@ -109,13 +121,13 @@ public class PlayingQueueAdapter extends RecyclerView.Adapter<PlayingQueueAdapte
                                 MusicPlayer.playAll(mContext, getSongIds(), position, -1, iSeaUtils.IdType.NA, false);
                                 break;
                             case R.id.popup_song_goto_album:
-                                NavigationUtils.goToAlbum(mContext, arraylist.get(position).albumId);
+                                NavigationUtils.goToAlbum(mContext, song.albumId);
                                 break;
                             case R.id.popup_song_goto_artist:
-                                NavigationUtils.goToArtist(mContext, arraylist.get(position).artistId);
+                                NavigationUtils.goToArtist(mContext, song.artistId);
                                 break;
                             case R.id.popup_song_addto_playlist:
-                                AddPlaylistDialog.newInstance(arraylist.get(position)).show(((AppCompatActivity) mContext).getSupportFragmentManager(), "ADD_PLAYLIST");
+                                AddPlaylistDialog.newInstance(song).show(((AppCompatActivity) mContext).getSupportFragmentManager(), "ADD_PLAYLIST");
                                 break;
                         }
                         return false;
@@ -135,14 +147,18 @@ public class PlayingQueueAdapter extends RecyclerView.Adapter<PlayingQueueAdapte
     public long[] getSongIds() {
         long[] ret = new long[getItemCount()];
         for (int i = 0; i < getItemCount(); i++) {
-            ret[i] = arraylist.get(i).id;
+            if(getItemViewType(i) == NATIVE_EXPRESS_AD_VIEW_TYPE) {
+                ret[i] = 0;
+            } else {
+                ret[i] = ((Song)arraylist.get(i)).id;
+            }
         }
 
         return ret;
     }
 
     public Song getSongAt(int i) {
-        return arraylist.get(i);
+        return (Song)arraylist.get(i);
     }
 
     public void addSongTo(int i, Song song) {
@@ -175,7 +191,7 @@ public class PlayingQueueAdapter extends RecyclerView.Adapter<PlayingQueueAdapte
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    MusicPlayer.setQueuePosition(getAdapterPosition());
+                    MusicPlayer.playAll(mContext, getSongIds(), getAdapterPosition(), -1, iSeaUtils.IdType.NA, false);
                     Handler handler1 = new Handler();
                     handler1.postDelayed(new Runnable() {
                         @Override
