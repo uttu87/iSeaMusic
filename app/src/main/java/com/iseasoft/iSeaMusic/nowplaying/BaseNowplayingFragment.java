@@ -23,7 +23,6 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -44,18 +43,19 @@ import com.afollestad.appthemeengine.ATE;
 import com.afollestad.appthemeengine.Config;
 import com.iseasoft.iSeaMusic.MusicPlayer;
 import com.iseasoft.iSeaMusic.MusicService;
+import com.iseasoft.iSeaMusic.R;
+import com.iseasoft.iSeaMusic.activities.BaseActivity;
+import com.iseasoft.iSeaMusic.adapters.BaseQueueAdapter;
+import com.iseasoft.iSeaMusic.adapters.SlidingQueueAdapter;
 import com.iseasoft.iSeaMusic.dataloaders.QueueLoader;
+import com.iseasoft.iSeaMusic.fragments.AdsFragment;
+import com.iseasoft.iSeaMusic.listeners.MusicStateListener;
 import com.iseasoft.iSeaMusic.timely.TimelyView;
 import com.iseasoft.iSeaMusic.utils.Helpers;
 import com.iseasoft.iSeaMusic.utils.NavigationUtils;
 import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
 import com.iseasoft.iSeaMusic.utils.SlideTrackSwitcher;
 import com.iseasoft.iSeaMusic.utils.iSeaUtils;
-import com.iseasoft.iSeaMusic.R;
-import com.iseasoft.iSeaMusic.activities.BaseActivity;
-import com.iseasoft.iSeaMusic.adapters.BaseQueueAdapter;
-import com.iseasoft.iSeaMusic.adapters.SlidingQueueAdapter;
-import com.iseasoft.iSeaMusic.listeners.MusicStateListener;
 import com.iseasoft.iSeaMusic.widgets.CircularSeekBar;
 import com.iseasoft.iSeaMusic.widgets.DividerItemDecoration;
 import com.iseasoft.iSeaMusic.widgets.PlayPauseButton;
@@ -70,34 +70,21 @@ import net.steamcrafted.materialiconlib.MaterialIconView;
 
 import java.security.InvalidParameterException;
 
-public class BaseNowplayingFragment extends Fragment implements MusicStateListener {
+public class BaseNowplayingFragment extends AdsFragment implements MusicStateListener {
 
+    public ImageView albumart, shuffle, repeat;
+    public int accentColor;
+    public RecyclerView recyclerView;
+    boolean fragmentPaused = false;
     private MaterialIconView previous, next;
     private PlayPauseButton mPlayPause;
     private PlayPauseDrawable playPauseDrawable = new PlayPauseDrawable();
     private FloatingActionButton playPauseFloating;
     private View playPauseWrapper;
-
     private String ateKey;
     private int overflowcounter = 0;
     private TextView songtitle, songalbum, songartist, songduration, elapsedtime;
     private SeekBar mProgress;
-    boolean fragmentPaused = false;
-
-    private CircularSeekBar mCircularProgress;
-    private BaseQueueAdapter mAdapter;
-    private SlidingQueueAdapter slidingQueueAdapter;
-
-    private TimelyView timelyView11, timelyView12, timelyView13, timelyView14, timelyView15;
-    private TextView hourColon;
-    private int[] timeArr = new int[]{0, 0, 0, 0, 0};
-    private Handler mElapsedTimeHandler;
-    private boolean duetoplaypause = false;
-
-    public ImageView albumart, shuffle, repeat;
-    public int accentColor;
-    public RecyclerView recyclerView;
-
     //seekbar
     public Runnable mUpdateProgress = new Runnable() {
 
@@ -113,12 +100,12 @@ public class BaseNowplayingFragment extends Fragment implements MusicStateListen
             overflowcounter--;
             int delay = 250; //not sure why this delay was so high before
             if (overflowcounter < 0 && !fragmentPaused) {
-                    overflowcounter++;
-                    mProgress.postDelayed(mUpdateProgress, delay); //delay
+                overflowcounter++;
+                mProgress.postDelayed(mUpdateProgress, delay); //delay
             }
         }
     };
-
+    private CircularSeekBar mCircularProgress;
     //circular seekbar
     public Runnable mUpdateCircularProgress = new Runnable() {
 
@@ -142,7 +129,12 @@ public class BaseNowplayingFragment extends Fragment implements MusicStateListen
 
         }
     };
-
+    private BaseQueueAdapter mAdapter;
+    private SlidingQueueAdapter slidingQueueAdapter;
+    private TimelyView timelyView11, timelyView12, timelyView13, timelyView14, timelyView15;
+    private TextView hourColon;
+    private int[] timeArr = new int[]{0, 0, 0, 0, 0};
+    private Handler mElapsedTimeHandler;
     public Runnable mUpdateElapsedTime = new Runnable() {
         @Override
         public void run() {
@@ -175,7 +167,7 @@ public class BaseNowplayingFragment extends Fragment implements MusicStateListen
 
         }
     };
-
+    private boolean duetoplaypause = false;
     private final View.OnClickListener mButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -205,7 +197,7 @@ public class BaseNowplayingFragment extends Fragment implements MusicStateListen
         @Override
         public void onClick(View v) {
             duetoplaypause = true;
-            if(MusicPlayer.getCurrentTrack() == null) {
+            if (MusicPlayer.getCurrentTrack() == null) {
                 Toast.makeText(getContext(), getString(R.string.now_playing_no_track_selected), Toast.LENGTH_SHORT).show();
             } else {
                 playPauseDrawable.transformToPlay(true);
@@ -220,7 +212,6 @@ public class BaseNowplayingFragment extends Fragment implements MusicStateListen
                     }
                 }, 250);
             }
-
 
 
         }
@@ -376,6 +367,7 @@ public class BaseNowplayingFragment extends Fragment implements MusicStateListen
         } else {
             ATE.apply(this, "light_theme");
         }
+        spaceBetweenAds = GRID_VIEW_ADS_COUNT;
     }
 
     private void setSongDetails() {
@@ -459,16 +451,16 @@ public class BaseNowplayingFragment extends Fragment implements MusicStateListen
             MaterialDrawableBuilder builder = MaterialDrawableBuilder.with(getActivity())
                     .setSizeDp(30);
 
-                if (MusicPlayer.getRepeatMode() == MusicService.REPEAT_NONE) {
-                    builder.setIcon(MaterialDrawableBuilder.IconValue.REPEAT);
-                    builder.setColor(Config.textColorPrimary(getActivity(), ateKey));
-                } else if (MusicPlayer.getRepeatMode() == MusicService.REPEAT_CURRENT) {
-                    builder.setIcon(MaterialDrawableBuilder.IconValue.REPEAT_ONCE);
-                    builder.setColor(Config.accentColor(getActivity(), ateKey));
-                } else if (MusicPlayer.getRepeatMode() == MusicService.REPEAT_ALL) {
-                    builder.setColor(Config.accentColor(getActivity(), ateKey));
-                    builder.setIcon(MaterialDrawableBuilder.IconValue.REPEAT);
-                }
+            if (MusicPlayer.getRepeatMode() == MusicService.REPEAT_NONE) {
+                builder.setIcon(MaterialDrawableBuilder.IconValue.REPEAT);
+                builder.setColor(Config.textColorPrimary(getActivity(), ateKey));
+            } else if (MusicPlayer.getRepeatMode() == MusicService.REPEAT_CURRENT) {
+                builder.setIcon(MaterialDrawableBuilder.IconValue.REPEAT_ONCE);
+                builder.setColor(Config.accentColor(getActivity(), ateKey));
+            } else if (MusicPlayer.getRepeatMode() == MusicService.REPEAT_ALL) {
+                builder.setColor(Config.accentColor(getActivity(), ateKey));
+                builder.setIcon(MaterialDrawableBuilder.IconValue.REPEAT);
+            }
 
 
             repeat.setImageDrawable(builder.build());
@@ -546,17 +538,15 @@ public class BaseNowplayingFragment extends Fragment implements MusicStateListen
                         });
             }
             if (songtitle != null && MusicPlayer.getTrackName() != null) {
-                    songtitle.setText(MusicPlayer.getTrackName());
-                    if(MusicPlayer.getTrackName().length() <= 23){
-                        songtitle.setTextSize(25);
-                    }
-                    else if(MusicPlayer.getTrackName().length() >= 30){
-                        songtitle.setTextSize(18);
-                    }
-                    else{
-                        songtitle.setTextSize(18 + (MusicPlayer.getTrackName().length() - 24));
-                    }
-                    Log.v("BaseNowPlayingFrag", "Title Text Size: " + songtitle.getTextSize());
+                songtitle.setText(MusicPlayer.getTrackName());
+                if (MusicPlayer.getTrackName().length() <= 23) {
+                    songtitle.setTextSize(25);
+                } else if (MusicPlayer.getTrackName().length() >= 30) {
+                    songtitle.setTextSize(18);
+                } else {
+                    songtitle.setTextSize(18 + (MusicPlayer.getTrackName().length() - 24));
+                }
+                Log.v("BaseNowPlayingFrag", "Title Text Size: " + songtitle.getTextSize());
             }
             if (songartist != null) {
                 songartist.setText(MusicPlayer.getArtistName());
@@ -729,6 +719,7 @@ public class BaseNowplayingFragment extends Fragment implements MusicStateListen
         protected String doInBackground(String... params) {
             if (getActivity() != null) {
                 mAdapter = new BaseQueueAdapter((AppCompatActivity) getActivity(), QueueLoader.getQueueSongs(getActivity()));
+                generateDataSet(mAdapter);
                 return "Executed";
             } else return null;
         }
