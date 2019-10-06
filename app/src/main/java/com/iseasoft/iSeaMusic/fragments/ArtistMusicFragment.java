@@ -15,23 +15,22 @@
 package com.iseasoft.iSeaMusic.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.iseasoft.iSeaMusic.R;
+import com.iseasoft.iSeaMusic.adapters.ArtistSongAdapter;
 import com.iseasoft.iSeaMusic.dataloaders.ArtistSongLoader;
 import com.iseasoft.iSeaMusic.models.Song;
 import com.iseasoft.iSeaMusic.utils.Constants;
-import com.iseasoft.iSeaMusic.R;
-import com.iseasoft.iSeaMusic.adapters.ArtistSongAdapter;
 import com.iseasoft.iSeaMusic.widgets.DividerItemDecoration;
 
 import java.util.ArrayList;
 
-public class ArtistMusicFragment extends Fragment {
+public class ArtistMusicFragment extends AdsFragment {
 
     public static RecyclerView songsRecyclerview;
     private long artistID = -1;
@@ -51,6 +50,7 @@ public class ArtistMusicFragment extends Fragment {
         if (getArguments() != null) {
             artistID = getArguments().getLong(Constants.ARTIST_ID);
         }
+        spaceBetweenAds = LIST_VIEW_ADS_COUNT;
     }
 
     @Override
@@ -80,6 +80,7 @@ public class ArtistMusicFragment extends Fragment {
         mSongAdapter = new ArtistSongAdapter(getActivity(), songList, artistID);
         songsRecyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         songsRecyclerview.setAdapter(mSongAdapter);
+        generateDataSet(mSongAdapter);
     }
 
 

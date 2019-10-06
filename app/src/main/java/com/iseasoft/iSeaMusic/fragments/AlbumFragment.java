@@ -17,7 +17,6 @@ package com.iseasoft.iSeaMusic.fragments;
 import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,19 +26,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.iseasoft.iSeaMusic.R;
+import com.iseasoft.iSeaMusic.adapters.AlbumAdapter;
 import com.iseasoft.iSeaMusic.dataloaders.AlbumLoader;
 import com.iseasoft.iSeaMusic.models.Album;
 import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
 import com.iseasoft.iSeaMusic.utils.SortOrder;
-import com.iseasoft.iSeaMusic.R;
-import com.iseasoft.iSeaMusic.adapters.AlbumAdapter;
 import com.iseasoft.iSeaMusic.widgets.BaseRecyclerView;
 import com.iseasoft.iSeaMusic.widgets.DividerItemDecoration;
 import com.iseasoft.iSeaMusic.widgets.FastScroller;
 
 import java.util.List;
 
-public class AlbumFragment extends Fragment {
+public class AlbumFragment extends AdsFragment {
 
     private AlbumAdapter mAdapter;
     private BaseRecyclerView recyclerView;
@@ -54,6 +53,7 @@ public class AlbumFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mPreferences = PreferencesUtility.getInstance(getActivity());
         isGrid = mPreferences.isAlbumsInGrid();
+        spaceBetweenAds = isGrid ? GRID_VIEW_ADS_COUNT : LIST_VIEW_ADS_COUNT;
     }
 
     @Override
@@ -97,7 +97,11 @@ public class AlbumFragment extends Fragment {
 
     private void updateLayoutManager(int column) {
         recyclerView.removeItemDecoration(itemDecoration);
-        recyclerView.setAdapter(new AlbumAdapter(getActivity(), AlbumLoader.getAllAlbums(getActivity())));
+        spaceBetweenAds = isGrid ? 5 : 10;
+        mAdapter = null;
+        mAdapter = new AlbumAdapter(getActivity(), AlbumLoader.getAllAlbums(getActivity()));
+        recyclerView.setAdapter(mAdapter);
+        generateDataSet(mAdapter);
         layoutManager.setSpanCount(column);
         layoutManager.requestLayout();
         setItemDecoration();
@@ -109,6 +113,7 @@ public class AlbumFragment extends Fragment {
             protected Void doInBackground(final Void... unused) {
                 List<Album> albumList = AlbumLoader.getAllAlbums(getActivity());
                 mAdapter.updateDataSet(albumList);
+                generateDataSet(mAdapter);
                 return null;
             }
 
@@ -194,8 +199,10 @@ public class AlbumFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... params) {
-            if (getActivity() != null)
+            if (getActivity() != null) {
                 mAdapter = new AlbumAdapter(getActivity(), AlbumLoader.getAllAlbums(getActivity()));
+                generateDataSet(mAdapter);
+            }
             return "Executed";
         }
 

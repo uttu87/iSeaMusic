@@ -17,7 +17,6 @@ package com.iseasoft.iSeaMusic.fragments;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,16 +28,16 @@ import android.view.ViewGroup;
 
 import com.afollestad.appthemeengine.ATE;
 import com.iseasoft.iSeaMusic.MusicPlayer;
+import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.activities.BaseActivity;
+import com.iseasoft.iSeaMusic.adapters.PlayingQueueAdapter;
 import com.iseasoft.iSeaMusic.dataloaders.QueueLoader;
 import com.iseasoft.iSeaMusic.listeners.MusicStateListener;
 import com.iseasoft.iSeaMusic.models.Song;
-import com.iseasoft.iSeaMusic.R;
-import com.iseasoft.iSeaMusic.adapters.PlayingQueueAdapter;
 import com.iseasoft.iSeaMusic.widgets.BaseRecyclerView;
 import com.iseasoft.iSeaMusic.widgets.DragSortRecycler;
 
-public class QueueFragment extends Fragment implements MusicStateListener {
+public class QueueFragment extends AdsFragment implements MusicStateListener {
 
     private PlayingQueueAdapter mAdapter;
     private BaseRecyclerView recyclerView;
@@ -75,6 +74,7 @@ public class QueueFragment extends Fragment implements MusicStateListener {
         } else {
             ATE.apply(this, "light_theme");
         }
+        spaceBetweenAds = LIST_VIEW_ADS_COUNT;
     }
 
     public void restartLoader() {
@@ -101,6 +101,7 @@ public class QueueFragment extends Fragment implements MusicStateListener {
         @Override
         protected void onPostExecute(String result) {
             recyclerView.setAdapter(mAdapter);
+            generateDataSet(mAdapter);
             DragSortRecycler dragSortRecycler = new DragSortRecycler();
             dragSortRecycler.setViewHandleId(R.id.reorder);
 

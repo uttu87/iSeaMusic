@@ -27,6 +27,8 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.iseasoft.iSeaMusic.MusicPlayer;
+import com.iseasoft.iSeaMusic.R;
+import com.iseasoft.iSeaMusic.dialogs.AddPlaylistDialog;
 import com.iseasoft.iSeaMusic.lastfmapi.LastFmClient;
 import com.iseasoft.iSeaMusic.lastfmapi.callbacks.ArtistInfoListener;
 import com.iseasoft.iSeaMusic.lastfmapi.models.ArtistQuery;
@@ -36,8 +38,6 @@ import com.iseasoft.iSeaMusic.models.Artist;
 import com.iseasoft.iSeaMusic.models.Song;
 import com.iseasoft.iSeaMusic.utils.NavigationUtils;
 import com.iseasoft.iSeaMusic.utils.iSeaUtils;
-import com.iseasoft.iSeaMusic.R;
-import com.iseasoft.iSeaMusic.dialogs.AddPlaylistDialog;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
@@ -45,7 +45,7 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import java.util.Collections;
 import java.util.List;
 
-public class SearchAdapter extends BaseSongAdapter<SearchAdapter.ItemHolder> {
+public class SearchAdapter extends BaseSongAdapter {
 
     private Activity mContext;
     private List searchResults = Collections.emptyList();
@@ -82,7 +82,8 @@ public class SearchAdapter extends BaseSongAdapter<SearchAdapter.ItemHolder> {
     }
 
     @Override
-    public void onBindViewHolder(final ItemHolder itemHolder, int i) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int i) {
+        final ItemHolder itemHolder = (ItemHolder) viewHolder;
         switch (getItemViewType(i)) {
             case 0:
                 Song song = (Song) searchResults.get(i);
@@ -143,7 +144,7 @@ public class SearchAdapter extends BaseSongAdapter<SearchAdapter.ItemHolder> {
     }
 
     @Override
-    public void onViewRecycled(ItemHolder itemHolder) {
+    public void onViewRecycled(RecyclerView.ViewHolder itemHolder) {
 
     }
 

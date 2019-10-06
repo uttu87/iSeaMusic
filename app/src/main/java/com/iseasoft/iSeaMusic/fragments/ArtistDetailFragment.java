@@ -18,8 +18,10 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
@@ -37,8 +39,11 @@ import android.widget.ImageView;
 
 import com.afollestad.appthemeengine.ATE;
 import com.iseasoft.iSeaMusic.MusicPlayer;
+import com.iseasoft.iSeaMusic.R;
+import com.iseasoft.iSeaMusic.adapters.ArtistSongAdapter;
 import com.iseasoft.iSeaMusic.dataloaders.ArtistLoader;
 import com.iseasoft.iSeaMusic.dataloaders.ArtistSongLoader;
+import com.iseasoft.iSeaMusic.dialogs.AddPlaylistDialog;
 import com.iseasoft.iSeaMusic.lastfmapi.LastFmClient;
 import com.iseasoft.iSeaMusic.lastfmapi.callbacks.ArtistInfoListener;
 import com.iseasoft.iSeaMusic.lastfmapi.models.ArtistQuery;
@@ -50,9 +55,6 @@ import com.iseasoft.iSeaMusic.utils.Constants;
 import com.iseasoft.iSeaMusic.utils.Helpers;
 import com.iseasoft.iSeaMusic.utils.ImageUtils;
 import com.iseasoft.iSeaMusic.utils.iSeaUtils;
-import com.iseasoft.iSeaMusic.R;
-import com.iseasoft.iSeaMusic.adapters.ArtistSongAdapter;
-import com.iseasoft.iSeaMusic.dialogs.AddPlaylistDialog;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -90,6 +92,7 @@ public class ArtistDetailFragment extends Fragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(

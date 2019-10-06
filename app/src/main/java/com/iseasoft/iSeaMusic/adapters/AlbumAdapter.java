@@ -26,105 +26,120 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.appthemeengine.Config;
+import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.models.Album;
 import com.iseasoft.iSeaMusic.utils.Helpers;
 import com.iseasoft.iSeaMusic.utils.NavigationUtils;
 import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
 import com.iseasoft.iSeaMusic.utils.iSeaUtils;
-import com.iseasoft.iSeaMusic.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ItemHolder> {
+public class AlbumAdapter extends AdsAdapter {
 
-    private List<Album> arraylist;
     private Activity mContext;
-    private boolean isGrid;
 
     public AlbumAdapter(Activity context, List<Album> arraylist) {
-        this.arraylist = arraylist;
+        this.arraylist = new ArrayList<>();
+        this.arraylist.addAll(arraylist);
         this.mContext = context;
         this.isGrid = PreferencesUtility.getInstance(mContext).isAlbumsInGrid();
 
     }
 
     @Override
-    public ItemHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        if (isGrid) {
-            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_album_grid, null);
-            ItemHolder ml = new ItemHolder(v);
-            return ml;
-        } else {
-            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_album_list, null);
-            ItemHolder ml = new ItemHolder(v);
-            return ml;
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+
+        View v;
+        switch (viewType) {
+            case NATIVE_EXPRESS_AD_VIEW_TYPE:
+                return super.onCreateViewHolder(viewGroup, viewType);
+            case DATA_VIEW_TYPE:
+            default:
+                v = LayoutInflater.from(viewGroup.getContext())
+                        .inflate(isGrid ? R.layout.item_album_grid : R.layout.item_album_list, null);
+                ItemHolder ml = new ItemHolder(v);
+                return ml;
         }
+
     }
 
     @Override
-    public void onBindViewHolder(final ItemHolder itemHolder, int i) {
-        Album localItem = arraylist.get(i);
+    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int i) {
+        int viewType = getItemViewType(i);
+        switch (viewType) {
+            case NATIVE_EXPRESS_AD_VIEW_TYPE:
+                super.onBindViewHolder(viewHolder, i);
+                break;
+            case DATA_VIEW_TYPE:
+            default:
+                final ItemHolder itemHolder = (ItemHolder) viewHolder;
+                Album localItem = (Album) arraylist.get(i);
 
-        itemHolder.title.setText(localItem.title);
-        itemHolder.artist.setText(localItem.artistName);
+                itemHolder.title.setText(localItem.title);
+                itemHolder.artist.setText(localItem.artistName);
 
-        ImageLoader.getInstance().displayImage(iSeaUtils.getAlbumArtUri(localItem.id).toString(), itemHolder.albumArt,
-                new DisplayImageOptions.Builder().cacheInMemory(true)
-                        .showImageOnLoading(R.drawable.ic_empty_music2)
-                        .resetViewBeforeLoading(true)
-                        .displayer(new FadeInBitmapDisplayer(400))
-                        .build(), new SimpleImageLoadingListener() {
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        if (isGrid) {
-                            new Palette.Builder(loadedImage).generate(new Palette.PaletteAsyncListener() {
-                                @Override
-                                public void onGenerated(Palette palette) {
-                                    Palette.Swatch swatch = palette.getVibrantSwatch();
-                                    if (swatch != null) {
-                                        int color = swatch.getRgb();
-                                        itemHolder.footer.setBackgroundColor(color);
-                                        int textColor = iSeaUtils.getBlackWhiteColor(swatch.getTitleTextColor());
-                                        itemHolder.title.setTextColor(textColor);
-                                        itemHolder.artist.setTextColor(textColor);
-                                    } else {
-                                        Palette.Swatch mutedSwatch = palette.getMutedSwatch();
-                                        if (mutedSwatch != null) {
-                                            int color = mutedSwatch.getRgb();
-                                            itemHolder.footer.setBackgroundColor(color);
-                                            int textColor = iSeaUtils.getBlackWhiteColor(mutedSwatch.getTitleTextColor());
-                                            itemHolder.title.setTextColor(textColor);
-                                            itemHolder.artist.setTextColor(textColor);
+                ImageLoader.getInstance().displayImage(iSeaUtils.getAlbumArtUri(localItem.id).toString(), itemHolder.albumArt,
+                        new DisplayImageOptions.Builder().cacheInMemory(true)
+                                .showImageOnLoading(R.drawable.ic_empty_music2)
+                                .resetViewBeforeLoading(true)
+                                .displayer(new FadeInBitmapDisplayer(400))
+                                .build(), new SimpleImageLoadingListener() {
+                            @Override
+                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                                if (isGrid) {
+                                    new Palette.Builder(loadedImage).generate(new Palette.PaletteAsyncListener() {
+                                        @Override
+                                        public void onGenerated(Palette palette) {
+                                            Palette.Swatch swatch = palette.getVibrantSwatch();
+                                            if (swatch != null) {
+                                                int color = swatch.getRgb();
+                                                itemHolder.footer.setBackgroundColor(color);
+                                                int textColor = iSeaUtils.getBlackWhiteColor(swatch.getTitleTextColor());
+                                                itemHolder.title.setTextColor(textColor);
+                                                itemHolder.artist.setTextColor(textColor);
+                                            } else {
+                                                Palette.Swatch mutedSwatch = palette.getMutedSwatch();
+                                                if (mutedSwatch != null) {
+                                                    int color = mutedSwatch.getRgb();
+                                                    itemHolder.footer.setBackgroundColor(color);
+                                                    int textColor = iSeaUtils.getBlackWhiteColor(mutedSwatch.getTitleTextColor());
+                                                    itemHolder.title.setTextColor(textColor);
+                                                    itemHolder.artist.setTextColor(textColor);
+                                                }
+                                            }
+
+
                                         }
-                                    }
-
-
+                                    });
                                 }
-                            });
-                        }
 
-                    }
-
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                        if (isGrid) {
-                            itemHolder.footer.setBackgroundColor(0);
-                            if (mContext != null) {
-                                int textColorPrimary = Config.textColorPrimary(mContext, Helpers.getATEKey(mContext));
-                                itemHolder.title.setTextColor(textColorPrimary);
-                                itemHolder.artist.setTextColor(textColorPrimary);
                             }
-                        }
-                    }
-                });
 
-        if (iSeaUtils.isLollipop())
-            itemHolder.albumArt.setTransitionName("transition_album_art" + i);
+                            @Override
+                            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                                if (isGrid) {
+                                    itemHolder.footer.setBackgroundColor(0);
+                                    if (mContext != null) {
+                                        int textColorPrimary = Config.textColorPrimary(mContext, Helpers.getATEKey(mContext));
+                                        itemHolder.title.setTextColor(textColorPrimary);
+                                        itemHolder.artist.setTextColor(textColorPrimary);
+                                    }
+                                }
+                            }
+                        });
+
+                if (iSeaUtils.isLollipop()) {
+                    itemHolder.albumArt.setTransitionName("transition_album_art" + i);
+                }
+                break;
+        }
 
     }
 
@@ -133,8 +148,10 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ItemHolder> 
         return (null != arraylist ? arraylist.size() : 0);
     }
 
+
     public void updateDataSet(List<Album> arraylist) {
-        this.arraylist = arraylist;
+        this.arraylist.clear();
+        this.arraylist.addAll(arraylist);
     }
 
     public class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -153,13 +170,12 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ItemHolder> 
 
         @Override
         public void onClick(View v) {
-            NavigationUtils.navigateToAlbum(mContext, arraylist.get(getAdapterPosition()).id,
+            final Album album = (Album) arraylist.get(getAdapterPosition());
+            NavigationUtils.navigateToAlbum(mContext, album.id,
                     new Pair<View, String>(albumArt, "transition_album_art" + getAdapterPosition()));
         }
 
     }
-
-
 }
 
 

@@ -41,17 +41,21 @@ import com.afollestad.appthemeengine.customizers.ATEActivityThemeCustomizer;
 import com.afollestad.appthemeengine.customizers.ATEToolbarCustomizer;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.android.gms.ads.AdLoader;
+import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
+import com.google.android.gms.ads.formats.UnifiedNativeAd;
+import com.iseasoft.iSeaMusic.R;
+import com.iseasoft.iSeaMusic.adapters.AdsAdapter;
+import com.iseasoft.iSeaMusic.adapters.SongsListAdapter;
 import com.iseasoft.iSeaMusic.dataloaders.LastAddedLoader;
 import com.iseasoft.iSeaMusic.dataloaders.PlaylistLoader;
 import com.iseasoft.iSeaMusic.dataloaders.PlaylistSongLoader;
 import com.iseasoft.iSeaMusic.dataloaders.SongLoader;
 import com.iseasoft.iSeaMusic.dataloaders.TopTracksLoader;
+import com.iseasoft.iSeaMusic.listeners.SimplelTransitionListener;
 import com.iseasoft.iSeaMusic.models.Song;
 import com.iseasoft.iSeaMusic.utils.Constants;
 import com.iseasoft.iSeaMusic.utils.iSeaUtils;
-import com.iseasoft.iSeaMusic.R;
-import com.iseasoft.iSeaMusic.adapters.SongsListAdapter;
-import com.iseasoft.iSeaMusic.listeners.SimplelTransitionListener;
 import com.iseasoft.iSeaMusic.widgets.DividerItemDecoration;
 import com.iseasoft.iSeaMusic.widgets.DragSortRecycler;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -62,6 +66,7 @@ import java.util.List;
 
 public class PlaylistDetailActivity extends BaseActivity implements ATEActivityThemeCustomizer, ATEToolbarCustomizer {
 
+    private static final int ADS_ITEM_START_INDEX = 2;
     private String action;
     private long playlistID;
     private HashMap<String, Runnable> playlistsMap = new HashMap<>();
@@ -183,6 +188,7 @@ public class PlaylistDetailActivity extends BaseActivity implements ATEActivityT
     }
 
     private void setRecyclerViewAapter() {
+        generateDataSet(mAdapter);
         recyclerView.setAdapter(mAdapter);
         if (animate && iSeaUtils.isLollipop()) {
             Handler handler = new Handler();
@@ -393,5 +399,27 @@ public class PlaylistDetailActivity extends BaseActivity implements ATEActivityT
     @Override
     public int getLightToolbarMode() {
         return Config.LIGHT_TOOLBAR_AUTO;
+    }
+
+    protected void generateDataSet(final AdsAdapter adapter) {
+        if (adapter.getDataSet().size() < ADS_ITEM_START_INDEX) {
+            return;
+        }
+        AdLoader adLoader = new AdLoader.Builder(this, "/21617015150/407539/21858867742")
+                .forUnifiedNativeAd(new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
+                    @Override
+                    public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
+                        final List<Object> mDataSet = adapter.getDataSet();
+                        int spaceBetweenAds = 10;
+                        for (int i = ADS_ITEM_START_INDEX; i <= mDataSet.size(); i += (spaceBetweenAds + 1)) {
+                            adapter.getDataSet().add(i, unifiedNativeAd);
+                            adapter.notifyItemRangeChanged(i, spaceBetweenAds);
+                        }
+                    }
+                })
+                .build();
+
+        adLoader.loadAd(new PublisherAdRequest.Builder()
+                .addTestDevice("FB536EF8C6F97686372A2C5A5AA24BC5").build());
     }
 }

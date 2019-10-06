@@ -12,15 +12,20 @@ import com.afollestad.appthemeengine.Config;
 import com.afollestad.appthemeengine.customizers.ATEActivityThemeCustomizer;
 import com.afollestad.appthemeengine.customizers.ATEStatusBarCustomizer;
 import com.afollestad.appthemeengine.customizers.ATEToolbarCustomizer;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
+import com.google.android.gms.ads.doubleclick.PublisherInterstitialAd;
+import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.utils.Constants;
 import com.iseasoft.iSeaMusic.utils.NavigationUtils;
 import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
-import com.iseasoft.iSeaMusic.R;
 
 /**
  * Created by naman on 01/01/16.
  */
 public class NowPlayingActivity extends BaseActivity implements ATEActivityThemeCustomizer, ATEToolbarCustomizer, ATEStatusBarCustomizer {
+
+    private PublisherInterstitialAd publisherInterstitialAd;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,8 @@ public class NowPlayingActivity extends BaseActivity implements ATEActivityTheme
 
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment).commit();
+
+        setupFullscreenAds();
 
     }
 
@@ -70,5 +77,42 @@ public class NowPlayingActivity extends BaseActivity implements ATEActivityTheme
             PreferencesUtility.getInstance(this).setNowPlayingThemeChanged(false);
             recreate();
         }
+    }
+
+    private void setupFullscreenAds() {
+        if (publisherInterstitialAd == null) {
+            publisherInterstitialAd = new PublisherInterstitialAd(this);
+            publisherInterstitialAd.setAdUnitId("/21617015150/407539/21853476136");
+        }
+        requestNewInterstitial();
+    }
+
+    private void requestNewInterstitial() {
+        PublisherAdRequest adRequest = new PublisherAdRequest.Builder()
+                .addTestDevice("FB536EF8C6F97686372A2C5A5AA24BC5")
+                .build();
+
+        publisherInterstitialAd.loadAd(adRequest);
+
+        publisherInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                if (publisherInterstitialAd != null) {
+                    publisherInterstitialAd.show();
+                }
+            }
+
+            @Override
+            public void onAdFailedToLoad(int i) {
+                super.onAdFailedToLoad(i);
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        publisherInterstitialAd = null;
     }
 }

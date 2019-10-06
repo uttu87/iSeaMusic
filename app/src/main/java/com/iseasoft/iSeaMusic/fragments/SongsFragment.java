@@ -16,7 +16,6 @@ package com.iseasoft.iSeaMusic.fragments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -26,21 +25,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.activities.BaseActivity;
+import com.iseasoft.iSeaMusic.adapters.SongsListAdapter;
 import com.iseasoft.iSeaMusic.dataloaders.SongLoader;
 import com.iseasoft.iSeaMusic.listeners.MusicStateListener;
 import com.iseasoft.iSeaMusic.models.Song;
 import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
 import com.iseasoft.iSeaMusic.utils.SortOrder;
-import com.iseasoft.iSeaMusic.R;
-import com.iseasoft.iSeaMusic.adapters.SongsListAdapter;
 import com.iseasoft.iSeaMusic.widgets.BaseRecyclerView;
 import com.iseasoft.iSeaMusic.widgets.DividerItemDecoration;
 import com.iseasoft.iSeaMusic.widgets.FastScroller;
 
 import java.util.List;
 
-public class SongsFragment extends Fragment implements MusicStateListener {
+public class SongsFragment extends AdsFragment implements MusicStateListener {
 
     private SongsListAdapter mAdapter;
     private BaseRecyclerView recyclerView;
@@ -50,6 +49,7 @@ public class SongsFragment extends Fragment implements MusicStateListener {
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPreferences = PreferencesUtility.getInstance(getActivity());
+        spaceBetweenAds = LIST_VIEW_ADS_COUNT;
     }
 
     @Override
@@ -88,6 +88,7 @@ public class SongsFragment extends Fragment implements MusicStateListener {
             protected Void doInBackground(final Void... unused) {
                 List<Song> songList = SongLoader.getAllSongs(getActivity());
                 mAdapter.updateDataSet(songList);
+                generateDataSet(mAdapter);
                 return null;
             }
 
@@ -153,6 +154,7 @@ public class SongsFragment extends Fragment implements MusicStateListener {
         @Override
         protected void onPostExecute(String result) {
             recyclerView.setAdapter(mAdapter);
+            generateDataSet(mAdapter);
             if (getActivity() != null)
                 recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
