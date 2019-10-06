@@ -36,7 +36,6 @@ import com.iseasoft.iSeaMusic.widgets.BaseRecyclerView;
 import com.iseasoft.iSeaMusic.widgets.DividerItemDecoration;
 import com.iseasoft.iSeaMusic.widgets.FastScroller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AlbumFragment extends AdsFragment {
@@ -55,7 +54,6 @@ public class AlbumFragment extends AdsFragment {
         mPreferences = PreferencesUtility.getInstance(getActivity());
         isGrid = mPreferences.isAlbumsInGrid();
         spaceBetweenAds = isGrid ? 5 : 10;
-        mDataSet = new ArrayList<>();
     }
 
     @Override
@@ -100,9 +98,9 @@ public class AlbumFragment extends AdsFragment {
     private void updateLayoutManager(int column) {
         recyclerView.removeItemDecoration(itemDecoration);
         spaceBetweenAds = isGrid ? 5 : 10;
-        mDataSet.clear();
-        mDataSet.addAll(AlbumLoader.getAllAlbums(getActivity()));
-        recyclerView.setAdapter(new AlbumAdapter(getActivity(), mDataSet));
+        mAdapter = null;
+        mAdapter = new AlbumAdapter(getActivity(), AlbumLoader.getAllAlbums(getActivity()));
+        recyclerView.setAdapter(mAdapter);
         generateDataSet(mAdapter);
         layoutManager.setSpanCount(column);
         layoutManager.requestLayout();
@@ -114,9 +112,7 @@ public class AlbumFragment extends AdsFragment {
             @Override
             protected Void doInBackground(final Void... unused) {
                 List<Album> albumList = AlbumLoader.getAllAlbums(getActivity());
-                mDataSet.clear();
-                mDataSet.addAll(albumList);
-                mAdapter.updateDataSet(mDataSet);
+                mAdapter.updateDataSet(albumList);
                 generateDataSet(mAdapter);
                 return null;
             }
@@ -204,9 +200,7 @@ public class AlbumFragment extends AdsFragment {
         @Override
         protected String doInBackground(String... params) {
             if (getActivity() != null) {
-                mDataSet.clear();
-                mDataSet.addAll(AlbumLoader.getAllAlbums(getActivity()));
-                mAdapter = new AlbumAdapter(getActivity(), mDataSet);
+                mAdapter = new AlbumAdapter(getActivity(), AlbumLoader.getAllAlbums(getActivity()));
                 generateDataSet(mAdapter);
             }
             return "Executed";

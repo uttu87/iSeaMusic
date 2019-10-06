@@ -1,25 +1,26 @@
 package com.iseasoft.iSeaMusic.fragments;
 
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
 
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
+import com.iseasoft.iSeaMusic.adapters.AdsAdapter;
 
 import java.util.List;
 
 public class AdsFragment extends Fragment {
-    protected List<Object> mDataSet;
     protected int spaceBetweenAds;
-    protected void generateDataSet(final RecyclerView.Adapter adapter) {
+
+    protected void generateDataSet(final AdsAdapter adapter) {
+        final List<Object> mDataSet = adapter.getDataSet();
         for (int i = 2; i <= mDataSet.size(); i += (spaceBetweenAds + 1)) {
             final int position = i;
             AdLoader adLoader = new AdLoader.Builder(getActivity(), "/21617015150/407539/21858867742")
                     .forUnifiedNativeAd(new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
                         @Override
                         public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
-                            mDataSet.add(position, unifiedNativeAd);
+                            adapter.getDataSet().add(position, unifiedNativeAd);
                             adapter.notifyItemRangeChanged(position, spaceBetweenAds);
                         }
                     })
