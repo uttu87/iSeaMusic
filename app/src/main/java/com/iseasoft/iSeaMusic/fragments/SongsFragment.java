@@ -154,6 +154,7 @@ public class SongsFragment extends AdsFragment implements MusicStateListener {
         @Override
         protected void onPostExecute(String result) {
             recyclerView.setAdapter(mAdapter);
+            generateDataSet(mAdapter);
             if (getActivity() != null)
                 recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
