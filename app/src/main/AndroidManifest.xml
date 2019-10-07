@@ -78,9 +78,6 @@
             android:theme="@style/AppTheme.ExpandedCastController"></activity>
 
         <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="@string/fabric_api_key" /> <!-- Music service -->
-        <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
             android:value="true" />
         <meta-data

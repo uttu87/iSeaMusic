@@ -17,10 +17,8 @@ package com.iseasoft.iSeaMusic;
 import android.support.multidex.MultiDexApplication;
 
 import com.afollestad.appthemeengine.ATE;
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.core.CrashlyticsCore;
-import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
 import com.iseasoft.iSeaMusic.permissions.Nammu;
+import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
@@ -28,8 +26,6 @@ import com.nostra13.universalimageloader.utils.L;
 
 import java.io.IOException;
 import java.io.InputStream;
-
-import io.fabric.sdk.android.Fabric;
 
 public class iSeaMusicApp extends MultiDexApplication {
 
@@ -44,12 +40,6 @@ public class iSeaMusicApp extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
-
-        //disable crashlytics for debug builds
-        Crashlytics crashlyticsKit = new Crashlytics.Builder()
-                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-                .build();
-        Fabric.with(this, crashlyticsKit);
 
         ImageLoaderConfiguration localImageLoaderConfiguration = new ImageLoaderConfiguration.Builder(this).imageDownloader(new BaseImageDownloader(this) {
             PreferencesUtility prefs = PreferencesUtility.getInstance(iSeaMusicApp.this);
