@@ -89,7 +89,9 @@ public class AdsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             templateView.setNativeAd(unifiedNativeAd);
             title.setText(unifiedNativeAd.getHeadline());
             artist.setText(unifiedNativeAd.getBody());
-            albumArt.setImageDrawable(unifiedNativeAd.getIcon().getDrawable());
+            if (unifiedNativeAd.getIcon() != null) {
+                albumArt.setImageDrawable(unifiedNativeAd.getIcon().getDrawable());
+            }
             templateView.setCallToActionView(templateView);
             Double starRating = unifiedNativeAd.getStarRating();
             if (starRating != null && starRating > 0) {
@@ -104,6 +106,9 @@ public class AdsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             if (isGrid) {
                 try {
+                    if (albumArt.getDrawable() == null) {
+                        return;
+                    }
                     Bitmap bitmap = ((BitmapDrawable) albumArt.getDrawable()).getBitmap();
                     new Palette.Builder(bitmap).generate(new Palette.PaletteAsyncListener() {
                         @Override
