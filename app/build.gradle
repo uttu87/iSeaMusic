@@ -22,6 +22,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             manifestPlaceholders = [ appNameSuffix:""]
+            resValue "string", "fabric_api_key", "12345"
+            resValue "string", "play_billing_license_key", "12345"
+            resValue "string", "cast_app_id", "12345"
 
         }
         debug {
