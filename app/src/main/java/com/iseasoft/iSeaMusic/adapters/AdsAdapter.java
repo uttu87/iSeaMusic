@@ -91,6 +91,8 @@ public class AdsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             artist.setText(unifiedNativeAd.getBody());
             if (unifiedNativeAd.getIcon() != null) {
                 albumArt.setImageDrawable(unifiedNativeAd.getIcon().getDrawable());
+            } else {
+                albumArt.setBackgroundResource(R.mipmap.ic_launcher);
             }
             templateView.setCallToActionView(templateView);
             Double starRating = unifiedNativeAd.getStarRating();
