@@ -355,6 +355,7 @@ public class MainActivity extends BaseActivity implements ATEActivityThemeCustom
         try {
             //if (!BillingProcessor.isIabServiceAvailable(this)) {
                 navigationView.getMenu().removeItem(R.id.nav_donate);
+                navigationView.getMenu().removeItem(R.id.nav_about);
             //}
         } catch (Exception e) {
             e.printStackTrace();
