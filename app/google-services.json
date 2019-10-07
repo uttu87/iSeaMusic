@@ -1,0 +1,1237 @@
+{
+  "project_info": {
+    "project_number": "160524091467",
+    "firebase_url": "https://iseagoals.firebaseio.com",
+    "project_id": "iseagoals",
+    "storage_bucket": "iseagoals.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:076d43b868aa8698880dce",
+        "android_client_info": {
+          "package_name": "com.isea14.MusicPlayer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:3018c657b5899033",
+        "android_client_info": {
+          "package_name": "com.isea14.android.italiatv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:1c2e553ab83648a4",
+        "android_client_info": {
+          "package_name": "com.isea14.android.usatv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:2d4f65272be1e987880dce",
+        "android_client_info": {
+          "package_name": "com.isea14.argentinatv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:a5be92620b5a6abe880dce",
+        "android_client_info": {
+          "package_name": "com.isea14.armeniatv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:dd1102f37d7b2e40880dce",
+        "android_client_info": {
+          "package_name": "com.isea14.belgiumtv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:cd1ff1b095f136c6880dce",
+        "android_client_info": {
+          "package_name": "com.isea14.braziltv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:4e99232df6eb1b7e880dce",
+        "android_client_info": {
+          "package_name": "com.isea14.canadatv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:8a1bbb41a21b401d",
+        "android_client_info": {
+          "package_name": "com.isea14.chinatv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:e4ddee968a3d570e880dce",
+        "android_client_info": {
+          "package_name": "com.isea14.egypttv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:e0fcc9246d2d09f8880dce",
+        "android_client_info": {
+          "package_name": "com.isea14.francetv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:3d6452e6021d2968",
+        "android_client_info": {
+          "package_name": "com.isea14.germanytv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:85eb9cc0982173d3880dce",
+        "android_client_info": {
+          "package_name": "com.isea14.greecetv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:e5553cc4cedf717e880dce",
+        "android_client_info": {
+          "package_name": "com.isea14.hongkongtv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:c2384a7009c52a9d880dce",
+        "android_client_info": {
+          "package_name": "com.isea14.indiatv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:9235427f377a45c4",
+        "android_client_info": {
+          "package_name": "com.isea14.indotv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:f00f342dc3c3b226",
+        "android_client_info": {
+          "package_name": "com.isea14.iptv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:4301e795aef6c22e880dce",
+        "android_client_info": {
+          "package_name": "com.isea14.japantv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:eadab0a3332c0348880dce",
+        "android_client_info": {
+          "package_name": "com.isea14.koreatv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:198fd108e938e013880dce",
+        "android_client_info": {
+          "package_name": "com.isea14.maroctv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:6314cd4e6cc1e3d1880dce",
+        "android_client_info": {
+          "package_name": "com.isea14.portugaltv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:751c527c1abf4781880dce",
+        "android_client_info": {
+          "package_name": "com.isea14.spaintv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:d10973597bd4dd85",
+        "android_client_info": {
+          "package_name": "com.isea14.sport"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:d1bc0713cfde5860880dce",
+        "android_client_info": {
+          "package_name": "com.isea14.thailandtv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:10524dede230ad6f880dce",
+        "android_client_info": {
+          "package_name": "com.isea14.turkeytv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:4a42e99f85118423880dce",
+        "android_client_info": {
+          "package_name": "com.isea14.ukrainetv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:f9371d1bdb0dd49a",
+        "android_client_info": {
+          "package_name": "com.iseasoft.android.indiatv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:7b824030f9b8e001",
+        "android_client_info": {
+          "package_name": "com.iseasoft.android.iseaiptv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:a4ca6c3760db1eed",
+        "android_client_info": {
+          "package_name": "com.iseasoft.android.sportstv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:7f6202c94683491b",
+        "android_client_info": {
+          "package_name": "com.iseasoft.android.usatv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:9cb2cabac42a82a0",
+        "android_client_info": {
+          "package_name": "com.iseasoft.chinatv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:1fcd2cfe739c4807",
+        "android_client_info": {
+          "package_name": "com.iseasoft.indiatv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:c9ff7b1650b0ca92",
+        "android_client_info": {
+          "package_name": "com.iseasoft.indotv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:5c606bd6b1da0081",
+        "android_client_info": {
+          "package_name": "com.iseasoft.iseafootball"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:5cb23d4d2451fcc8",
+        "android_client_info": {
+          "package_name": "com.iseasoft.iseagoal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:f2e795fde7072c1c",
+        "android_client_info": {
+          "package_name": "com.iseasoft.iseagoals"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:960de3db0484783f",
+        "android_client_info": {
+          "package_name": "com.iseasoft.iseagoals.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:18cb1df5782504fa",
+        "android_client_info": {
+          "package_name": "com.iseasoft.iseaiptv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:bf1d65feb4096ea9",
+        "android_client_info": {
+          "package_name": "com.iseasoft.isealive"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-clfpgrk0vv8eu96kk4hpj1ida960ok5a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iseasoft.isealive",
+            "certificate_hash": "18d59d73c4ab99ca65dfb8e1ecae61fe0acf2e9d"
+          }
+        },
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:7ed0cb9ecf5721db",
+        "android_client_info": {
+          "package_name": "com.iseasoft.russiatv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:60ddf771056b915a",
+        "android_client_info": {
+          "package_name": "com.iseasoft.sportstv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160524091467:android:466a9b0f43bf2330",
+        "android_client_info": {
+          "package_name": "com.iseasoft.usatv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcgN2CSg3ElJQSMQMSTZhgoDQZKClmkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160524091467-6l18jd71jubkbqk3o94ol5dbid8i9vvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
