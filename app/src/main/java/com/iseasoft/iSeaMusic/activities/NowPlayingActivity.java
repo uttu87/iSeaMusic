@@ -82,7 +82,7 @@ public class NowPlayingActivity extends BaseActivity implements ATEActivityTheme
     private void setupFullscreenAds() {
         if (publisherInterstitialAd == null) {
             publisherInterstitialAd = new PublisherInterstitialAd(this);
-            publisherInterstitialAd.setAdUnitId("/21617015150/407539/21853476136");
+            publisherInterstitialAd.setAdUnitId(getString(R.string.interstitial_ads_id));
         }
         requestNewInterstitial();
     }

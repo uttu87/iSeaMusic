@@ -6,7 +6,8 @@
         android:orderInCategory="10" app:showAsAction="never" />
 
     <item android:id="@+id/action_equalizer" android:title="@string/action_equalizer"
-        android:orderInCategory="100" app:showAsAction="never" />
+        android:icon="@drawable/ic_equalizer"
+        android:orderInCategory="100" app:showAsAction="always" />
 
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="101" app:showAsAction="never" />

@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
+import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.adapters.AdsAdapter;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class AdsFragment extends Fragment {
                 || adapter.getDataSet().size() < ADS_ITEM_START_INDEX) {
             return;
         }
-        AdLoader adLoader = new AdLoader.Builder(getActivity(), "/21617015150/407539/21858867742")
+        AdLoader adLoader = new AdLoader.Builder(getActivity(), getString(R.string.native_ads_id))
                 .forUnifiedNativeAd(new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
                     @Override
                     public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {

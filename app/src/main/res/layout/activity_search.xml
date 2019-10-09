@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         ads:adSize="BANNER"
-        ads:adUnitId="/21617015150/407539/21853188684"
+        ads:adUnitId="@string/banner_ads_id"
         android:visibility="gone">
     </com.google.android.gms.ads.doubleclick.PublisherAdView>
 
