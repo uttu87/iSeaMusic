@@ -17,7 +17,6 @@ package com.iseasoft.iSeaMusic.fragments;
 import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,19 +26,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.iseasoft.iSeaMusic.R;
+import com.iseasoft.iSeaMusic.adapters.ArtistAdapter;
 import com.iseasoft.iSeaMusic.dataloaders.ArtistLoader;
 import com.iseasoft.iSeaMusic.models.Artist;
 import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
 import com.iseasoft.iSeaMusic.utils.SortOrder;
-import com.iseasoft.iSeaMusic.R;
-import com.iseasoft.iSeaMusic.adapters.ArtistAdapter;
 import com.iseasoft.iSeaMusic.widgets.BaseRecyclerView;
 import com.iseasoft.iSeaMusic.widgets.DividerItemDecoration;
 import com.iseasoft.iSeaMusic.widgets.FastScroller;
 
 import java.util.List;
 
-public class ArtistFragment extends Fragment {
+public class ArtistFragment extends AdsFragment {
 
     private ArtistAdapter mAdapter;
     private BaseRecyclerView recyclerView;
@@ -53,6 +52,7 @@ public class ArtistFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mPreferences = PreferencesUtility.getInstance(getActivity());
         isGrid = mPreferences.isArtistsInGrid();
+        spaceBetweenAds = isGrid ? GRID_VIEW_ADS_COUNT : LIST_VIEW_ADS_COUNT;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class ArtistFragment extends Fragment {
         View rootView = inflater.inflate(
                 R.layout.fragment_recyclerview, container, false);
 
-        recyclerView =  rootView.findViewById(R.id.recyclerview);
+        recyclerView = rootView.findViewById(R.id.recyclerview);
         FastScroller fastScroller = rootView.findViewById(R.id.fastscroller);
         fastScroller.setRecyclerView(recyclerView);
         recyclerView.setEmptyView(getActivity(), rootView.findViewById(R.id.list_empty), "No media found");
@@ -93,7 +93,11 @@ public class ArtistFragment extends Fragment {
 
     private void updateLayoutManager(int column) {
         recyclerView.removeItemDecoration(itemDecoration);
-        recyclerView.setAdapter(new ArtistAdapter(getActivity(), ArtistLoader.getAllArtists(getActivity())));
+        spaceBetweenAds = isGrid ? 5 : 10;
+        mAdapter = null;
+        mAdapter = new ArtistAdapter(getActivity(), ArtistLoader.getAllArtists(getActivity()));
+        recyclerView.setAdapter(mAdapter);
+        generateDataSet(mAdapter);
         layoutManager.setSpanCount(column);
         layoutManager.requestLayout();
         setItemDecoration();
@@ -105,6 +109,7 @@ public class ArtistFragment extends Fragment {
             protected Void doInBackground(final Void... unused) {
                 List<Artist> artistList = ArtistLoader.getAllArtists(getActivity());
                 mAdapter.updateDataSet(artistList);
+                generateDataSet(mAdapter);
                 return null;
             }
 
@@ -166,8 +171,10 @@ public class ArtistFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... params) {
-            if (getActivity() != null)
+            if (getActivity() != null) {
                 mAdapter = new ArtistAdapter(getActivity(), ArtistLoader.getAllArtists(getActivity()));
+                generateDataSet(mAdapter);
+            }
             return "Executed";
         }
 

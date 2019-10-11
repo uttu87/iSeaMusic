@@ -17,12 +17,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.dataloaders.FolderLoader;
 import com.iseasoft.iSeaMusic.dataloaders.SongLoader;
 import com.iseasoft.iSeaMusic.models.Song;
 import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
 import com.iseasoft.iSeaMusic.utils.iSeaUtils;
-import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.widgets.BubbleTextGetter;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -35,14 +35,14 @@ import java.util.List;
  * Created by nv95 on 10.11.16.
  */
 
-public class FolderAdapter extends BaseSongAdapter<FolderAdapter.ItemHolder> implements BubbleTextGetter {
+public class FolderAdapter extends BaseSongAdapter implements BubbleTextGetter {
 
+    private final Drawable[] mIcons;
     @NonNull
     private List<File> mFileSet;
     private List<Song> mSongs;
     private File mRoot;
     private Activity mContext;
-    private final Drawable[] mIcons;
     private boolean mBusy = false;
 
 
@@ -76,9 +76,10 @@ public class FolderAdapter extends BaseSongAdapter<FolderAdapter.ItemHolder> imp
     }
 
     @Override
-    public void onBindViewHolder(final FolderAdapter.ItemHolder itemHolder, int i) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int i) {
         File localItem = mFileSet.get(i);
         Song song = mSongs.get(i);
+        ItemHolder itemHolder = (ItemHolder) viewHolder;
         itemHolder.title.setText(localItem.getName());
         if (localItem.isDirectory()) {
             itemHolder.albumArt.setImageDrawable("..".equals(localItem.getName()) ? mIcons[1] : mIcons[0]);
@@ -94,6 +95,11 @@ public class FolderAdapter extends BaseSongAdapter<FolderAdapter.ItemHolder> imp
     @Override
     public int getItemCount() {
         return mFileSet.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return 0;
     }
 
     @Deprecated
@@ -226,7 +232,7 @@ public class FolderAdapter extends BaseSongAdapter<FolderAdapter.ItemHolder> imp
                     @Override
                     public void run() {
                         int current = -1;
-                        long songId = SongLoader.getSongFromPath(mFileSet.get(getAdapterPosition()).getAbsolutePath(),mContext).id;
+                        long songId = SongLoader.getSongFromPath(mFileSet.get(getAdapterPosition()).getAbsolutePath(), mContext).id;
                         int count = 0;
                         for (Song song : mSongs) {
                             if (song.id != -1) {

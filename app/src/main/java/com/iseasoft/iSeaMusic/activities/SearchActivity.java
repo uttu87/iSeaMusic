@@ -28,14 +28,17 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
+import com.google.android.gms.ads.doubleclick.PublisherAdView;
+import com.iseasoft.iSeaMusic.R;
+import com.iseasoft.iSeaMusic.adapters.SearchAdapter;
 import com.iseasoft.iSeaMusic.dataloaders.AlbumLoader;
 import com.iseasoft.iSeaMusic.dataloaders.ArtistLoader;
 import com.iseasoft.iSeaMusic.dataloaders.SongLoader;
 import com.iseasoft.iSeaMusic.models.Album;
 import com.iseasoft.iSeaMusic.models.Artist;
 import com.iseasoft.iSeaMusic.models.Song;
-import com.iseasoft.iSeaMusic.R;
-import com.iseasoft.iSeaMusic.adapters.SearchAdapter;
 import com.iseasoft.iSeaMusic.provider.SearchHistory;
 
 import java.util.ArrayList;
@@ -56,6 +59,7 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
 
     private SearchAdapter adapter;
     private RecyclerView recyclerView;
+    private PublisherAdView adView;
 
     private List<Object> searchResults = Collections.emptyList();
 
@@ -71,10 +75,37 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        adView = findViewById(R.id.adView);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new SearchAdapter(this);
         recyclerView.setAdapter(adapter);
+
+        setupAds();
+    }
+
+    private void setupAds() {
+        PublisherAdRequest adRequest = new PublisherAdRequest.Builder()
+                .addTestDevice("FB536EF8C6F97686372A2C5A5AA24BC5")
+                .build();
+        adView.loadAd(adRequest);
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                if (adView != null) {
+                    adView.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onAdFailedToLoad(int i) {
+                super.onAdFailedToLoad(i);
+                if (adView != null) {
+                    adView.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
 
@@ -165,11 +196,24 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        adView.resume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        adView.pause();
+    }
+
+    @Override
     protected void onDestroy() {
         if (mSearchTask != null && mSearchTask.getStatus() != AsyncTask.Status.FINISHED) {
             mSearchTask.cancel(false);
         }
         super.onDestroy();
+        adView.destroy();
     }
 
     public void hideInputManager() {
@@ -183,7 +227,7 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
         }
     }
 
-    private class SearchTask extends AsyncTask<String,Void,ArrayList<Object>> {
+    private class SearchTask extends AsyncTask<String, Void, ArrayList<Object>> {
 
         @Override
         protected ArrayList<Object> doInBackground(String... params) {

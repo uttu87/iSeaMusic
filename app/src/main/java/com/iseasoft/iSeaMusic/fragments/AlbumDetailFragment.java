@@ -23,7 +23,6 @@ import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
@@ -43,8 +42,11 @@ import android.widget.TextView;
 import com.afollestad.appthemeengine.ATE;
 import com.afollestad.appthemeengine.Config;
 import com.iseasoft.iSeaMusic.MusicPlayer;
+import com.iseasoft.iSeaMusic.R;
+import com.iseasoft.iSeaMusic.adapters.AlbumSongsAdapter;
 import com.iseasoft.iSeaMusic.dataloaders.AlbumLoader;
 import com.iseasoft.iSeaMusic.dataloaders.AlbumSongLoader;
+import com.iseasoft.iSeaMusic.dialogs.AddPlaylistDialog;
 import com.iseasoft.iSeaMusic.listeners.SimplelTransitionListener;
 import com.iseasoft.iSeaMusic.models.Album;
 import com.iseasoft.iSeaMusic.models.Song;
@@ -57,9 +59,6 @@ import com.iseasoft.iSeaMusic.utils.NavigationUtils;
 import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
 import com.iseasoft.iSeaMusic.utils.SortOrder;
 import com.iseasoft.iSeaMusic.utils.iSeaUtils;
-import com.iseasoft.iSeaMusic.R;
-import com.iseasoft.iSeaMusic.adapters.AlbumSongsAdapter;
-import com.iseasoft.iSeaMusic.dialogs.AddPlaylistDialog;
 import com.iseasoft.iSeaMusic.widgets.DividerItemDecoration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
@@ -68,7 +67,7 @@ import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 
 import java.util.List;
 
-public class AlbumDetailFragment extends Fragment {
+public class AlbumDetailFragment extends AdsFragment {
 
     private long albumID = -1;
 
@@ -113,6 +112,7 @@ public class AlbumDetailFragment extends Fragment {
         context = getActivity();
         mContext = (AppCompatActivity) context;
         mPreferences = PreferencesUtility.getInstance(context);
+        spaceBetweenAds = LIST_VIEW_ADS_COUNT;
     }
 
     @TargetApi(21)
@@ -267,6 +267,7 @@ public class AlbumDetailFragment extends Fragment {
         mAdapter = new AlbumSongsAdapter(getActivity(), songList, albumID);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         recyclerView.setAdapter(mAdapter);
+        generateDataSet(mAdapter);
 
     }
 
@@ -282,6 +283,7 @@ public class AlbumDetailFragment extends Fragment {
             protected Void doInBackground(final Void... unused) {
                 List<Song> songList = AlbumSongLoader.getSongsForAlbum(getActivity(), albumID);
                 mAdapter.updateDataSet(songList);
+                generateDataSet(mAdapter);
                 return null;
             }
 
