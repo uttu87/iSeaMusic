@@ -30,10 +30,10 @@ import android.view.ViewGroup;
 
 import com.afollestad.appthemeengine.ATE;
 import com.afollestad.appthemeengine.Config;
+import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.utils.ATEUtils;
 import com.iseasoft.iSeaMusic.utils.Helpers;
 import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
-import com.iseasoft.iSeaMusic.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +88,7 @@ public class MainFragment extends Fragment {
 
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getChildFragmentManager());
+        adapter.addFragment(new DiscoverFragment(), "Discover");
         adapter.addFragment(new SongsFragment(), this.getString(R.string.songs));
         adapter.addFragment(new AlbumFragment(), this.getString(R.string.albums));
         adapter.addFragment(new ArtistFragment(), this.getString(R.string.artists));
