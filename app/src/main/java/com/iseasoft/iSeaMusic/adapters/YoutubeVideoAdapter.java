@@ -36,23 +36,40 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class YoutubeVideoAdapter extends RecyclerView.Adapter<YoutubeVideoAdapter.ItemHolder> {
+public class YoutubeVideoAdapter extends AdsAdapter {
 
-    private List<YoutubeVideo> arraylist;
+    public interface OnVideoListener {
+        void onClick(YoutubeVideo video);
+    }
+
     private Activity mContext;
-    private boolean isGrid;
+    private OnVideoListener listener;
+
+    public OnVideoListener getListener() {
+        return listener;
+    }
+
+    public void setListener(OnVideoListener listener) {
+        this.listener = listener;
+    }
 
     public YoutubeVideoAdapter(Activity context, List<YoutubeVideo> arraylist) {
-        this.arraylist = arraylist;
+        this.arraylist = new ArrayList<>();
+        this.arraylist.addAll(arraylist);
         this.mContext = context;
         this.isGrid = PreferencesUtility.getInstance(mContext).isAlbumsInGrid();
 
     }
 
     @Override
-    public ItemHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        if (i == NATIVE_EXPRESS_AD_VIEW_TYPE) {
+            return super.onCreateViewHolder(viewGroup, i);
+        }
+
         if (isGrid) {
             View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_album_grid, null);
             ItemHolder ml = new ItemHolder(v);
@@ -65,8 +82,15 @@ public class YoutubeVideoAdapter extends RecyclerView.Adapter<YoutubeVideoAdapte
     }
 
     @Override
-    public void onBindViewHolder(final ItemHolder itemHolder, int i) {
-        YoutubeVideo localItem = arraylist.get(i);
+    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int i) {
+        if (getItemViewType(i) == NATIVE_EXPRESS_AD_VIEW_TYPE) {
+            super.onBindViewHolder(viewHolder, i);
+            return;
+        }
+
+        YoutubeVideo localItem = (YoutubeVideo) arraylist.get(i);
+
+        final ItemHolder itemHolder = (ItemHolder) viewHolder;
 
         itemHolder.title.setText(localItem.getSnippet().getTitle());
         itemHolder.artist.setText(localItem.getSnippet().getDescription());
@@ -132,7 +156,8 @@ public class YoutubeVideoAdapter extends RecyclerView.Adapter<YoutubeVideoAdapte
     }
 
     public void updateDataSet(List<YoutubeVideo> arraylist) {
-        this.arraylist = arraylist;
+        this.arraylist.clear();
+        this.arraylist.addAll(arraylist);
     }
 
     public class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -151,9 +176,11 @@ public class YoutubeVideoAdapter extends RecyclerView.Adapter<YoutubeVideoAdapte
 
         @Override
         public void onClick(View v) {
-            final YoutubeVideo item = arraylist.get(getAdapterPosition());
+            final YoutubeVideo item = (YoutubeVideo)arraylist.get(getAdapterPosition());
+           if(listener != null) {
+               listener.onClick(item);
+           }
         }
-
     }
 
 
