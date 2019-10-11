@@ -23,6 +23,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.L;
+import com.yausername.youtubedl_android.YoutubeDL;
+import com.yausername.youtubedl_android.YoutubeDLException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -95,6 +97,11 @@ public class iSeaMusicApp extends MultiDexApplication {
                     .coloredNavigationBar(true)
                     .usingMaterialDialogs(true)
                     .commit();
+        }
+
+        try {
+            YoutubeDL.getInstance().init(this);
+        } catch (YoutubeDLException e) {
         }
 
     }

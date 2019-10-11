@@ -32,9 +32,9 @@ import android.provider.BaseColumns;
 import android.provider.MediaStore;
 import android.widget.Toast;
 
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
 import com.iseasoft.iSeaMusic.dataloaders.SongLoader;
 import com.iseasoft.iSeaMusic.helpers.MusicPlaybackTrack;
+import com.iseasoft.iSeaMusic.utils.iSeaUtils;
 
 import java.util.Arrays;
 import java.util.WeakHashMap;
@@ -125,6 +125,17 @@ public class MusicPlayer {
                     mService.pause();
                 } else {
                     mService.play();
+                }
+            }
+        } catch (final Exception ignored) {
+        }
+    }
+
+    public static void pause(){
+        try {
+            if (mService != null) {
+                if (mService.isPlaying()) {
+                    mService.pause();
                 }
             }
         } catch (final Exception ignored) {
