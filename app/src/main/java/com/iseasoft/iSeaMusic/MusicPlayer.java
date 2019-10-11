@@ -238,6 +238,26 @@ public class MusicPlayer {
         return null;
     }
 
+    public static final String getTrackDes() {
+        if (mService != null) {
+            try {
+                return mService.getTrackDes();
+            } catch (final RemoteException ignored) {
+            }
+        }
+        return null;
+    }
+
+    public static final String getTrackUrl() {
+        if (mService != null) {
+            try {
+                return mService.getTrackUrl();
+            } catch (final RemoteException ignored) {
+            }
+        }
+        return null;
+    }
+
     public static final String getArtistName() {
         if (mService != null) {
             try {
@@ -276,6 +296,52 @@ public class MusicPlayer {
             }
         }
         return -1;
+    }
+
+    public static void setOnline (boolean isOnline) {
+        if (mService != null) {
+            try {
+                 mService.setOnline(isOnline);
+            } catch (final RemoteException ignored) {
+            }
+        }
+    }
+
+    public static boolean isOnline() {
+        if (mService != null) {
+            try {
+                return mService.isOnline();
+            } catch (final RemoteException ignored) {
+            }
+        }
+        return false;
+    }
+
+    public static void setTrackName(String trackName) {
+        if (mService != null) {
+            try {
+                mService.setTrackName(trackName);
+            } catch (final RemoteException ignored) {
+            }
+        }
+    }
+
+    public static void setTrackDes(String trackDes) {
+        if (mService != null) {
+            try {
+                mService.setTrackDes(trackDes);
+            } catch (final RemoteException ignored) {
+            }
+        }
+    }
+
+    public static void setTrackUrl(String trackUrl) {
+        if (mService != null) {
+            try {
+                mService.setTrackUrl(trackUrl);
+            } catch (final RemoteException ignored) {
+            }
+        }
     }
 
     public static final MusicPlaybackTrack getCurrentTrack() {

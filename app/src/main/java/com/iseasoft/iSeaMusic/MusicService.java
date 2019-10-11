@@ -53,11 +53,13 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.os.Process;
 import android.os.RemoteException;
 import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Audio.AlbumColumns;
 import android.provider.MediaStore.Audio.AudioColumns;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
@@ -66,9 +68,6 @@ import android.support.v7.graphics.Palette;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.iseasoft.iSeaMusic.utils.NavigationUtils;
-import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
-import com.iseasoft.iSeaMusic.utils.iSeaUtils;
 import com.iseasoft.iSeaMusic.helpers.MediaButtonIntentReceiver;
 import com.iseasoft.iSeaMusic.helpers.MusicPlaybackTrack;
 import com.iseasoft.iSeaMusic.lastfmapi.LastFmClient;
@@ -78,6 +77,9 @@ import com.iseasoft.iSeaMusic.permissions.Nammu;
 import com.iseasoft.iSeaMusic.provider.MusicPlaybackState;
 import com.iseasoft.iSeaMusic.provider.RecentStore;
 import com.iseasoft.iSeaMusic.provider.SongPlayCount;
+import com.iseasoft.iSeaMusic.utils.NavigationUtils;
+import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
+import com.iseasoft.iSeaMusic.utils.iSeaUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.IOException;
@@ -215,6 +217,11 @@ public class MusicService extends Service {
 
     private int mServiceStartId = -1;
 
+    private boolean isOnline = false;
+    private String trackName;
+    private String trackDes;
+    private String trackUrl;
+
     private ArrayList<MusicPlaybackTrack> mPlaylist = new ArrayList<MusicPlaybackTrack>(100);
 
     private long[] mAutoShuffleList = null;
@@ -295,7 +302,7 @@ public class MusicService extends Service {
 
 
         mHandlerThread = new HandlerThread("MusicPlayerHandler",
-                android.os.Process.THREAD_PRIORITY_BACKGROUND);
+                Process.THREAD_PRIORITY_BACKGROUND);
         mHandlerThread.start();
 
 
@@ -428,7 +435,7 @@ public class MusicService extends Service {
             }
         });
         mSession.setFlags(MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS
-                          | MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS);
+                | MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS);
     }
 
     @Override
@@ -568,8 +575,7 @@ public class MusicService extends Service {
             cycleShuffle();
         } else if (UPDATE_PREFERENCES.equals(action)) {
             onPreferencesUpdate(intent.getExtras());
-        }
-        else if (AudioManager.ACTION_AUDIO_BECOMING_NOISY.equals(action)) {
+        } else if (AudioManager.ACTION_AUDIO_BECOMING_NOISY.equals(action)) {
             if (PreferencesUtility.getInstance(getApplicationContext()).pauseEnabledOnDetach()) {
                 pause();
             }
@@ -578,7 +584,7 @@ public class MusicService extends Service {
 
     private void onPreferencesUpdate(Bundle extras) {
         mShowAlbumArtOnLockscreen = extras.getBoolean("lockscreen", mShowAlbumArtOnLockscreen);
-        mActivateXTrackSelector = extras.getBoolean("xtrack",mActivateXTrackSelector);
+        mActivateXTrackSelector = extras.getBoolean("xtrack", mActivateXTrackSelector);
         LastfmUserSession session = LastfmUserSession.getSession(this);
         session.mToken = extras.getString("lf_token", session.mToken);
         session.mUsername = extras.getString("lf_user", session.mUsername);
@@ -1269,7 +1275,7 @@ public class MusicService extends Service {
             mNotificationPostTime = System.currentTimeMillis();
         }
 
-        android.support.v4.app.NotificationCompat.Builder builder = new android.support.v4.app.NotificationCompat.Builder(this, CHANNEL_ID)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setLargeIcon(artwork)
                 .setContentIntent(clickIntent)
@@ -1707,6 +1713,9 @@ public class MusicService extends Service {
     }
 
     public String getAlbumName() {
+        if(isOnline) {
+            return trackDes;
+        }
         synchronized (this) {
             if (mCursor == null) {
                 return null;
@@ -1716,12 +1725,19 @@ public class MusicService extends Service {
     }
 
     public String getTrackName() {
+        if(isOnline) {
+            return trackName;
+        }
         synchronized (this) {
             if (mCursor == null) {
                 return null;
             }
             return mCursor.getString(mCursor.getColumnIndexOrThrow(AudioColumns.TITLE));
         }
+    }
+
+    public void setTrackName(String trackName) {
+        this.trackName = trackName;
     }
 
     public String getGenreName() {
@@ -1749,6 +1765,9 @@ public class MusicService extends Service {
     }
 
     public String getArtistName() {
+        if(isOnline) {
+            return trackDes;
+        }
         synchronized (this) {
             if (mCursor == null) {
                 return null;
@@ -1791,6 +1810,22 @@ public class MusicService extends Service {
         }
 
         return -1;
+    }
+
+    public boolean isOnline() {
+        return isOnline;
+    }
+
+    public void setOnline(boolean isOnline) {
+        this.isOnline = isOnline;
+    }
+
+    public void setTrackDes(String trackDes) {
+        this.trackDes = trackDes;
+    }
+
+    public void setTrackUrl(String trackUrl) {
+        this.trackUrl = trackUrl;
     }
 
     public MusicPlaybackTrack getCurrentTrack() {
@@ -2230,6 +2265,14 @@ public class MusicService extends Service {
 
     public void playlistChanged() {
         notifyChange(PLAYLIST_CHANGED);
+    }
+
+    public String getTrackUrl() {
+        return trackUrl;
+    }
+
+    public String getTrackDes() {
+        return trackDes;
     }
 
     public interface TrackErrorExtra {
@@ -2761,6 +2804,11 @@ public class MusicService extends Service {
         }
 
         @Override
+        public void setTrackName(String trackName) throws RemoteException {
+            mService.get().setTrackName(trackName);
+        }
+
+        @Override
         public String getAlbumName() throws RemoteException {
             return mService.get().getAlbumName();
         }
@@ -2805,12 +2853,10 @@ public class MusicService extends Service {
             return mService.get().removeTracks(first, last);
         }
 
-
         @Override
         public int removeTrack(final long id) throws RemoteException {
             return mService.get().removeTrack(id);
         }
-
 
         @Override
         public boolean removeTrackAtPosition(final long id, final int position)
@@ -2818,16 +2864,44 @@ public class MusicService extends Service {
             return mService.get().removeTrackAtPosition(id, position);
         }
 
-
         @Override
         public int getMediaMountedCount() throws RemoteException {
             return mService.get().getMediaMountedCount();
         }
 
-
         @Override
         public int getAudioSessionId() throws RemoteException {
             return mService.get().getAudioSessionId();
+        }
+
+        @Override
+        public boolean isOnline() throws RemoteException {
+            return mService.get().isOnline();
+        }
+
+        @Override
+        public void setOnline(boolean isOnline) throws RemoteException {
+            mService.get().setOnline(isOnline);
+        }
+
+        @Override
+        public void setTrackDes(String trackDes) throws RemoteException {
+            mService.get().setTrackDes(trackDes);
+        }
+
+        @Override
+        public void setTrackUrl(String trackUrl) throws RemoteException {
+            mService.get().setTrackUrl(trackUrl);
+        }
+
+        @Override
+        public String getTrackDes() throws RemoteException {
+            return mService.get().getTrackDes();
+        }
+
+        @Override
+        public String getTrackUrl() throws RemoteException {
+            return mService.get().getTrackUrl();
         }
 
     }

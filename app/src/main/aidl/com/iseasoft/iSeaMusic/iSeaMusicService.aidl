@@ -48,5 +48,12 @@ interface iSeaMusicService
     int getRepeatMode();
     int getMediaMountedCount();
     int getAudioSessionId();
+    boolean isOnline() ;
+    void setOnline(boolean isOnline) ;
+    void setTrackName(String trackName) ;
+    void setTrackDes(String trackDes);
+    void setTrackUrl(String trackUrl);
+    String getTrackDes();
+    String getTrackUrl();
 }
 

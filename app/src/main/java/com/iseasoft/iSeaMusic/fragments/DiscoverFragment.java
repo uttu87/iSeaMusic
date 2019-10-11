@@ -53,6 +53,10 @@ public class DiscoverFragment extends AdsFragment {
         mListener = new YoutubeVideoAdapter.OnVideoListener() {
             @Override
             public void onClick(YoutubeVideo video) {
+                MusicPlayer.setOnline(true);
+                MusicPlayer.setTrackName(video.getSnippet().getTitle());
+                MusicPlayer.setTrackDes(video.getSnippet().getDescription());
+                MusicPlayer.setTrackUrl(video.getSnippet().getThumbnails().getStandard().getUrl());
                 MusicPlayer.pause();
                 Disposable disposable = Observable.fromCallable(() -> YoutubeDL.getInstance().getInfo(video.getId()))
                         .subscribeOn(Schedulers.newThread())

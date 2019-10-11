@@ -79,6 +79,9 @@ public class iSeaUtils {
     }
 
     public static Uri getAlbumArtUri(long albumId) {
+        if(MusicPlayer.isOnline()) {
+            return Uri.parse(MusicPlayer.getTrackUrl());
+        }
         return ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"), albumId);
     }
     public static String getAlbumArtForFile(String filePath) {
