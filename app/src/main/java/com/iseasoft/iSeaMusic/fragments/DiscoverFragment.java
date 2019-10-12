@@ -43,6 +43,7 @@ public class DiscoverFragment extends AdsFragment {
     private boolean isGrid;
     private YoutubeVideoAdapter.OnVideoListener mListener;
     private CompositeDisposable compositeDisposable;
+    private boolean isRequesting;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -50,9 +51,14 @@ public class DiscoverFragment extends AdsFragment {
         mPreferences = PreferencesUtility.getInstance(getActivity());
         isGrid = mPreferences.isAlbumsInGrid();
         compositeDisposable = new CompositeDisposable();
+        isRequesting = false;
         mListener = new YoutubeVideoAdapter.OnVideoListener() {
             @Override
             public void onClick(YoutubeVideo video) {
+                if (isRequesting) {
+                    return;
+                }
+                isRequesting = true;
                 MusicPlayer.setOnline(true);
                 MusicPlayer.setTrackName(video.getSnippet().getTitle());
                 MusicPlayer.setTrackDes(video.getSnippet().getDescription());
@@ -67,7 +73,9 @@ public class DiscoverFragment extends AdsFragment {
                                 MusicPlayer.openFile(videoUrl);
                                 MusicPlayer.playOrPause();
                             }
+                            isRequesting = false;
                         }, e -> {
+                            isRequesting = false;
                             Logger.e(e, "failed to get stream info");
                         });
                 compositeDisposable.add(disposable);
@@ -122,11 +130,11 @@ public class DiscoverFragment extends AdsFragment {
 
     private String getVideoUrl(VideoInfo streamInfo) {
         String videoUrl = null;
-        if(null == streamInfo || null == streamInfo.formats){
+        if (null == streamInfo || null == streamInfo.formats) {
             return null;
         }
-        for(VideoFormat f: streamInfo.formats){
-            if("m4a".equals(f.ext)){
+        for (VideoFormat f : streamInfo.formats) {
+            if ("m4a".equals(f.ext)) {
                 videoUrl = f.url;
                 break;
             }
@@ -147,5 +155,6 @@ public class DiscoverFragment extends AdsFragment {
         super.onDestroy();
         mListener = null;
         compositeDisposable = null;
+        isRequesting = false;
     }
 }
