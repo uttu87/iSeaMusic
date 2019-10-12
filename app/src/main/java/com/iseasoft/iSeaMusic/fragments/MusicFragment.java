@@ -13,15 +13,15 @@ import android.view.ViewGroup;
 
 import com.iseasoft.iSeaMusic.MusicPlayer;
 import com.iseasoft.iSeaMusic.R;
-import com.iseasoft.iSeaMusic.adapters.YoutubeVideoAdapter;
-import com.iseasoft.iSeaMusic.models.YoutubeVideo;
-import com.iseasoft.iSeaMusic.models.YoutubeVideoList;
+import com.iseasoft.iSeaMusic.adapters.YoutubeMusicAdapter;
+import com.iseasoft.iSeaMusic.models.YoutubeMusic;
+import com.iseasoft.iSeaMusic.models.YoutubeMusicList;
 import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
 import com.iseasoft.iSeaMusic.utils.iSeaUtils;
 import com.iseasoft.iSeaMusic.widgets.BaseRecyclerView;
 import com.iseasoft.iSeaMusic.widgets.FastScroller;
 import com.iseasoft.iSeaMusic.youtubeapi.YoutubeApiClient;
-import com.iseasoft.iSeaMusic.youtubeapi.callbacks.VideoInfoListener;
+import com.iseasoft.iSeaMusic.youtubeapi.callbacks.MusicInfoListener;
 import com.orhanobut.logger.Logger;
 import com.yausername.youtubedl_android.YoutubeDL;
 import com.yausername.youtubedl_android.mapper.VideoFormat;
@@ -33,18 +33,25 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class DiscoverFragment extends AdsFragment {
+public class MusicFragment extends AdsFragment {
 
-    private YoutubeVideoAdapter mAdapter;
+    private String topicId;
+    private YoutubeMusicAdapter mAdapter;
     private BaseRecyclerView recyclerView;
     private FastScroller fastScroller;
     private PreferencesUtility mPreferences;
     private GridLayoutManager layoutManager;
     private RecyclerView.ItemDecoration itemDecoration;
     private boolean isGrid;
-    private YoutubeVideoAdapter.OnVideoListener mListener;
+    private YoutubeMusicAdapter.OnVideoListener mListener;
     private CompositeDisposable compositeDisposable;
     private boolean isRequesting;
+
+    public static MusicFragment newInstance(String topicId) {
+        MusicFragment fragment = new MusicFragment();
+        fragment.topicId = topicId;
+        return fragment;
+    }
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -53,9 +60,9 @@ public class DiscoverFragment extends AdsFragment {
         isGrid = mPreferences.isAlbumsInGrid();
         compositeDisposable = new CompositeDisposable();
         isRequesting = false;
-        mListener = new YoutubeVideoAdapter.OnVideoListener() {
+        mListener = new YoutubeMusicAdapter.OnVideoListener() {
             @Override
-            public void onClick(YoutubeVideo video) {
+            public void onClick(YoutubeMusic video) {
                 if (isRequesting) {
                     return;
                 }
@@ -65,7 +72,7 @@ public class DiscoverFragment extends AdsFragment {
                 MusicPlayer.setTrackDes(video.getSnippet().getDescription());
                 MusicPlayer.setTrackUrl(video.getUrl());
                 MusicPlayer.pause();
-                Disposable disposable = Observable.fromCallable(() -> YoutubeDL.getInstance().getInfo(video.getId()))
+                Disposable disposable = Observable.fromCallable(() -> YoutubeDL.getInstance().getInfo(video.getId().getVideoId()))
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(streamInfo -> {
@@ -97,12 +104,12 @@ public class DiscoverFragment extends AdsFragment {
         setLayoutManager();
 
         String countryCode = iSeaUtils.getCountryCode(getActivity());
-        YoutubeApiClient.getInstance(getActivity()).getVideos(countryCode, new VideoInfoListener() {
+        YoutubeApiClient.getInstance(getActivity()).getMusic(topicId, countryCode, new MusicInfoListener() {
             @Override
-            public void videoInfoSuccess(YoutubeVideoList youtubeVideos) {
+            public void videoInfoSuccess(YoutubeMusicList youtubeVideos) {
                 new Handler(Looper.getMainLooper()).post(() -> {
                     spaceBetweenAds = isGrid ? GRID_VIEW_ADS_COUNT : LIST_VIEW_ADS_COUNT;
-                    mAdapter = new YoutubeVideoAdapter(getActivity(), youtubeVideos.getItems());
+                    mAdapter = new YoutubeMusicAdapter(getActivity(), youtubeVideos.getItems());
                     mAdapter.setListener(mListener);
                     recyclerView.setAdapter(mAdapter);
                     generateDataSet(mAdapter);

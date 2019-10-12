@@ -413,4 +413,14 @@ public class iSeaUtils {
         return "";
     }
 
+    public static String getCountryCode(Context context) {
+        String locale;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            locale = context.getResources().getConfiguration().getLocales().get(0).getCountry();
+        } else {
+            locale = context.getResources().getConfiguration().locale.getCountry();
+        }
+        return locale;
+    }
+
 }

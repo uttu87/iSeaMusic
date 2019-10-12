@@ -2,7 +2,9 @@ package com.iseasoft.iSeaMusic.youtubeapi;
 
 import android.content.Context;
 
+import com.iseasoft.iSeaMusic.models.YoutubeMusicList;
 import com.iseasoft.iSeaMusic.models.YoutubeVideoList;
+import com.iseasoft.iSeaMusic.youtubeapi.callbacks.MusicInfoListener;
 import com.iseasoft.iSeaMusic.youtubeapi.callbacks.VideoInfoListener;
 
 import retrofit.Callback;
@@ -29,11 +31,39 @@ public class YoutubeApiClient {
         }
     }
 
-    public void getVideos(final VideoInfoListener listener) {
-        mYoutubeApiService.getVideos(new Callback<YoutubeVideoList>() {
+    public void getVideos(String countryCode, final VideoInfoListener listener) {
+        mYoutubeApiService.getVideos(countryCode, new Callback<YoutubeVideoList>() {
             @Override
             public void success(YoutubeVideoList youtubeVideos, Response response) {
                 listener.videoInfoSuccess(youtubeVideos);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                listener.videoInfoFailed();
+            }
+        });
+    }
+
+    public void getMusic(String topicId, String countryCode, final MusicInfoListener listener) {
+        mYoutubeApiService.getMusic("video", topicId, countryCode, new Callback<YoutubeMusicList>() {
+            @Override
+            public void success(YoutubeMusicList youtubeMusicList, Response response) {
+                listener.videoInfoSuccess(youtubeMusicList);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                listener.videoInfoFailed();
+            }
+        });
+    }
+
+    public void getPlaylist(String topicId, String countryCode, final MusicInfoListener listener) {
+        mYoutubeApiService.getMusic("playlist", topicId, countryCode, new Callback<YoutubeMusicList>() {
+            @Override
+            public void success(YoutubeMusicList youtubeMusicList, Response response) {
+                listener.videoInfoSuccess(youtubeMusicList);
             }
 
             @Override

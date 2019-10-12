@@ -6,9 +6,9 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
-public class YoutubeVideo implements Serializable
-{
+public class YoutubeMusic implements Serializable {
 
+    private final static long serialVersionUID = 699287641044279773L;
     @SerializedName("kind")
     @Expose
     private String kind;
@@ -17,11 +17,10 @@ public class YoutubeVideo implements Serializable
     private String etag;
     @SerializedName("id")
     @Expose
-    private String id;
+    private Id id;
     @SerializedName("snippet")
     @Expose
     private Snippet snippet;
-    private final static long serialVersionUID = 699287641044279773L;
 
     public String getKind() {
         return kind;
@@ -39,11 +38,11 @@ public class YoutubeVideo implements Serializable
         this.etag = etag;
     }
 
-    public String getId() {
+    public Id getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Id id) {
         this.id = id;
     }
 
@@ -57,65 +56,53 @@ public class YoutubeVideo implements Serializable
 
     public String getUrl() {
         final Thumbnails thumbnails = getSnippet().getThumbnails();
-        if(thumbnails.getMaxres() != null) {
+        if (thumbnails == null) {
+            return "";
+        }
+        if (thumbnails.getMaxres() != null) {
             return thumbnails.getMaxres().getUrl();
         }
-        if(thumbnails.getStandard() != null) {
+        if (thumbnails.getStandard() != null) {
             return thumbnails.getStandard().getUrl();
         }
-        if(thumbnails.getHigh() != null) {
+        if (thumbnails.getHigh() != null) {
             return thumbnails.getHigh().getUrl();
         }
-        if(thumbnails.getMedium() != null) {
+        if (thumbnails.getMedium() != null) {
             return thumbnails.getMedium().getUrl();
         }
 
         return thumbnails.getDefault().getUrl();
     }
 
-    public class Default implements Serializable
-    {
+    public class Id implements Serializable {
+        @SerializedName("kind")
+        @Expose
+        private String kind;
+        @SerializedName("videoId")
+        @Expose
+        private String videoId;
 
-        @SerializedName("url")
-        @Expose
-        private String url;
-        @SerializedName("width")
-        @Expose
-        private Integer width;
-        @SerializedName("height")
-        @Expose
-        private Integer height;
+        public String getKind() {
+            return kind;
+        }
+
+        public void setKind(String kind) {
+            this.kind = kind;
+        }
+
+        public String getVideoId() {
+            return videoId;
+        }
+
+        public void setVideoId(String videoId) {
+            this.videoId = videoId;
+        }
+    }
+
+    public class Default implements Serializable {
+
         private final static long serialVersionUID = -8750952324753906070L;
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
-        public Integer getWidth() {
-            return width;
-        }
-
-        public void setWidth(Integer width) {
-            this.width = width;
-        }
-
-        public Integer getHeight() {
-            return height;
-        }
-
-        public void setHeight(Integer height) {
-            this.height = height;
-        }
-
-    }
-
-    public class High implements Serializable
-    {
-
         @SerializedName("url")
         @Expose
         private String url;
@@ -125,7 +112,6 @@ public class YoutubeVideo implements Serializable
         @SerializedName("height")
         @Expose
         private Integer height;
-        private final static long serialVersionUID = 970094810990744007L;
 
         public String getUrl() {
             return url;
@@ -153,16 +139,54 @@ public class YoutubeVideo implements Serializable
 
     }
 
-    public class Localized implements Serializable
-    {
+    public class High implements Serializable {
 
+        private final static long serialVersionUID = 970094810990744007L;
+        @SerializedName("url")
+        @Expose
+        private String url;
+        @SerializedName("width")
+        @Expose
+        private Integer width;
+        @SerializedName("height")
+        @Expose
+        private Integer height;
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public Integer getWidth() {
+            return width;
+        }
+
+        public void setWidth(Integer width) {
+            this.width = width;
+        }
+
+        public Integer getHeight() {
+            return height;
+        }
+
+        public void setHeight(Integer height) {
+            this.height = height;
+        }
+
+    }
+
+    public class Localized implements Serializable {
+
+        private final static long serialVersionUID = -4771393228682388106L;
         @SerializedName("title")
         @Expose
         private String title;
         @SerializedName("description")
         @Expose
         private String description;
-        private final static long serialVersionUID = -4771393228682388106L;
 
         public String getTitle() {
             return title;
@@ -183,50 +207,9 @@ public class YoutubeVideo implements Serializable
     }
 
 
-    public class Maxres implements Serializable
-    {
+    public class Maxres implements Serializable {
 
-        @SerializedName("url")
-        @Expose
-        private String url;
-        @SerializedName("width")
-        @Expose
-        private Integer width;
-        @SerializedName("height")
-        @Expose
-        private Integer height;
         private final static long serialVersionUID = -2481796398261501626L;
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
-        public Integer getWidth() {
-            return width;
-        }
-
-        public void setWidth(Integer width) {
-            this.width = width;
-        }
-
-        public Integer getHeight() {
-            return height;
-        }
-
-        public void setHeight(Integer height) {
-            this.height = height;
-        }
-
-    }
-
-
-    public class Medium implements Serializable
-    {
-
         @SerializedName("url")
         @Expose
         private String url;
@@ -236,7 +219,6 @@ public class YoutubeVideo implements Serializable
         @SerializedName("height")
         @Expose
         private Integer height;
-        private final static long serialVersionUID = -8869317988600601728L;
 
         public String getUrl() {
             return url;
@@ -264,9 +246,49 @@ public class YoutubeVideo implements Serializable
 
     }
 
-    public class Snippet implements Serializable
-    {
 
+    public class Medium implements Serializable {
+
+        private final static long serialVersionUID = -8869317988600601728L;
+        @SerializedName("url")
+        @Expose
+        private String url;
+        @SerializedName("width")
+        @Expose
+        private Integer width;
+        @SerializedName("height")
+        @Expose
+        private Integer height;
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public Integer getWidth() {
+            return width;
+        }
+
+        public void setWidth(Integer width) {
+            this.width = width;
+        }
+
+        public Integer getHeight() {
+            return height;
+        }
+
+        public void setHeight(Integer height) {
+            this.height = height;
+        }
+
+    }
+
+    public class Snippet implements Serializable {
+
+        private final static long serialVersionUID = 162295070301966944L;
         @SerializedName("publishedAt")
         @Expose
         private String publishedAt;
@@ -300,7 +322,6 @@ public class YoutubeVideo implements Serializable
         @SerializedName("defaultAudioLanguage")
         @Expose
         private String defaultAudioLanguage;
-        private final static long serialVersionUID = 162295070301966944L;
 
         public String getPublishedAt() {
             return publishedAt;
@@ -392,9 +413,9 @@ public class YoutubeVideo implements Serializable
 
     }
 
-    public class Standard implements Serializable
-    {
+    public class Standard implements Serializable {
 
+        private final static long serialVersionUID = -757479467478556335L;
         @SerializedName("url")
         @Expose
         private String url;
@@ -404,7 +425,6 @@ public class YoutubeVideo implements Serializable
         @SerializedName("height")
         @Expose
         private Integer height;
-        private final static long serialVersionUID = -757479467478556335L;
 
         public String getUrl() {
             return url;
@@ -432,9 +452,9 @@ public class YoutubeVideo implements Serializable
 
     }
 
-    public class Thumbnails implements Serializable
-    {
+    public class Thumbnails implements Serializable {
 
+        private final static long serialVersionUID = 8503390483099248440L;
         @SerializedName("default")
         @Expose
         private Default _default;
@@ -450,7 +470,6 @@ public class YoutubeVideo implements Serializable
         @SerializedName("maxres")
         @Expose
         private Maxres maxres;
-        private final static long serialVersionUID = 8503390483099248440L;
 
         public Default getDefault() {
             return _default;

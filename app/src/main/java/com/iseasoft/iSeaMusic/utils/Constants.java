@@ -69,6 +69,23 @@ public class Constants {
 
     public static final int CAST_SERVER_PORT = 8080;
 
+    public static final String TOPIC_MUSIC_ID = "/m/04rlf";
+    public static final String TOPIC_CHILDREN_MUSIC_ID = "/m/05fw6t";
+    public static final String TOPIC_CHRISTIAN_MUSIC_ID = "/m/02mscn";
+    public static final String TOPIC_CLASSICAL_MUSIC_ID = "/m/0ggq0m";
+    public static final String TOPIC_COUNTRY_MUSIC_ID = "/m/01lyv";
+    public static final String TOPIC_ELECTRONIC_MUSIC_ID = "/m/02lkt";
+    public static final String TOPIC_HIPHOP_MUSIC_ID = "/m/0glt670";
+    public static final String TOPIC_INDEPENDENT_MUSIC_ID = "/m/05rwpb";
+    public static final String TOPIC_JAZZ_MUSIC_ID = "/m/03_d0";
+    public static final String TOPIC_ASIA_MUSIC_ID = "/m/028sqc";
+    public static final String TOPIC_LATIN_MUSIC_ID = "/m/0g293";
+    public static final String TOPIC_POP_MUSIC_ID = "/m/064t9";
+    public static final String TOPIC_REGGAE_MUSIC_ID = "/m/06cqb";
+    public static final String TOPIC_RHYTHM_BLUES_MUSIC_ID = "/m/06j6l";
+    public static final String TOPIC_ROCK_MUSIC_ID = "/m/06by7";
+    public static final String TOPIC_SOUL_MUSIC_ID = "/m/0gywn";
+
 
 
 }

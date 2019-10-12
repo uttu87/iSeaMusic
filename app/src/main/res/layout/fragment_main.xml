@@ -20,6 +20,7 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:tabMode="scrollable"
             android:tag="tab_indicator_accent_color,bg_primary_color" />
 
     </android.support.design.widget.AppBarLayout>

@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.afollestad.appthemeengine.Config;
 import com.iseasoft.iSeaMusic.R;
+import com.iseasoft.iSeaMusic.models.YoutubeMusic;
 import com.iseasoft.iSeaMusic.models.YoutubeVideo;
 import com.iseasoft.iSeaMusic.utils.Helpers;
 import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
@@ -39,10 +40,10 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import java.util.ArrayList;
 import java.util.List;
 
-public class YoutubeVideoAdapter extends AdsAdapter {
+public class YoutubeMusicAdapter extends AdsAdapter {
 
     public interface OnVideoListener {
-        void onClick(YoutubeVideo video);
+        void onClick(YoutubeMusic video);
     }
 
     private Activity mContext;
@@ -56,7 +57,7 @@ public class YoutubeVideoAdapter extends AdsAdapter {
         this.listener = listener;
     }
 
-    public YoutubeVideoAdapter(Activity context, List<YoutubeVideo> arraylist) {
+    public YoutubeMusicAdapter(Activity context, List<YoutubeMusic> arraylist) {
         this.arraylist = new ArrayList<>();
         this.arraylist.addAll(arraylist);
         this.mContext = context;
@@ -88,7 +89,7 @@ public class YoutubeVideoAdapter extends AdsAdapter {
             return;
         }
 
-        YoutubeVideo localItem = (YoutubeVideo) arraylist.get(i);
+        YoutubeMusic localItem = (YoutubeMusic) arraylist.get(i);
 
         final ItemHolder itemHolder = (ItemHolder) viewHolder;
 
@@ -176,7 +177,7 @@ public class YoutubeVideoAdapter extends AdsAdapter {
 
         @Override
         public void onClick(View v) {
-            final YoutubeVideo item = (YoutubeVideo)arraylist.get(getAdapterPosition());
+            final YoutubeMusic item = (YoutubeMusic)arraylist.get(getAdapterPosition());
            if(listener != null) {
                listener.onClick(item);
            }
