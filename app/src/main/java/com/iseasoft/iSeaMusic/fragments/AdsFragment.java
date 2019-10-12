@@ -13,7 +13,7 @@ import java.util.List;
 public class AdsFragment extends Fragment {
     protected final static int LIST_VIEW_ADS_COUNT = 10;
     protected final static int GRID_VIEW_ADS_COUNT = 5;
-    private final static int ADS_ITEM_START_INDEX = 2;
+    private final static int ADS_ITEM_START_INDEX = 1;
     protected int spaceBetweenAds;
 
     protected void generateDataSet(final AdsAdapter adapter) {

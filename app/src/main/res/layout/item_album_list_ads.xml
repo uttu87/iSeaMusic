@@ -2,6 +2,7 @@
     android:id="@+id/template_ads"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/channel_background"
     android:orientation="vertical">
 
     <LinearLayout

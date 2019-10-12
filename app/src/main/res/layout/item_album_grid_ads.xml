@@ -4,7 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="160dp"
     android:layout_margin="2.0dip"
-    android:background="?attr/selectableItemBackground"
+    android:background="@drawable/channel_background"
     android:elevation="3dp">
 
     <FrameLayout

@@ -91,14 +91,12 @@ public class DiscoverFragment extends AdsFragment {
         YoutubeApiClient.getInstance(getActivity()).getVideos(new VideoInfoListener() {
             @Override
             public void videoInfoSuccess(YoutubeVideoList youtubeVideos) {
-                mAdapter = new YoutubeVideoAdapter(getActivity(), youtubeVideos.getItems());
-                mAdapter.setListener(mListener);
-                recyclerView.setAdapter(mAdapter);
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        //generateDataSet(mAdapter);
-                    }
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    spaceBetweenAds = isGrid ? GRID_VIEW_ADS_COUNT : LIST_VIEW_ADS_COUNT;
+                    mAdapter = new YoutubeVideoAdapter(getActivity(), youtubeVideos.getItems());
+                    mAdapter.setListener(mListener);
+                    recyclerView.setAdapter(mAdapter);
+                    generateDataSet(mAdapter);
                 });
             }
 
