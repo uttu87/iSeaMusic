@@ -30,6 +30,14 @@ public class AdsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     protected List<Object> arraylist;
     protected boolean isGrid;
 
+    public boolean isGrid() {
+        return isGrid;
+    }
+
+    public void setGrid(boolean grid) {
+        isGrid = grid;
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {

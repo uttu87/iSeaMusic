@@ -57,6 +57,7 @@ public class YoutubeMusicAdapter extends AdsAdapter {
         this.listener = listener;
     }
 
+
     public YoutubeMusicAdapter(Activity context, List<YoutubeMusic> arraylist) {
         this.arraylist = new ArrayList<>();
         this.arraylist.addAll(arraylist);

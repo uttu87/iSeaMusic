@@ -17,11 +17,14 @@ package com.iseasoft.iSeaMusic.activities;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -36,6 +39,7 @@ import com.iseasoft.iSeaMusic.adapters.SearchAdapter;
 import com.iseasoft.iSeaMusic.dataloaders.AlbumLoader;
 import com.iseasoft.iSeaMusic.dataloaders.ArtistLoader;
 import com.iseasoft.iSeaMusic.dataloaders.SongLoader;
+import com.iseasoft.iSeaMusic.fragments.SearchResultFragment;
 import com.iseasoft.iSeaMusic.models.Album;
 import com.iseasoft.iSeaMusic.models.Artist;
 import com.iseasoft.iSeaMusic.models.Song;
@@ -161,10 +165,22 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
 
     @Override
     public boolean onQueryTextSubmit(final String query) {
-        onQueryTextChange(query);
+        showSearchResult(query);
         hideInputManager();
 
         return true;
+    }
+
+    private void showSearchResult(String query) {
+        if(TextUtils.isEmpty(query)) {
+            return;
+        }
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.replace(R.id.search_result_container, SearchResultFragment.newInstance(query));
+        transaction.commit();
+        View searchResultContainer = findViewById(R.id.search_result_container);
+        searchResultContainer.setVisibility(View.VISIBLE);
     }
 
     @Override
