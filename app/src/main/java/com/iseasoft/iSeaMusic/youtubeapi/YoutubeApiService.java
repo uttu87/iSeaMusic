@@ -18,8 +18,14 @@ public interface YoutubeApiService {
     void getVideos(@Query("regionCode") String countryCode, Callback<YoutubeVideoList> callback);
 
     @GET(BASE_MUSIC_LIST)
-    void getMusic(@Query("type") String type, @Query("topicId") String topicId, @Query("regionCode") String countryCode, Callback<YoutubeMusicList> callback);
+    void getMusic(@Query("type") String type,
+                  @Query("topicId") String topicId,
+                  @Query("regionCode") String countryCode,
+                  @Query("order") String order,
+                  Callback<YoutubeMusicList> callback);
 
     @GET(BASE_SEARCH_LIST)
-    void searchMusic(@Query("q") String keyWord, Callback<YoutubeMusicList> callback);
+    void searchMusic(@Query("q") String keyWord,
+                     @Query("order") String order,
+                     Callback<YoutubeMusicList> callback);
 }

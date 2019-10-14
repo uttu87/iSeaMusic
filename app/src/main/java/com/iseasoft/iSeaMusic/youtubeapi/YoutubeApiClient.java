@@ -46,7 +46,7 @@ public class YoutubeApiClient {
     }
 
     public void getMusic(String topicId, String countryCode, final MusicInfoListener listener) {
-        mYoutubeApiService.getMusic("video", topicId, countryCode, new Callback<YoutubeMusicList>() {
+        mYoutubeApiService.getMusic("video", topicId, countryCode, OrderBy.DATE, new Callback<YoutubeMusicList>() {
             @Override
             public void success(YoutubeMusicList youtubeMusicList, Response response) {
                 listener.videoInfoSuccess(youtubeMusicList);
@@ -60,7 +60,7 @@ public class YoutubeApiClient {
     }
 
     public void getPlaylist(String topicId, String countryCode, final MusicInfoListener listener) {
-        mYoutubeApiService.getMusic("playlist", topicId, countryCode, new Callback<YoutubeMusicList>() {
+        mYoutubeApiService.getMusic("playlist", topicId, countryCode, OrderBy.DATE, new Callback<YoutubeMusicList>() {
             @Override
             public void success(YoutubeMusicList youtubeMusicList, Response response) {
                 listener.videoInfoSuccess(youtubeMusicList);
@@ -74,7 +74,7 @@ public class YoutubeApiClient {
     }
 
     public void searchMusic(String keyword, final MusicInfoListener listener) {
-        mYoutubeApiService.searchMusic(keyword, new Callback<YoutubeMusicList>() {
+        mYoutubeApiService.searchMusic(keyword, OrderBy.DATE, new Callback<YoutubeMusicList>() {
             @Override
             public void success(YoutubeMusicList youtubeMusicList, Response response) {
                 listener.videoInfoSuccess(youtubeMusicList);
