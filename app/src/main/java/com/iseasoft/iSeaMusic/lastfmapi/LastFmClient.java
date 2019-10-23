@@ -47,8 +47,8 @@ import retrofit.client.Response;
 public class LastFmClient {
 
     //TODO update the api keys
-    public static final String API_KEY = "62ac1851456e4558bef1c41747b1aec2";
-    public static final String API_SECRET = "b4ae8965723d67fb18e35d207014d6f3";
+    public static final String API_KEY = "e97fc5df5f676d20d5636d981e2a5c03";
+    public static final String API_SECRET = "eab2f60f443892e18540ee43ab105e16";
 
     public static final String JSON = "json";
 
