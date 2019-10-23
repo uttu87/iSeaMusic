@@ -3,9 +3,10 @@ package com.iseasoft.iSeaMusic.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class YoutubeVideoList {
+public class YoutubeVideoList implements Serializable{
 
     @SerializedName("kind")
     @Expose
@@ -75,7 +76,7 @@ public class YoutubeVideoList {
     }
 
 
-    public class PageInfo {
+    public class PageInfo implements Serializable {
 
         @SerializedName("totalResults")
         @Expose

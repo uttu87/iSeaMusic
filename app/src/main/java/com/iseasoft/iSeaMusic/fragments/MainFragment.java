@@ -32,7 +32,6 @@ import com.afollestad.appthemeengine.ATE;
 import com.afollestad.appthemeengine.Config;
 import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.utils.ATEUtils;
-import com.iseasoft.iSeaMusic.utils.Constants;
 import com.iseasoft.iSeaMusic.utils.Helpers;
 import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
 
@@ -90,23 +89,25 @@ public class MainFragment extends Fragment {
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getChildFragmentManager());
         adapter.addFragment(new DiscoverFragment(), "Discover");
-        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_MUSIC_ID), "Music");
-        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_COUNTRY_MUSIC_ID), "Country");
-        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_CLASSICAL_MUSIC_ID), "Classical");
-        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_JAZZ_MUSIC_ID), "Jazz");
-        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_ELECTRONIC_MUSIC_ID), "Electronic");
-        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_HIPHOP_MUSIC_ID), "Hip Hop");
-        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_INDEPENDENT_MUSIC_ID), "Independent");
-        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_ASIA_MUSIC_ID), "Music of Asia");
-        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_LATIN_MUSIC_ID), "Latin America");
-        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_POP_MUSIC_ID), "POP");
-        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_REGGAE_MUSIC_ID), "Reggae");
-        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_RHYTHM_BLUES_MUSIC_ID), "Rhythm and Blues");
-        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_ROCK_MUSIC_ID), "Rock");
-        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_SOUL_MUSIC_ID), "Soul");
+//        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_MUSIC_ID), "Music");
+//        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_CHILDREN_MUSIC_ID), "Children");
+//        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_CHRISTIAN_MUSIC_ID), "Christian Music");
+//        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_COUNTRY_MUSIC_ID), "Country");
+//        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_CLASSICAL_MUSIC_ID), "Classical");
+//        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_JAZZ_MUSIC_ID), "Jazz");
+//        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_ELECTRONIC_MUSIC_ID), "Electronic");
+//        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_HIPHOP_MUSIC_ID), "Hip Hop");
+//        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_INDEPENDENT_MUSIC_ID), "Independent");
+//        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_ASIA_MUSIC_ID), "Music of Asia");
+//        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_LATIN_MUSIC_ID), "Latin America");
+//        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_POP_MUSIC_ID), "POP");
+//        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_REGGAE_MUSIC_ID), "Reggae");
+//        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_RHYTHM_BLUES_MUSIC_ID), "Rhythm and Blues");
+//        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_ROCK_MUSIC_ID), "Rock");
+//        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_SOUL_MUSIC_ID), "Soul");
         adapter.addFragment(new SongsFragment(), this.getString(R.string.songs));
-        //adapter.addFragment(new AlbumFragment(), this.getString(R.string.albums));
-        //adapter.addFragment(new ArtistFragment(), this.getString(R.string.artists));
+        adapter.addFragment(new AlbumFragment(), this.getString(R.string.albums));
+        adapter.addFragment(new ArtistFragment(), this.getString(R.string.artists));
         viewPager.setAdapter(adapter);
     }
 

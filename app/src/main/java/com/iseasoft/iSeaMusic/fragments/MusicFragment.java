@@ -35,6 +35,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MusicFragment extends AdsFragment {
 
+    private static final String BUNDLE_KEY_YOUTUBE_MUSIC_LIST = "youtube_music_list";
     private String topicId;
     private YoutubeMusicAdapter mAdapter;
     private BaseRecyclerView recyclerView;
@@ -46,6 +47,7 @@ public class MusicFragment extends AdsFragment {
     private YoutubeMusicAdapter.OnVideoListener mListener;
     private CompositeDisposable compositeDisposable;
     private boolean isRequesting;
+    private YoutubeMusicList mYoutubeMusicList;
 
     public static MusicFragment newInstance(String topicId) {
         MusicFragment fragment = new MusicFragment();
@@ -103,16 +105,19 @@ public class MusicFragment extends AdsFragment {
         fastScroller.setRecyclerView(recyclerView);
         setLayoutManager();
 
+        if(savedInstanceState != null) {
+            mYoutubeMusicList = (YoutubeMusicList)savedInstanceState.getSerializable(BUNDLE_KEY_YOUTUBE_MUSIC_LIST);
+            setupAdapter(mYoutubeMusicList);
+            return rootView;
+        }
         String countryCode = iSeaUtils.getCountryCode(getActivity());
         YoutubeApiClient.getInstance(getActivity()).getMusic(topicId, countryCode, new MusicInfoListener() {
             @Override
             public void videoInfoSuccess(YoutubeMusicList youtubeVideos) {
                 new Handler(Looper.getMainLooper()).post(() -> {
                     spaceBetweenAds = isGrid ? GRID_VIEW_ADS_COUNT : LIST_VIEW_ADS_COUNT;
-                    mAdapter = new YoutubeMusicAdapter(getActivity(), youtubeVideos.getItems());
-                    mAdapter.setListener(mListener);
-                    recyclerView.setAdapter(mAdapter);
-                    generateDataSet(mAdapter);
+                    mYoutubeMusicList = youtubeVideos;
+                    setupAdapter(youtubeVideos);
                 });
             }
 
@@ -122,6 +127,19 @@ public class MusicFragment extends AdsFragment {
             }
         });
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(BUNDLE_KEY_YOUTUBE_MUSIC_LIST, mYoutubeMusicList);
+    }
+
+    private void setupAdapter(YoutubeMusicList youtubeVideos) {
+        mAdapter = new YoutubeMusicAdapter(getActivity(), youtubeVideos.getItems());
+        mAdapter.setListener(mListener);
+        recyclerView.setAdapter(mAdapter);
+        generateDataSet(mAdapter);
     }
 
     private void setLayoutManager() {

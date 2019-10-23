@@ -35,6 +35,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class DiscoverFragment extends AdsFragment {
 
+    private static final String BUNDLE_KEY_YOUTUBE_VIDEO_LIST = "youtube_video_list";
     private YoutubeVideoAdapter mAdapter;
     private BaseRecyclerView recyclerView;
     private FastScroller fastScroller;
@@ -45,6 +46,7 @@ public class DiscoverFragment extends AdsFragment {
     private YoutubeVideoAdapter.OnVideoListener mListener;
     private CompositeDisposable compositeDisposable;
     private boolean isRequesting;
+    private YoutubeVideoList mYoutubeVideoList;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -96,16 +98,20 @@ public class DiscoverFragment extends AdsFragment {
         fastScroller.setRecyclerView(recyclerView);
         setLayoutManager();
 
+        if (savedInstanceState != null) {
+            mYoutubeVideoList = (YoutubeVideoList) savedInstanceState.getSerializable(BUNDLE_KEY_YOUTUBE_VIDEO_LIST);
+            setupAdapter(mYoutubeVideoList);
+            return rootView;
+        }
+
         String countryCode = iSeaUtils.getCountryCode(getActivity());
         YoutubeApiClient.getInstance(getActivity()).getVideos(countryCode, new VideoInfoListener() {
             @Override
             public void videoInfoSuccess(YoutubeVideoList youtubeVideos) {
                 new Handler(Looper.getMainLooper()).post(() -> {
                     spaceBetweenAds = isGrid ? GRID_VIEW_ADS_COUNT : LIST_VIEW_ADS_COUNT;
-                    mAdapter = new YoutubeVideoAdapter(getActivity(), youtubeVideos.getItems());
-                    mAdapter.setListener(mListener);
-                    recyclerView.setAdapter(mAdapter);
-                    generateDataSet(mAdapter);
+                    mYoutubeVideoList = youtubeVideos;
+                    setupAdapter(youtubeVideos);
                 });
             }
 
@@ -115,6 +121,19 @@ public class DiscoverFragment extends AdsFragment {
             }
         });
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(BUNDLE_KEY_YOUTUBE_VIDEO_LIST, mYoutubeVideoList);
+    }
+
+    private void setupAdapter(YoutubeVideoList youtubeVideos) {
+        mAdapter = new YoutubeVideoAdapter(getActivity(), youtubeVideos.getItems());
+        mAdapter.setListener(mListener);
+        recyclerView.setAdapter(mAdapter);
+        generateDataSet(mAdapter);
     }
 
     private void setLayoutManager() {

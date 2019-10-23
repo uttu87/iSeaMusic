@@ -30,9 +30,9 @@ public class YoutubeApiServiceFactory {
             public void intercept(RequestFacade request) {
                 //7-days cache
                 request.addHeader("Cache-Control",
-                        String.format("max-age=%d,%smax-stale=%d",
+                        String.format("max-age=%d, max-stale=%d",
                                 Integer.valueOf(60 * 60 * 24 * 7),
-                                prefs.loadArtistAndAlbumImages() ? "" : "only-if-cached,", Integer.valueOf(31536000)));
+                                 Integer.valueOf(31536000)));
                 request.addHeader("Connection", "keep-alive");
             }
         };
