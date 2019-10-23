@@ -172,7 +172,10 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
     }
 
     private void showSearchResult(String query) {
-        if(TextUtils.isEmpty(query)) {
+        if (!isConnected()) {
+            return;
+        }
+        if (TextUtils.isEmpty(query)) {
             return;
         }
         FragmentManager fm = getSupportFragmentManager();

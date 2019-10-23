@@ -14,6 +14,7 @@
 
 package com.iseasoft.iSeaMusic.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
@@ -31,6 +32,7 @@ import android.view.ViewGroup;
 import com.afollestad.appthemeengine.ATE;
 import com.afollestad.appthemeengine.Config;
 import com.iseasoft.iSeaMusic.R;
+import com.iseasoft.iSeaMusic.activities.BaseActivity;
 import com.iseasoft.iSeaMusic.utils.ATEUtils;
 import com.iseasoft.iSeaMusic.utils.Helpers;
 import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
@@ -88,7 +90,10 @@ public class MainFragment extends Fragment {
 
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getChildFragmentManager());
-        adapter.addFragment(new DiscoverFragment(), "Discover");
+        Activity activity = getActivity();
+        if (activity instanceof BaseActivity && ((BaseActivity)activity).isConnected()) {
+            adapter.addFragment(new DiscoverFragment(), "Discover");
+        }
 //        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_MUSIC_ID), "Music");
 //        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_CHILDREN_MUSIC_ID), "Children");
 //        adapter.addFragment(MusicFragment.newInstance(Constants.TOPIC_CHRISTIAN_MUSIC_ID), "Christian Music");

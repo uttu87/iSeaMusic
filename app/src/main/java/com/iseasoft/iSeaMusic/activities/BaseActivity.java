@@ -22,6 +22,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.media.AudioManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -45,16 +47,16 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.iseasoft.iSeaMusic.MusicPlayer;
 import com.iseasoft.iSeaMusic.MusicService;
+import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.cast.SimpleSessionManagerListener;
 import com.iseasoft.iSeaMusic.cast.WebServer;
+import com.iseasoft.iSeaMusic.iSeaMusicService;
 import com.iseasoft.iSeaMusic.listeners.MusicStateListener;
 import com.iseasoft.iSeaMusic.slidinguppanel.SlidingUpPanelLayout;
 import com.iseasoft.iSeaMusic.subfragments.QuickControlsFragment;
 import com.iseasoft.iSeaMusic.utils.Helpers;
 import com.iseasoft.iSeaMusic.utils.NavigationUtils;
 import com.iseasoft.iSeaMusic.utils.iSeaUtils;
-import com.iseasoft.iSeaMusic.iSeaMusicService;
-import com.iseasoft.iSeaMusic.R;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -63,54 +65,14 @@ import java.util.ArrayList;
 public class BaseActivity extends ATEActivity implements ServiceConnection, MusicStateListener {
 
     private final ArrayList<MusicStateListener> mMusicStateListener = new ArrayList<>();
-    private MusicPlayer.ServiceToken mToken;
-    private PlaybackStatus mPlaybackStatus;
-
-    private CastSession mCastSession;
-    private SessionManager mSessionManager;
     private final SessionManagerListener mSessionManagerListener =
             new SessionManagerListenerImpl();
-    private WebServer castServer;
-
     public boolean playServicesAvailable = false;
-
-    private class SessionManagerListenerImpl extends SimpleSessionManagerListener {
-        @Override
-        public void onSessionStarting(Session session) {
-            super.onSessionStarting(session);
-            startCastServer();
-        }
-
-        @Override
-        public void onSessionStarted(Session session, String sessionId) {
-            invalidateOptionsMenu();
-            mCastSession = mSessionManager.getCurrentCastSession();
-            showCastMiniController();
-        }
-        @Override
-        public void onSessionResumed(Session session, boolean wasSuspended) {
-            invalidateOptionsMenu();
-            mCastSession = mSessionManager.getCurrentCastSession();
-        }
-        @Override
-        public void onSessionEnded(Session session, int error) {
-            mCastSession = null;
-            hideCastMiniController();
-            stopCastServer();
-        }
-
-        @Override
-        public void onSessionResuming(Session session, String s) {
-            super.onSessionResuming(session, s);
-            startCastServer();
-        }
-
-        @Override
-        public void onSessionSuspended(Session session, int i) {
-            super.onSessionSuspended(session, i);
-            stopCastServer();
-        }
-    }
+    private MusicPlayer.ServiceToken mToken;
+    private PlaybackStatus mPlaybackStatus;
+    private CastSession mCastSession;
+    private SessionManager mSessionManager;
+    private WebServer castServer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -165,7 +127,7 @@ public class BaseActivity extends ATEActivity implements ServiceConnection, Musi
             mSessionManager.addSessionManagerListener(mSessionManagerListener);
         }
         //For Android 8.0+: service may get destroyed if in background too long
-        if(MusicPlayer.mService == null){
+        if (MusicPlayer.mService == null) {
             mToken = MusicPlayer.bindToService(this, this);
         }
         onMetaChanged();
@@ -186,7 +148,6 @@ public class BaseActivity extends ATEActivity implements ServiceConnection, Musi
         MusicPlayer.mService = iSeaMusicService.Stub.asInterface(service);
         onMetaChanged();
     }
-
 
     private void initCast() {
         CastContext castContext = CastContext.getSharedInstance(this);
@@ -348,6 +309,43 @@ public class BaseActivity extends ATEActivity implements ServiceConnection, Musi
         });
     }
 
+    public void showCastMiniController() {
+        //implement by overriding in activities
+    }
+
+    public void hideCastMiniController() {
+        //implement by overriding in activities
+    }
+
+    public CastSession getCastSession() {
+        return mCastSession;
+    }
+
+    private void startCastServer() {
+        castServer = new WebServer(this);
+        try {
+            castServer.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void stopCastServer() {
+        if (castServer != null) {
+            castServer.stop();
+        }
+    }
+
+    public boolean isConnected() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
+    }
+
     private final static class PlaybackStatus extends BroadcastReceiver {
 
         private final WeakReference<BaseActivity> mReference;
@@ -379,6 +377,46 @@ public class BaseActivity extends ATEActivity implements ServiceConnection, Musi
         }
     }
 
+    private class SessionManagerListenerImpl extends SimpleSessionManagerListener {
+        @Override
+        public void onSessionStarting(Session session) {
+            super.onSessionStarting(session);
+            startCastServer();
+        }
+
+        @Override
+        public void onSessionStarted(Session session, String sessionId) {
+            invalidateOptionsMenu();
+            mCastSession = mSessionManager.getCurrentCastSession();
+            showCastMiniController();
+        }
+
+        @Override
+        public void onSessionResumed(Session session, boolean wasSuspended) {
+            invalidateOptionsMenu();
+            mCastSession = mSessionManager.getCurrentCastSession();
+        }
+
+        @Override
+        public void onSessionEnded(Session session, int error) {
+            mCastSession = null;
+            hideCastMiniController();
+            stopCastServer();
+        }
+
+        @Override
+        public void onSessionResuming(Session session, String s) {
+            super.onSessionResuming(session, s);
+            startCastServer();
+        }
+
+        @Override
+        public void onSessionSuspended(Session session, int i) {
+            super.onSessionSuspended(session, i);
+            stopCastServer();
+        }
+    }
+
     public class initQuickControls extends AsyncTask<String, Void, String> {
 
         @Override
@@ -396,33 +434,6 @@ public class BaseActivity extends ATEActivity implements ServiceConnection, Musi
 
         @Override
         protected void onPreExecute() {
-        }
-    }
-
-    public void showCastMiniController() {
-        //implement by overriding in activities
-    }
-
-    public void hideCastMiniController() {
-        //implement by overriding in activities
-    }
-
-    public CastSession getCastSession() {
-        return mCastSession;
-    }
-
-    private void startCastServer() {
-        castServer = new WebServer(this);
-        try {
-            castServer.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void stopCastServer() {
-        if (castServer != null) {
-            castServer.stop();
         }
     }
 }
