@@ -28,7 +28,6 @@ import com.afollestad.appthemeengine.Config;
 import com.iseasoft.iSeaMusic.R;
 import com.iseasoft.iSeaMusic.models.YoutubeVideo;
 import com.iseasoft.iSeaMusic.utils.Helpers;
-import com.iseasoft.iSeaMusic.utils.PreferencesUtility;
 import com.iseasoft.iSeaMusic.utils.iSeaUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -60,7 +59,7 @@ public class YoutubeVideoAdapter extends AdsAdapter {
         this.arraylist = new ArrayList<>();
         this.arraylist.addAll(arraylist);
         this.mContext = context;
-        this.isGrid = PreferencesUtility.getInstance(mContext).isAlbumsInGrid();
+        this.isGrid = true;
 
     }
 
