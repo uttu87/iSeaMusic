@@ -74,7 +74,7 @@ public class YoutubeApiClient {
     }
 
     public void searchMusic(String keyword, final MusicInfoListener listener) {
-        mYoutubeApiService.searchMusic(keyword, OrderBy.DATE, new Callback<YoutubeMusicList>() {
+        mYoutubeApiService.searchMusic(keyword, OrderBy.RELEVANCE, new Callback<YoutubeMusicList>() {
             @Override
             public void success(YoutubeMusicList youtubeMusicList, Response response) {
                 listener.videoInfoSuccess(youtubeMusicList);
