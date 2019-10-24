@@ -9,8 +9,8 @@ android {
         applicationId "com.isea14.MusicPlayer"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 110
-        versionName "1.1"
+        versionCode 210
+        versionName "2.1"
         //renderscript support mode is not supported for 21+ with gradle version 2.0
         renderscriptTargetApi 20
         renderscriptSupportModeEnabled true
