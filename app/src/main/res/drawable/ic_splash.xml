@@ -5,6 +5,6 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/ic_logo" />
+            android:src="@drawable/ic_empty_music2" />
     </item>
 </layer-list>
